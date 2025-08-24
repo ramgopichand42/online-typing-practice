@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Space Invaders Typing Game</title>
+  <style>
+    body {
+      background: linear-gradient(120deg,#a1c4fd,#c2e9fb 100%);
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    h1 {
+      text-align: center;
+      color: #0a6bcd;
+      margin-top: 32px;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 8px #fff;
+    }
+    #game-container {
+      max-width: 480px;
+      margin: 30px auto;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 6px 28px #a1c4fd55;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .game-stats {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.14em;
+      margin-bottom: 16px;
+      color: #0a6bcd;
+      font-weight: bold;
+    }
+    #game-area {
+      position: relative;
+      height: 350px;
+      background: linear-gradient(180deg,#e0c3fc 0%, #8ec5fc 100%);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px #eee;
+      margin-bottom: 12px;
+      border: 1px solid #dce6f6;
+    }
+    .alien-word {
+      position: absolute;
+      left: calc(var(--x) * 1%);
+      top: -36px;
+      font-size: 1.12em;
+      font-weight: bold;
+      padding: 8px 16px;
+      border-radius: 22px;
+      background: var(--color,#43cea2);
+      color: #fff;
+      box-shadow: 0 4px 14px 0 rgba(0,0,0,0.11);
+      border: 2px solid #fff;
+      opacity: 0.97;
+      animation: dropDown 4s linear forwards;
+      z-index: 3;
+      user-select: none;
+      transition: filter 0.3s, transform 0.2s;
+    }
+    @keyframes dropDown {
+      0% { top: -36px; opacity: 0.98;}
+      95% { opacity: 1;}
+      100% { top: 320px; opacity: 0.12;}
+    }
+    .alien-word.shoot {
+      animation: shootAnim 0.38s cubic-bezier(.2,1.8,.7,1.7) forwards;
+      filter: drop-shadow(0 0 14px #fd5d47);
+      background: #fd5d47 !important;
+      transform: scale(1.15);
+      opacity: 0.7;
+      z-index: 7;
+      font-style: italic;
+    }
+    @keyframes shootAnim {
+      0% { opacity: 1; transform: scale(1);}
+      70% { opacity: 0.7; transform: scale(1.23);}
+      100% { opacity: 0; top: 350px;}
+    }
+    .alien-word.missed {
+      animation: missedAnim 0.38s cubic-bezier(.2,1.8,.7,1.7) forwards;
+      filter: brightness(0.5) blur(1px);
+      background: #7e8fa0 !important;
+      opacity: 0.7;
+      z-index:6;
+    }
+    @keyframes missedAnim {
+      0% { opacity: 1; }
+      100% { opacity: 0; top: 350px;}
+    }
+    #typing-input {
+      width: 90%;
+      padding: 10px 14px;
+      font-size: 1.04em;
+      border: 1px solid #bfc6d1;
+      border-radius: 6px;
+      outline: none;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+      background: #f4f8fb;
+      color: #1d3557;
+      text-align: center;
+      letter-spacing: 2px;
+    }
+    #typing-input:disabled {
+      background: #e9ecef;
+      color: #a0a0a0;
+    }
+    #start-btn, #restart-btn {
+      padding: 9px 32px;
+      background: linear-gradient(90deg,#0a6bcd,#43cea2);
+      color: #fff;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 9px;
+      cursor: pointer;
+      margin: 10px 4px 10px 4px;
+      font-weight: bold;
+      box-shadow: 0 2px 8px #43cea244;
+      transition: background 0.23s, transform 0.18s;
+    }
+    #start-btn:hover, #restart-btn:hover {
+      background: linear-gradient(90deg,#fd5d47,#43cea2);
+      transform: scale(1.09);
+    }
+    #final-score {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 1.16em;
+      color: #fd5d47;
+      font-weight: bold;
+      letter-spacing: 1px;
+      background: #e0c3fc44;
+      border-radius: 10px;
+      padding: 10px;
+      display: none;
+    }
+    #life-indicator {
+      color: #fd5d47;
+      font-weight: bold;
+      letter-spacing: 1px;
+      font-size: 1.13em;
+    }
+    #instruction {
+      text-align: center;
+      color: #7e8fa0;
+      font-size: 1.01em;
+      margin-bottom: 7px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Space Invaders Typing Game</h1>
+  <div id="game-container">
+    <div class="game-stats">
+      <span>स्कोर: <span id="score">0</span></span>
+      <span id="life-indicator">लाइफ: <span id="life">5</span></span>
+    </div>
+    <div id="instruction">स्क्रीन पर आते शब्दों को सही टाइप करके उन्हें खत्म करो!</div>
+    <div id="game-area"></div>
+    <input type="text" id="typing-input" placeholder="शब्द टाइप करें..." disabled autocomplete="off" />
+    <button id="start-btn">Start</button>
+    <button id="restart-btn" style="display:none;">Restart</button>
+    <div id="final-score"></div>
+  </div>
+  <script>
+    // Word list (mix of short & long, you can edit/expand)
+    const words = [
+      "space", "alien", "rocket", "invader", "planet", "galaxy", "typing", "laser",
+      "asteroid", "orbit", "comet", "star", "shoot", "game", "challenge", "score",
+      "mission", "attack", "defend", "power", "energy", "keyboard", "speed", "skill",
+      "destroy", "level", "advance", "winner", "bonus", "control", "fighter", "pilot"
+    ];
+    const colors = [
+      "#43cea2","#fd5d47","#6e45e2","#ee0979","#50c9c3","#ffb347","#f7971e",
+      "#43cea2","#185a9d","#5f2c82","#00b4db","#f857a6","#e0c3fc"
+    ];
+    let gameActive = false;
+    let score = 0;
+    let life = 5;
+    let intervalId = null;
+    let dropSpeed = 4000;
+    let activeWords = [];
+    let wordId = 0;
+
+    const scoreEl = document.getElementById('score');
+    const lifeEl = document.getElementById('life');
+    const lifeIndicatorEl = document.getElementById('life-indicator');
+    const gameArea = document.getElementById('game-area');
+    const startBtn = document.getElementById('start-btn');
+    const restartBtn = document.getElementById('restart-btn');
+    const finalScoreEl = document.getElementById('final-score');
+    const instructionEl = document.getElementById('instruction');
+    const typingInputEl = document.getElementById('typing-input');
+
+    function getRandomX() {
+      return Math.floor(Math.random() * 75) + 10;
+    }
+    function getRandomColor() {
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+    function getRandomWord() {
+      return words[Math.floor(Math.random() * words.length)];
+    }
+
+    // Adds a new word to the game area
+    function addWord() {
+      const text = getRandomWord();
+      const x = getRandomX();
+      const color = getRandomColor();
+      const id = "word-" + (++wordId);
+
+      const el = document.createElement('div');
+      el.textContent = text;
+      el.className = 'alien-word';
+      el.setAttribute('data-word', text);
+      el.setAttribute('data-id', id);
+      el.style.setProperty('--x', x);
+      el.style.setProperty('--color', color);
+
+      el.addEventListener('animationend', function(e) {
+        if (gameActive && !el.classList.contains('shoot')) {
+          el.classList.add('missed');
+          setTimeout(()=>gameArea.removeChild(el), 340);
+          // Life down
+          life--;
+          updateLife();
+          checkGameOver();
+        } else {
+          setTimeout(()=>gameArea.removeChild(el), 340);
+        }
+        activeWords = activeWords.filter(obj=>obj.id !== id);
+      });
+
+      gameArea.appendChild(el);
+      activeWords.push({id, text, el});
+    }
+
+    function updateScore() {
+      scoreEl.textContent = score;
+    }
+    function updateLife() {
+      lifeEl.textContent = life;
+      if (life <= 2) {
+        lifeIndicatorEl.style.color = '#fd5d47';
+      } else {
+        lifeIndicatorEl.style.color = '#0a6bcd';
+      }
+    }
+
+    function handleTypingInput() {
+      if (!gameActive) return;
+      const typed = typingInputEl.value.trim().toLowerCase();
+      let found = null;
+      for (let obj of activeWords) {
+        if (obj.text.toLowerCase() === typed && !obj.el.classList.contains('shoot')) {
+          found = obj;
+          break;
+        }
+      }
+      if (found) {
+        found.el.classList.add('shoot');
+        score++;
+        updateScore();
+        setTimeout(()=> {
+          if (found.el.parentNode) gameArea.removeChild(found.el);
+        }, 340);
+        activeWords = activeWords.filter(obj=>obj.id !== found.id);
+        typingInputEl.value = '';
+        // Speed up as score increases (min 1800ms)
+        if (score > 10 && dropSpeed > 1800) {
+          dropSpeed -= 160;
+          clearInterval(intervalId);
+          intervalId = setInterval(addWord, dropSpeed);
+        }
+      }
+    }
+
+    typingInputEl.addEventListener('input', handleTypingInput);
+
+    function startGame() {
+      gameActive = true;
+      score = 0;
+      life = 5;
+      dropSpeed = 4000;
+      activeWords = [];
+      wordId = 0;
+      updateScore();
+      updateLife();
+      gameArea.innerHTML = '';
+      finalScoreEl.style.display = 'none';
+      startBtn.style.display = 'none';
+      restartBtn.style.display = 'none';
+      instructionEl.style.color = "#7e8fa0";
+      instructionEl.textContent = "स्क्रीन पर आते शब्दों को सही टाइप करके उन्हें खत्म करो!";
+      typingInputEl.disabled = false;
+      typingInputEl.value = '';
+      typingInputEl.focus();
+
+      intervalId = setInterval(addWord, dropSpeed);
+    }
+
+    function endGame() {
+      gameActive = false;
+      clearInterval(intervalId);
+      finalScoreEl.textContent = `Game Over! आपका अंतिम स्कोर: ${score}`;
+      finalScoreEl.style.display = 'block';
+      restartBtn.style.display = 'inline-block';
+      startBtn.style.display = 'none';
+      typingInputEl.disabled = true;
+      instructionEl.textContent = "Restart दबाकर फिर खेलें!";
+      activeWords.forEach(obj => {
+        if (obj.el.parentNode) obj.el.parentNode.removeChild(obj.el);
+      });
+      activeWords = [];
+    }
+
+    function checkGameOver() {
+      if (life <= 0) {
+        endGame();
+      }
+    }
+
+    restartBtn.addEventListener('click', () => {
+      startGame();
+    });
+
+    startBtn.addEventListener('click', () => {
+      startGame();
+    });
+
+    // Enter key shortcut
+    typingInputEl.addEventListener('keydown', function(e) {
+      if (e.key === "Enter" && gameActive) handleTypingInput();
+    });
+  </script>
+</body>
+</html>

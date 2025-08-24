@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pong Typing Game</title>
+  <style>
+    body {
+      background: linear-gradient(135deg,#a1c4fd,#c2e9fb 100%);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      text-align: center;
+      color: #fdc800;
+      margin-top: 32px;
+      letter-spacing: 3px;
+      font-size: 2.2em;
+      text-shadow: 0 2px 14px #d7263d, 0 1px 36px #fff;
+      font-family: 'Trebuchet MS', 'Segoe UI', Arial, sans-serif;
+    }
+    #game-container {
+      max-width: 620px;
+      margin: 30px auto;
+      background: linear-gradient(120deg, #ffe066 0%, #e9e9e9 100%);
+      border-radius: 26px;
+      box-shadow: 0 6px 32px #bfae5e77;
+      padding: 22px 24px 34px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .game-stats {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.19em;
+      margin-bottom: 12px;
+      color: #d7263d;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-shadow: 0 1px 4px #fff3;
+    }
+    #pong-arena {
+      position: relative;
+      height: 340px;
+      background: linear-gradient(90deg,#a1c4fd 0%, #c2e9fb 65%, #f8ffae 100%);
+      border-radius: 22px;
+      overflow: hidden;
+      margin-bottom: 18px;
+      border: 2px solid #fdc800;
+      box-shadow: 0 4px 24px #bfae5e44, 0 1px 8px #ffe06688 inset;
+    }
+    .paddle {
+      position: absolute;
+      width: 18px;
+      height: 100px;
+      background: linear-gradient(180deg,#fdc800 60%,#d7263d 100%);
+      border-radius: 16px;
+      top: 120px;
+      box-shadow: 0 2px 10px #d7263d33;
+      transition: height 0.2s;
+      z-index: 2;
+    }
+    #paddle-left {
+      left: 0;
+    }
+    #paddle-right {
+      right: 0;
+    }
+    .pong-word {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+      font-size: 1.34em;
+      font-weight: bold;
+      padding: 14px 34px;
+      border-radius: 22px;
+      color: #fff;
+      background: linear-gradient(90deg,#43cea2,#fdc800);
+      box-shadow: 0 6px 32px #d7263d44;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 12px #8c7300cc;
+      z-index: 4;
+      user-select: none;
+      animation-duration: 0.85s;
+      animation-timing-function: cubic-bezier(.2,1.8,.7,1.7);
+      opacity: 0.96;
+    }
+    @keyframes bounceLeft {
+      0% { left: 84%; }
+      75% { left: 20%; }
+      100% { left: 10%; }
+    }
+    @keyframes bounceRight {
+      0% { left: 10%; }
+      75% { left: 80%; }
+      100% { left: 84%; }
+    }
+    .pong-word.left {
+      left: 10%;
+      animation-name: bounceLeft;
+    }
+    .pong-word.right {
+      left: 84%;
+      animation-name: bounceRight;
+    }
+    .pong-word.correct {
+      background: linear-gradient(90deg,#43cea2 60%,#fdc800 100%);
+      box-shadow: 0 0 24px #43cea2cc;
+      opacity: 1;
+      font-style: italic;
+    }
+    .pong-word.wrong {
+      background: linear-gradient(90deg,#d7263d 60%,#fdc800 100%);
+      opacity: 0.7;
+      filter: blur(2px);
+    }
+    #typing-input {
+      width: 92%;
+      padding: 12px 18px;
+      font-size: 1.12em;
+      border: 2px solid #fdc800;
+      border-radius: 10px;
+      outline: none;
+      margin-bottom: 12px;
+      box-sizing: border-box;
+      background: #fffde4;
+      color: #d7263d;
+      text-align: center;
+      letter-spacing: 2px;
+      font-weight: 600;
+      box-shadow: 0 1px 8px #fdc80044 inset;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+    #typing-input:disabled {
+      background: #e9ecef;
+      color: #a0a0a0;
+      border: 2px solid #c2e9fb;
+      box-shadow: none;
+    }
+    #start-btn, #restart-btn {
+      padding: 11px 36px;
+      background: linear-gradient(90deg,#d7263d,#fdc800);
+      color: #fff;
+      font-size: 1.13em;
+      border: none;
+      border-radius: 11px;
+      cursor: pointer;
+      margin: 10px 4px 10px 4px;
+      font-weight: bold;
+      box-shadow: 0 2px 8px #fdc80044, 0 1px 12px #d7263d22 inset;
+      transition: background 0.23s, transform 0.18s;
+      letter-spacing: 1.5px;
+    }
+    #start-btn:hover, #restart-btn:hover {
+      background: linear-gradient(90deg,#43cea2,#fdc800);
+      transform: scale(1.09);
+    }
+    #final-score {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 1.18em;
+      color: #d7263d;
+      font-weight: bold;
+      letter-spacing: 2px;
+      background: #fdc80022;
+      border-radius: 12px;
+      padding: 13px 0;
+      display: none;
+      box-shadow: 0 1px 8px #fdc80044 inset;
+    }
+    #instruction {
+      text-align: center;
+      color: #376313;
+      font-size: 1.09em;
+      margin-bottom: 14px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-shadow: 0 1px 6px #ffe06688;
+    }
+  </style>
+</head>
+<body>
+  <h1>Pong Typing Game</h1>
+  <div id="game-container">
+    <div class="game-stats">
+      <span>स्कोर: <span id="score">0</span></span>
+      <span>पैडल साइज: <span id="paddle-size">100</span>px</span>
+    </div>
+    <div id="instruction">सही key टाइप करें, शब्द को bounce करें! Paddle छोटा होने से बचें!</div>
+    <div id="pong-arena">
+      <div id="paddle-left" class="paddle"></div>
+      <div id="paddle-right" class="paddle"></div>
+    </div>
+    <input type="text" id="typing-input" placeholder="शब्द टाइप करें..." disabled autocomplete="off" />
+    <button id="start-btn">Start</button>
+    <button id="restart-btn" style="display:none;">Restart</button>
+    <div id="final-score"></div>
+  </div>
+  <script>
+    // Word list
+    const words = [
+      "pong", "bounce", "speed", "score", "game", "challenge", "focus", "reflex",
+      "paddle", "ball", "hit", "block", "type", "move", "win", "play", "push", "tap",
+      "fast", "left", "right", "up", "down"
+    ];
+    let gameActive = false;
+    let score = 0;
+    let paddleSize = 100;
+    let side = 'left'; // Which side the word is on
+    let currentWord = '';
+    let wordEl = null;
+    let wordTimeout = null;
+
+    const scoreEl = document.getElementById('score');
+    const paddleSizeEl = document.getElementById('paddle-size');
+    const paddleLeftEl = document.getElementById('paddle-left');
+    const paddleRightEl = document.getElementById('paddle-right');
+    const pongArenaEl = document.getElementById('pong-arena');
+    const startBtn = document.getElementById('start-btn');
+    const restartBtn = document.getElementById('restart-btn');
+    const finalScoreEl = document.getElementById('final-score');
+    const instructionEl = document.getElementById('instruction');
+    const typingInputEl = document.getElementById('typing-input');
+
+    function getRandomWord() {
+      return words[Math.floor(Math.random() * words.length)];
+    }
+    function resetWordTimeout() {
+      if (wordTimeout) clearTimeout(wordTimeout);
+    }
+    function showWord() {
+      if (wordEl) {
+        pongArenaEl.removeChild(wordEl);
+        wordEl = null;
+      }
+      currentWord = getRandomWord();
+      wordEl = document.createElement('div');
+      wordEl.textContent = currentWord;
+      wordEl.className = 'pong-word ' + side;
+      pongArenaEl.appendChild(wordEl);
+
+      typingInputEl.value = '';
+      typingInputEl.focus();
+
+      // Set timeout for miss
+      resetWordTimeout();
+      wordTimeout = setTimeout(() => {
+        // Missed!
+        wordEl.classList.add('wrong');
+        shrinkPaddle();
+        setTimeout(() => {
+          if (wordEl && wordEl.parentNode) pongArenaEl.removeChild(wordEl);
+          nextRound();
+        }, 400);
+      }, getWordTime());
+    }
+    function getWordTime() {
+      // Slow at start, gets faster
+      if (score < 3) return 4500;
+      if (score < 8) return 3200;
+      if (score < 15) return 2300;
+      if (score < 25) return 1500;
+      return 900;
+    }
+    function nextRound() {
+      if (!gameActive) return;
+      side = (side === 'left') ? 'right' : 'left';
+      showWord();
+    }
+    function shrinkPaddle() {
+      paddleSize -= 14;
+      if (paddleSize < 24) paddleSize = 0;
+      updatePaddleSize();
+      if (paddleSize === 0) endGame();
+    }
+    function updatePaddleSize() {
+      paddleSizeEl.textContent = paddleSize;
+      paddleLeftEl.style.height = paddleSize + 'px';
+      paddleRightEl.style.height = paddleSize + 'px';
+    }
+    function handleTypingInput() {
+      if (!gameActive || !wordEl) return;
+      const typed = typingInputEl.value.trim().toLowerCase();
+      if (typed === currentWord.toLowerCase()) {
+        resetWordTimeout();
+        wordEl.classList.add('correct');
+        score++;
+        scoreEl.textContent = score;
+        setTimeout(() => {
+          if (wordEl && wordEl.parentNode) pongArenaEl.removeChild(wordEl);
+          nextRound();
+        }, 350);
+        typingInputEl.value = '';
+      }
+    }
+    typingInputEl.addEventListener('input', handleTypingInput);
+    typingInputEl.addEventListener('keydown', function(e) {
+      if (e.key === "Enter" && gameActive) handleTypingInput();
+    });
+    function startGame() {
+      gameActive = true;
+      score = 0;
+      paddleSize = 100;
+      side = 'left';
+      scoreEl.textContent = score;
+      updatePaddleSize();
+      pongArenaEl.querySelectorAll('.pong-word').forEach(w=>w.parentNode.removeChild(w));
+      finalScoreEl.style.display = 'none';
+      startBtn.style.display = 'none';
+      restartBtn.style.display = 'none';
+      instructionEl.style.color = "#376313";
+      instructionEl.textContent = "सही key टाइप करें, शब्द को bounce करें! Paddle छोटा होने से बचें!";
+      typingInputEl.disabled = false;
+      typingInputEl.value = '';
+      typingInputEl.focus();
+      showWord();
+    }
+    function endGame() {
+      gameActive = false;
+      resetWordTimeout();
+      finalScoreEl.textContent = `Game Over! आपका अंतिम स्कोर: ${score}`;
+      finalScoreEl.style.display = 'block';
+      restartBtn.style.display = 'inline-block';
+      startBtn.style.display = 'none';
+      typingInputEl.disabled = true;
+      instructionEl.textContent = "Restart दबाकर फिर खेलें!";
+      pongArenaEl.querySelectorAll('.pong-word').forEach(w=>w.parentNode.removeChild(w));
+      wordEl = null;
+    }
+    restartBtn.onclick = startGame;
+    startBtn.onclick = startGame;
+
+  </script>
+</body>
+</html>
