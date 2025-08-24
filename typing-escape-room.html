@@ -1,0 +1,375 @@
+<!--
+  Typing Escape Room Game (Hindi/English Language Option)
+  - Language selector: Hindi या English
+  - हर भाषा में अलग puzzles (paragraphs) हैं
+  - सही वाक्य टाइप करो, अगला दरवाजा खुलता है, टाइमर है
+  - Code में comments हैं, आसानी से एडिट/feature जोड़ सकते हैं
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Typing Escape Room Game</title>
+  <style>
+    body {
+      background: linear-gradient(120deg, #cfd9df 0%, #e2ebf0 100%);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      text-align: center;
+      color: #0a6bcd;
+      margin-top: 32px;
+      letter-spacing: 2px;
+      font-size: 2em;
+      text-shadow: 0 2px 8px #fff;
+      font-family: 'Trebuchet MS', 'Segoe UI', Arial, sans-serif;
+    }
+    #game-container {
+      max-width: 540px;
+      margin: 30px auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 6px 28px #5c7ea388;
+      padding: 26px;
+      position: relative;
+      overflow: hidden;
+    }
+    .game-stats {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.13em;
+      margin-bottom: 10px;
+      color: #0a6bcd;
+      font-weight: bold;
+    }
+    #room-status {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #7e8fa0;
+      font-size: 1.02em;
+    }
+    #timer {
+      text-align: center;
+      font-size: 1.18em;
+      color: #0a6bcd;
+      margin-bottom: 8px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    #puzzle-area {
+      text-align: center;
+      margin-bottom: 22px;
+      font-size: 1.22em;
+      color: #333;
+      background: linear-gradient(90deg,#cfd9df,#e2ebf0);
+      border-radius: 12px;
+      padding: 22px 12px 18px 12px;
+      box-shadow: 0 2px 12px #0a6bcd22;
+      font-family: 'Noto Sans', Arial, sans-serif;
+      min-height: 74px;
+      line-height: 1.5;
+      letter-spacing: 1px;
+    }
+    #typing-input {
+      width: 96%;
+      padding: 13px 10px;
+      font-size: 1.05em;
+      border: 1.5px solid #0a6bcd;
+      border-radius: 8px;
+      outline: none;
+      margin-bottom: 14px;
+      box-sizing: border-box;
+      background: #f4f8fb;
+      color: #0a6bcd;
+      text-align: left;
+      letter-spacing: 1px;
+    }
+    #typing-input:disabled {
+      background: #e9ecef;
+      color: #a0a0a0;
+    }
+    #start-btn, #restart-btn {
+      padding: 10px 32px;
+      background: linear-gradient(90deg,#0a6bcd,#6dd5ed);
+      color: #fff;
+      font-size: 1.07em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px 4px 10px 4px;
+      font-weight: bold;
+      box-shadow: 0 2px 8px #0a6bcd44;
+      transition: background 0.23s, transform 0.18s;
+    }
+    #start-btn:hover, #restart-btn:hover {
+      background: linear-gradient(90deg,#43cea2,#0a6bcd);
+      transform: scale(1.07);
+    }
+    #final-score {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 1.16em;
+      color: #0a6bcd;
+      font-weight: bold;
+      letter-spacing: 1px;
+      background: #e2ebf022;
+      border-radius: 10px;
+      padding: 10px;
+      display: none;
+    }
+    #escape-success {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 1.2em;
+      color: #43cea2;
+      font-weight: bold;
+      letter-spacing: 1px;
+      background: #cfd9df22;
+      border-radius: 10px;
+      padding: 14px;
+      display: none;
+    }
+    #level-indicator {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 1.05em;
+      color: #0a6bcd;
+      font-weight: 600;
+    }
+    #lang-select-row {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    #lang-select {
+      font-size: 1.05em;
+      padding: 6px 14px;
+      border-radius: 7px;
+      border: 1.5px solid #0a6bcd;
+      color: #0a6bcd;
+      background: #e2ebf0;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+    label[for="lang-select"] {
+      color: #0a6bcd;
+      font-weight: 600;
+      font-size: 1.03em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Typing Escape Room Game</h1>
+  <div id="game-container">
+    <div class="game-stats">
+      <span>Level : <span id="level">1</span></span>
+      <span>Rooms Cleared : <span id="score">0</span></span>
+    </div>
+    <div id="lang-select-row">
+      <label for="lang-select">Language:</label>
+      <select id="lang-select">
+        <option value="hi">हिन्दी</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+    <div id="room-status">आप एक कमरे में फँसे हैं, बाहर निकलने के लिए पहेली हल करो!</div>
+    <div id="level-indicator"></div>
+    <div id="timer">Time: <span id="time">40</span> seconds</div>
+    <div id="puzzle-area"></div>
+    <input type="text" id="typing-input" placeholder="Type the full sentence..." disabled autocomplete="off" />
+    <button id="start-btn">Start</button>
+    <button id="restart-btn" style="display:none;">Restart</button>
+    <div id="final-score"></div>
+    <div id="escape-success"></div>
+  </div>
+  <script>
+    // पहेली/पैरा की लिस्ट हिंदी में
+    const puzzles_hi = [
+      "यह कमरा बहुत अंधेरा है। एक दरवाजा है, लेकिन उसे खोलने के लिए आपको सही वाक्य टाइप करना होगा।",
+      "दीवार पर एक ताला है, जिस पर लिखा है: 'सफलता उन्हीं को मिलती है जो प्रयास करना नहीं छोड़ते।'।",
+      "कमरे के कोने में एक घड़ी है, जो समय के महत्व को दर्शाती है।",
+      "दरवाजे की कुंजी पाने के लिए टाइप करें: 'ज्ञान सबसे बड़ा धन है।'",
+      "आपने कमरे में एक किताब देखी जिस पर लिखा है: 'सपनों को पाने के लिए मेहनत करनी पड़ती है।'",
+      "एक और दरवाजा दिखता है, उस पर लिखा है: 'हर समस्या का हल है, बस धैर्य रखना जरूरी है।'"
+    ];
+
+    // पहेली/पैरा की लिस्ट इंग्लिश में
+    const puzzles_en = [
+      "This room is very dark. There is a door, but to open it you must type the correct sentence.",
+      "There is a lock on the wall that says: 'Success comes to those who never give up.'",
+      "In the corner of the room, a clock reminds you of the importance of time.",
+      "Type to get the key for the door: 'Knowledge is the greatest wealth.'",
+      "You spot a book in the room that says: 'Dreams require hard work to achieve.'",
+      "Another door appears, written on it: 'Every problem has a solution, patience is the key.'"
+    ];
+
+    let puzzles = puzzles_hi; // default
+    let gameActive = false;
+    let level = 1;
+    let score = 0;
+    let time = 40;
+    let timerInterval = null;
+    let currentPuzzle = '';
+    let escapeDone = false;
+    let lang = "hi";
+
+    // DOM references
+    const scoreEl = document.getElementById('score');
+    const levelEl = document.getElementById('level');
+    const roomStatusEl = document.getElementById('room-status');
+    const timerEl = document.getElementById('time');
+    const puzzleAreaEl = document.getElementById('puzzle-area');
+    const startBtn = document.getElementById('start-btn');
+    const restartBtn = document.getElementById('restart-btn');
+    const finalScoreEl = document.getElementById('final-score');
+    const typingInputEl = document.getElementById('typing-input');
+    const escapeSuccessEl = document.getElementById('escape-success');
+    const levelIndicatorEl = document.getElementById('level-indicator');
+    const langSelectEl = document.getElementById('lang-select');
+
+    // भाषा बदलने पर puzzles बदलें और UI भी
+    langSelectEl.addEventListener("change", function() {
+      lang = langSelectEl.value;
+      puzzles = (lang === "hi") ? puzzles_hi : puzzles_en;
+      // टाइमर और placeholder की भाषा बदलें
+      document.getElementById("timer").innerHTML = (lang === "hi")
+        ? `समय: <span id="time">${time}</span> सेकंड`
+        : `Time: <span id="time">${time}</span> seconds`;
+      typingInputEl.placeholder = (lang === "hi")
+        ? "पूरा वाक्य टाइप करें..."
+        : "Type the full sentence...";
+      roomStatusEl.textContent = (lang === "hi")
+        ? "आप एक कमरे में फँसे हैं, बाहर निकलने के लिए पहेली हल करो!"
+        : "You are trapped in a room, solve the puzzle to escape!";
+      levelIndicatorEl.textContent = '';
+      puzzleAreaEl.textContent = '';
+      finalScoreEl.style.display = 'none';
+      escapeSuccessEl.style.display = 'none';
+      typingInputEl.value = '';
+      typingInputEl.disabled = true;
+      // Reset level and score on language change
+      level = 1;
+      score = 0;
+      levelEl.textContent = level;
+      scoreEl.textContent = score;
+    });
+
+    // नया puzzle दिखाता है
+    function showPuzzle() {
+      if (level > puzzles.length) {
+        // सारे कमरे पार कर लिए
+        escapeDone = true;
+        puzzleAreaEl.textContent = '';
+        typingInputEl.value = '';
+        typingInputEl.disabled = true;
+        escapeSuccessEl.style.display = 'block';
+        escapeSuccessEl.textContent = (lang === "hi")
+          ? "बधाई हो! आपने सभी कमरे पार कर लिए और बाहर निकल गए!"
+          : "Congratulations! You have escaped all rooms!";
+        roomStatusEl.textContent = (lang === "hi")
+          ? "आपने सफलतापूर्वक एस्केप कर लिया!"
+          : "You escaped successfully!";
+        levelIndicatorEl.textContent = '';
+        clearInterval(timerInterval);
+        finalScoreEl.style.display = 'none';
+        restartBtn.style.display = 'inline-block';
+        startBtn.style.display = 'none';
+        return;
+      }
+      currentPuzzle = puzzles[level - 1];
+      puzzleAreaEl.textContent = currentPuzzle;
+      typingInputEl.value = '';
+      typingInputEl.disabled = false;
+      typingInputEl.focus();
+      timerEl.textContent = time;
+      levelEl.textContent = level;
+      scoreEl.textContent = score;
+      levelIndicatorEl.textContent = (lang === "hi")
+        ? `कमरा #${level} | दरवाजा खोलने के लिए पूरा वाक्य टाइप करें`
+        : `Room #${level} | Type the full sentence to unlock the door`;
+      escapeSuccessEl.style.display = 'none';
+      roomStatusEl.textContent = (lang === "hi")
+        ? "आप एक कमरे में फँसे हैं, बाहर निकलने के लिए पहेली हल करो!"
+        : "You are trapped in a room, solve the puzzle to escape!";
+      finalScoreEl.style.display = 'none';
+    }
+
+    // टाइपिंग input पर चेक करता है (सही टाइप पर अगला कमरा)
+    function handleTypingInput() {
+      if (!gameActive || escapeDone) return;
+      const typed = typingInputEl.value.trim();
+      // सही टाइपिंग पर अगला कमरा खोलना
+      if (typed === currentPuzzle) {
+        score++;
+        level++;
+        scoreEl.textContent = score;
+        levelEl.textContent = level;
+        clearInterval(timerInterval);
+        time = 40;
+        showPuzzle();
+        startTimer();
+      }
+    }
+
+    typingInputEl.addEventListener('input', handleTypingInput);
+
+    // टाइमर चलाता है, समय खत्म होने पर कमरा बंद (गेम ओवर)
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        time--;
+        timerEl.textContent = time;
+        if (time <= 0) {
+          clearInterval(timerInterval);
+          endGame();
+        }
+      }, 1000);
+    }
+
+    // गेम शुरू करता है
+    function startGame() {
+      gameActive = true;
+      level = 1;
+      score = 0;
+      time = 40;
+      escapeDone = false;
+      puzzles = (lang === "hi") ? puzzles_hi : puzzles_en;
+      scoreEl.textContent = score;
+      levelEl.textContent = level;
+      finalScoreEl.style.display = 'none';
+      startBtn.style.display = 'none';
+      restartBtn.style.display = 'none';
+      escapeSuccessEl.style.display = 'none';
+      typingInputEl.disabled = false;
+      showPuzzle();
+      startTimer();
+    }
+
+    // गेम ओवर करता है (कमरा बंद - समय खत्म)
+    function endGame() {
+      gameActive = false;
+      typingInputEl.disabled = true;
+      finalScoreEl.textContent = (lang === "hi")
+        ? `Game Over! आप कमरे से बाहर नहीं निकल सके। साफ़ टाइपिंग करो और फिर कोशिश करो!`
+        : `Game Over! You could not escape the room. Type carefully and try again!`;
+      finalScoreEl.style.display = 'block';
+      restartBtn.style.display = 'inline-block';
+      startBtn.style.display = 'none';
+      roomStatusEl.textContent = (lang === "hi")
+        ? "समय खत्म! कमरा बंद हो गया।"
+        : "Time's up! The room is locked.";
+      puzzleAreaEl.textContent = '';
+      levelIndicatorEl.textContent = '';
+      escapeSuccessEl.style.display = 'none';
+    }
+
+    restartBtn.onclick = startGame;
+    startBtn.onclick = startGame;
+
+    typingInputEl.addEventListener('keydown', function(e) {
+      if (e.key === "Enter" && gameActive && !escapeDone) handleTypingInput();
+    });
+
+  </script>
+</body>
+</html>

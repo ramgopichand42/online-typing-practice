@@ -1,0 +1,266 @@
+<!--
+  Math Blitz Typing Game
+  - स्क्रीन पर आसान गणित सवाल (जोड़/घटा) आते हैं
+  - सही जवाब टाइप करो, टाइमर खत्म होने तक ज्यादा से ज्यादा स्कोर बनाओ
+  - कोड में comments हैं ताकि आप एडिट कर सको
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Math Blitz Typing Game</title>
+  <style>
+    body {
+      background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      text-align: center;
+      color: #f76a6a;
+      margin-top: 32px;
+      letter-spacing: 2px;
+      font-size: 2em;
+      text-shadow: 0 2px 14px #fff, 0 1px 36px #f76a6a;
+      font-family: 'Trebuchet MS', 'Segoe UI', Arial, sans-serif;
+    }
+    #game-container {
+      max-width: 440px;
+      margin: 30px auto;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 6px 28px #f76a6a44;
+      padding: 24px 18px 30px 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    .game-stats {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.13em;
+      margin-bottom: 10px;
+      color: #f76a6a;
+      font-weight: bold;
+    }
+    #instruction {
+      text-align: center;
+      color: #7e8fa0;
+      font-size: 1.01em;
+      margin-bottom: 7px;
+    }
+    #question-area {
+      text-align: center;
+      margin-bottom: 22px;
+      font-size: 1.5em;
+      color: #f76a6a;
+      font-weight: bold;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg,#a8edea,#fed6e3);
+      border-radius: 12px;
+      padding: 18px 0;
+      box-shadow: 0 2px 12px #f76a6a44;
+    }
+    #typing-input {
+      width: 90%;
+      padding: 10px 14px;
+      font-size: 1.04em;
+      border: 1.5px solid #f76a6a;
+      border-radius: 6px;
+      outline: none;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+      background: #f4f8fb;
+      color: #f76a6a;
+      text-align: center;
+      letter-spacing: 2px;
+    }
+    #typing-input:disabled {
+      background: #e9ecef;
+      color: #a0a0a0;
+    }
+    #start-btn, #restart-btn {
+      padding: 9px 32px;
+      background: linear-gradient(90deg,#f76a6a,#a8edea);
+      color: #fff;
+      font-size: 1.07em;
+      border: none;
+      border-radius: 9px;
+      cursor: pointer;
+      margin: 10px 4px 10px 4px;
+      font-weight: bold;
+      box-shadow: 0 2px 8px #f76a6a44;
+      transition: background 0.23s, transform 0.18s;
+    }
+    #start-btn:hover, #restart-btn:hover {
+      background: linear-gradient(90deg,#a8edea,#f76a6a);
+      transform: scale(1.09);
+    }
+    #timer {
+      text-align: center;
+      font-size: 1.18em;
+      color: #f76a6a;
+      margin-bottom: 8px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    #final-score {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 1.16em;
+      color: #f76a6a;
+      font-weight: bold;
+      letter-spacing: 1px;
+      background: #a8edea22;
+      border-radius: 10px;
+      padding: 10px;
+      display: none;
+    }
+    #time-select-row {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    #time-select {
+      padding: 6px 18px;
+      font-size: 1em;
+      border-radius: 6px;
+      border: 1.5px solid #f76a6a;
+      color: #f76a6a;
+      background: #f4f8fb;
+      margin-left: 6px;
+      margin-right: 6px;
+    }
+    label[for="time-select"] {
+      color: #f76a6a;
+      font-weight: 600;
+      font-size: 1.05em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Math Blitz Typing Game</h1>
+  <div id="game-container">
+    <div class="game-stats">
+      <span>स्कोर: <span id="score">0</span></span>
+    </div>
+    <!-- Time select dropdown -->
+    <div id="time-select-row">
+      <label for="time-select">समय चुनें:</label>
+      <select id="time-select">
+        <option value="15">15 सेकंड</option>
+        <option value="30" selected>30 सेकंड</option>
+        <option value="60">60 सेकंड</option>
+        <option value="90">90 सेकंड</option>
+      </select>
+    </div>
+    <div id="timer">समय: <span id="time">30</span> सेकंड</div>
+    <div id="instruction">हर सवाल का सही जवाब जल्दी टाइप करो, टाइमर खत्म होने से पहले!</div>
+    <div id="question-area"></div>
+    <input type="text" id="typing-input" placeholder="जवाब टाइप करें..." disabled autocomplete="off" />
+    <button id="start-btn">Start</button>
+    <button id="restart-btn" style="display:none;">Restart</button>
+    <div id="final-score"></div>
+  </div>
+  <script>
+    let gameActive = false;
+    let score = 0;
+    let time = 30; // गेम टाइमर (seconds)
+    let timerInterval = null;
+    let currentQuestion = '';
+    let currentAnswer = '';
+    // DOM References
+    const scoreEl = document.getElementById('score');
+    const timeEl = document.getElementById('time');
+    const questionAreaEl = document.getElementById('question-area');
+    const startBtn = document.getElementById('start-btn');
+    const restartBtn = document.getElementById('restart-btn');
+    const finalScoreEl = document.getElementById('final-score');
+    const instructionEl = document.getElementById('instruction');
+    const typingInputEl = document.getElementById('typing-input');
+    const timeSelectEl = document.getElementById('time-select');
+
+    // नया random सवाल बनाता है (जोड़ या घटा)
+    function generateQuestion() {
+      // दो random नंबर 3 से 20 तक
+      let a = Math.floor(Math.random() * 18) + 3;
+      let b = Math.floor(Math.random() * 18) + 3;
+      // जोड़ या घटा random
+      let op = Math.random() < 0.5 ? '+' : '-';
+      if(op === '-' && b > a) [a, b] = [b, a]; // answer हमेशा positive रहे
+      currentQuestion = `${a} ${op} ${b}`;
+      currentAnswer = op === '+' ? (a+b).toString() : (a-b).toString();
+      questionAreaEl.textContent = currentQuestion;
+      typingInputEl.value = '';
+      typingInputEl.focus();
+    }
+
+    // टाइपिंग input पर check करता है (सही जवाब पर score बढ़ाता है और नया सवाल लाता है)
+    function handleTypingInput() {
+      if (!gameActive) return;
+      const typed = typingInputEl.value.trim();
+      if (typed === currentAnswer) {
+        score++;
+        scoreEl.textContent = score;
+        generateQuestion();
+      }
+    }
+    typingInputEl.addEventListener('input', handleTypingInput);
+
+    // टाइमर चलाता है, समय खत्म होने पर गेम ओवर
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        time--;
+        timeEl.textContent = time;
+        if (time <= 0) {
+          clearInterval(timerInterval);
+          endGame();
+        }
+      }, 1000);
+    }
+
+    // गेम शुरू करता है
+    function startGame() {
+      time = parseInt(timeSelectEl.value, 10);
+      gameActive = true;
+      score = 0;
+      scoreEl.textContent = score;
+      timeEl.textContent = time;
+      finalScoreEl.style.display = 'none';
+      startBtn.style.display = 'none';
+      restartBtn.style.display = 'none';
+      instructionEl.textContent = "हर सवाल का सही जवाब जल्दी टाइप करो, टाइमर खत्म होने से पहले!";
+      typingInputEl.disabled = false;
+      generateQuestion();
+      startTimer();
+      timeSelectEl.disabled = true;
+    }
+
+    // गेम ओवर करता है
+    function endGame() {
+      gameActive = false;
+      typingInputEl.disabled = true;
+      finalScoreEl.textContent = `Game Over! आपका अंतिम स्कोर: ${score}`;
+      finalScoreEl.style.display = 'block';
+      restartBtn.style.display = 'inline-block';
+      startBtn.style.display = 'none';
+      instructionEl.textContent = "Restart दबाकर फिर खेलें!";
+      questionAreaEl.textContent = '';
+      timeSelectEl.disabled = false;
+    }
+
+    // बटन events
+    restartBtn.onclick = startGame;
+    startBtn.onclick = startGame;
+
+    typingInputEl.addEventListener('keydown', function(e) {
+      if (e.key === "Enter" && gameActive) handleTypingInput();
+    });
+
+    timeSelectEl.addEventListener('change', function() {
+      if (!gameActive) {
+        timeEl.textContent = timeSelectEl.value;
+      }
+    });
+  </script>
+</body>
+</html>
