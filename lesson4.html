@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Home Row Muscle Memory Builder</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at center, #1a237e, #0d47a1);
+      color: #fff;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    header {
+      padding: 30px;
+      background: linear-gradient(to right, #3949ab, #1e88e5);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin: 0;
+      color: #fff;
+      text-shadow: 0 0 10px #90caf9;
+    }
+
+    .container {
+      margin: 40px auto;
+      max-width: 700px;
+      background: rgba(255,255,255,0.1);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 30px #64b5f6;
+      position: relative;
+    }
+
+    .typing-box {
+      position: relative;
+      padding: 20px;
+      background: #0d47a1;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #82b1ff;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { box-shadow: 0 0 20px #82b1ff; }
+      to { box-shadow: 0 0 40px #bbdefb; }
+    }
+
+    .target {
+      font-size: 24px;
+      font-family: monospace;
+      margin-bottom: 20px;
+      color: #fff;
+      letter-spacing: 2px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 14px;
+      font-size: 20px;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+      background: #e3f2fd;
+      color: #0d47a1;
+      box-shadow: 0 0 10px #64b5f6;
+    }
+
+    .progress {
+      height: 20px;
+      background: #cfd8dc;
+      border-radius: 10px;
+      margin-top: 20px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, #00e5ff, #00c853);
+      transition: width 0.3s ease;
+    }
+
+    #feedback {
+      margin-top: 15px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #ffeb3b;
+      text-shadow: 0 0 5px #fbc02d;
+    }
+
+    #emoji {
+      font-size: 2rem;
+      margin-top: 10px;
+    }
+
+    footer {
+      margin-top: 50px;
+      padding: 20px;
+      background-color: #1e88e5;
+      color: white;
+      font-size: 1rem;
+      text-align: center;
+      box-shadow: 0 0 10px #64b5f6;
+    }
+
+    .fire-trail {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: orange;
+      border-radius: 50%;
+      animation: trail 0.6s ease-out forwards;
+    }
+
+    @keyframes trail {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(3); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🔥 Home Row Muscle Memory Builder</h1>
+    <p>Train your fingers. Build your reflexes. Type like a legend.</p>
+  </header>
+
+  <div class="container">
+    <div class="typing-box">
+      <div class="target" id="targetText">asdf jkl;</div>
+      <input type="text" id="userInput" placeholder="Type the above text" />
+      <div id="feedback"></div>
+      <div id="emoji"></div>
+      <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    ✨ Crafted by <strong>Gopichand Ram</strong> — Typing meets style 💫
+  </footer>
+
+  <script>
+    const homeRowWords = [
+      "asdf jkl;",
+      "ask flask",
+      "sad lad",
+      "dash jalk",
+      "fall desk",
+      "all ask",
+      "jazz flask",
+      "salsa jack"
+    ];
+
+    let currentIndex = 0;
+    let targetText = homeRowWords[currentIndex];
+    let progress = 0;
+
+    const input = document.getElementById("userInput");
+    const targetDiv = document.getElementById("targetText");
+    const feedback = document.getElementById("feedback");
+    const emoji = document.getElementById("emoji");
+    const progressBar = document.getElementById("progressBar");
+
+    function updateTyping() {
+      const userText = input.value;
+
+      if (userText === targetText) {
+        progress += 100 / homeRowWords.length;
+        progressBar.style.width = `${progress}%`;
+        feedback.textContent = successLine();
+        emoji.textContent = "🚀🔥🎯";
+
+        setTimeout(() => {
+          currentIndex = (currentIndex + 1) % homeRowWords.length;
+          targetText = homeRowWords[currentIndex];
+          targetDiv.textContent = targetText;
+          input.value = "";
+          feedback.textContent = "";
+          emoji.textContent = "";
+        }, 1000);
+      } else {
+        feedback.textContent = failLine();
+        emoji.textContent = "😅🙈";
+      }
+    }
+
+    function successLine() {
+      const lines = [
+        "💪 Reflex locked in!",
+        "🎯 Home row mastered!",
+        "🔥 Fingers on fire!",
+        "🚀 Typing turbo mode!"
+      ];
+      return lines[Math.floor(Math.random() * lines.length)];
+    }
+
+    function failLine() {
+      const lines = [
+        "😬 Oops! Try again.",
+        "🙈 That wasn’t it!",
+        "🧠 Muscle memory needs fuel!",
+        "😅 Almost there!"
+      ];
+      return lines[Math.floor(Math.random() * lines.length)];
+    }
+
+    input.addEventListener("input", updateTyping);
+
+    input.addEventListener("keydown", (e) => {
+      const trail = document.createElement("div");
+      trail.className = "fire-trail";
+      trail.style.left = `${Math.random() * window.innerWidth}px`;
+      trail.style.top = `${Math.random() * window.innerHeight}px`;
+      document.body.appendChild(trail);
+      setTimeout(() => trail.remove(), 600);
+    });
+  </script>
+
+</body>
+</html>
