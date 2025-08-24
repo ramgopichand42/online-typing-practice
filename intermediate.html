@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intermediate | typer.app</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General page container and titles */
+        .page-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        /* New: Animation for all content */
+        .page-title, .page-subtitle, .lesson-card, .back-btn {
+            opacity: 0;
+            animation: slide-in 0.8s forwards;
+        }
+
+        /* Animation keyframes for slide-in effect */
+        @keyframes slide-in {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Animation delays for staggered effect */
+        .page-title {
+            animation-delay: 0.2s;
+        }
+        .page-subtitle {
+            animation-delay: 0.4s;
+        }
+        .lessons-grid .lesson-card:nth-child(1) { animation-delay: 0.6s; }
+        .lessons-grid .lesson-card:nth-child(2) { animation-delay: 0.8s; }
+        .lessons-grid .lesson-card:nth-child(3) { animation-delay: 1.0s; }
+        .lessons-grid .lesson-card:nth-child(4) { animation-delay: 1.2s; }
+        .lessons-grid .lesson-card:nth-child(5) { animation-delay: 1.4s; }
+        .lessons-grid .lesson-card:nth-child(6) { animation-delay: 1.6s; }
+        .back-btn {
+            animation-delay: 1.8s;
+        }
+
+        .page-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.5em;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .page-subtitle {
+            font-size: 1.2em;
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-bottom: 40px;
+        }
+
+        /* Grid for lesson cards */
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            justify-content: center;
+        }
+
+        /* Styling for each lesson card */
+        .lesson-card {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: 1px solid var(--card-border-color);
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+        }
+        
+        /* Dark mode specific shadow */
+        .dark-mode .lesson-card {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        /* Hover animation effects for the cards */
+        .lesson-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: var(--glow-shadow);
+            animation: pulse-glow 2s infinite; /* Added a pulsing glow effect */
+        }
+        
+        /* Inner glow effect on hover */
+        .lesson-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            transform: rotate(45deg);
+        }
+
+        .lesson-card:hover::after {
+            opacity: 1;
+            animation: sparkle-sweep 1.5s linear infinite; /* A sweeping sparkle animation */
+        }
+
+        /* Keyframes for the new animations */
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(0, 123, 255, 0.8); }
+            100% { box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); }
+        }
+
+        @keyframes sparkle-sweep {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Icon and text styles */
+        .lesson-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            color: var(--color-primary);
+        }
+
+        .lesson-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .lesson-description {
+            font-size: 0.9em;
+            line-height: 1.6;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+        
+        /* Back button styling */
+        .back-btn {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 30px;
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .back-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Responsive styles for smaller screens */
+        @media (max-width: 600px) {
+            .page-title {
+                font-size: 2.5em;
+            }
+            .lessons-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <h1 class="page-title">Intermediate Typing Lessons</h1>
+        <p class="page-subtitle">Take your speed and accuracy to the next level.</p>
+        
+        <div class="lessons-grid">
+            
+            <div class="lesson-card">
+                <div class="lesson-icon">🏃</div>
+                <h2 class="lesson-title">Word Flow Practice</h2>
+                <p class="lesson-description">Practice typing entire words in a single rhythm instead of individual letters. This helps build muscle memory and increase your speed.</p>
+            </div>
+            
+            <div class="lesson-card">
+                <div class="lesson-icon">#️⃣</div>
+                <h2 class="lesson-title">Advanced Punctuation & Numbers</h2>
+                <p class="lesson-description">Master typing numbers and special symbols without looking at the keyboard. Focus on using the shift key efficiently.</p>
+            </div>
+            
+            <div class="lesson-card">
+                <div class="lesson-icon">📚</div>
+                <h2 class="lesson-title">Diverse Text Practice</h2>
+                <p class="lesson-description">Improve your typing versatility by practicing different types of text, such as stories, technical articles, and poems.</p>
+            </div>
+            
+            <div class="lesson-card">
+                <div class="lesson-icon">✅</div>
+                <h2 class="lesson-title">Error Correction Techniques</h2>
+                <p class="lesson-description">Learn to quickly and efficiently correct mistakes. Focus on maintaining accuracy while you build speed.</p>
+            </div>
+            
+            <div class="lesson-card">
+                <div class="lesson-icon">🚀</div>
+                <h2 class="lesson-title">Speed Drills</h2>
+                <p class="lesson-description">Challenge your speed with timed drills and aim to break your personal records. Stay motivated by seeing your progress.</p>
+            </div>
+            
+            <div class="lesson-card">
+                <div class="lesson-icon">✍️</div>
+                <h2 class="lesson-title">Custom Practice</h2>
+                <p class="lesson-description">Paste any text you want to practice and hone your skills on the content that matters most to you.</p>
+            </div>
+        </div>
+        
+        <a href="index.html" class="back-btn">Go Back to Home</a>
+    </div>
+
+    <script>
+        document.documentElement.className = localStorage.getItem('darkMode') === 'enabled' ? 'dark-mode' : '';
+    </script>
+</body>
+</html>
