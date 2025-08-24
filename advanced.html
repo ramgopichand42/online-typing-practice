@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Typing Practice</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #ffecd2, #fcb69f);
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(to right, #667eea, #764ba2);
+      color: #fff;
+      padding: 50px 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.95;
+    }
+
+    section {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .module {
+      background: #fff;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-top: 8px solid;
+    }
+
+    .module:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+
+    .module h2 {
+      margin-bottom: 15px;
+      font-size: 1.4rem;
+    }
+
+    .module ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .module li {
+      margin-bottom: 10px;
+      padding-left: 25px;
+      position: relative;
+    }
+
+    .module li::before {
+      content: "🌟";
+      position: absolute;
+      left: 0;
+      color: #ff6f61;
+      font-weight: bold;
+    }
+
+    /* Color accents for each module */
+    .module:nth-child(1) { border-color: #ff6f61; }
+    .module:nth-child(2) { border-color: #6dd5ed; }
+    .module:nth-child(3) { border-color: #f7971e; }
+    .module:nth-child(4) { border-color: #00c9a7; }
+    .module:nth-child(5) { border-color: #c471ed; }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      header p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Advanced Typing Practice</h1>
+    <p>The perfect blend of speed, accuracy, and mindful focus</p>
+  </header>
+
+  <section>
+    <div class="module">
+      <h2>Touch Typing Mastery</h2>
+      <ul>
+        <li>Type without looking at the keyboard</li>
+        <li>Use home row technique and finger positioning</li>
+        <li>Build strong muscle memory</li>
+      </ul>
+    </div>
+
+    <div class="module">
+      <h2>Speed & Accuracy</h2>
+      <ul>
+        <li>Time-bound tests to boost WPM</li>
+        <li>Real-time error feedback</li>
+        <li>Develop auto-correction habits</li>
+      </ul>
+    </div>
+
+    <div class="module">
+      <h2>Dynamic Content Typing</h2>
+      <ul>
+        <li>Practice code snippets and special characters</li>
+        <li>Support for multiple languages</li>
+      </ul>
+    </div>
+
+    <div class="module">
+      <h2>Gamified Progression</h2>
+      <ul>
+        <li>Earn badges, points, and level up</li>
+        <li>Track progress and compete with others</li>
+      </ul>
+    </div>
+
+    <div class="module">
+      <h2>Mindful Typing</h2>
+      <ul>
+        <li>Stay focused while typing</li>
+        <li>Manage distractions effectively</li>
+        <li>Maintain rhythm and flow</li>
+      </ul>
+    </div>
+  </section>
+
+</body>
+</html>
