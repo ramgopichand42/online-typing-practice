@@ -1,159 +1,141 @@
-// ------------------------------
-// Typing Tool Main Logic Script
-// ------------------------------
+document.getElementById('year').textContent = new Date().getFullYear();
 
-// Hard-coded paragraph for typing practice
-const paragraphText =
-  "Typing is a fundamental skill that helps you communicate efficiently with computers. Practice daily to improve your speed and accuracy, and learn to use all your fingers for the best results.";
+// --- DARK MODE TOGGLE FIX ---
+const darkModeBtn = document.getElementById('darkModeToggle');
+const darkModeIcon = document.getElementById('darkModeIcon');
+const body = document.documentElement;
 
-// Selectors for DOM elements
-const typingDisplay = document.getElementById("typingDisplay");
-const typingInput = document.getElementById("typingInput");
-const wpmDisplay = document.getElementById("liveWPM");
-const accuracyDisplay = document.getElementById("liveAccuracy");
-const resultBox = document.getElementById("resultBox");
-// Restart button (for test page)
-const restartBtn = document.getElementById("restartBtn");
-
-// State variables for typing logic
-let started = false;       // Has typing started?
-let startTime = null;      // Timestamp when typing starts
-let timerInterval = null;  // Interval for updating stats
-let currentIndex = 0;      // Current character index user is typing
-let correctCount = 0;      // Number of correct characters typed
-let errorCount = 0;        // Number of incorrect characters typed
-let totalTyped = 0;        // Total characters typed
-
-// Utility: Render the paragraph with highlights for correct/incorrect typing
-function renderParagraph(userInput) {
-  let html = "";
-  for (let i = 0; i < paragraphText.length; i++) {
-    let char = paragraphText[i];
-    if (i < userInput.length) {
-      if (userInput[i] === char) {
-        // Correct character: highlight green
-        html += `<span class="typed-correct">${char}</span>`;
-      } else {
-        // Incorrect character: highlight red
-        html += `<span class="typed-wrong">${char}</span>`;
-      }
+function setDarkMode(on) {
+    if (on) {
+        body.classList.add('dark-mode');
+        darkModeIcon.textContent = '☀️';
+        localStorage.setItem('darkMode', 'enabled');
     } else {
-      // Untyped character: default style
-      html += `<span>${char}</span>`;
+        body.classList.remove('dark-mode');
+        darkModeIcon.textContent = '🌙';
+        localStorage.setItem('darkMode', 'disabled');
     }
-  }
-  typingDisplay.innerHTML = html;
 }
 
-// Utility: Calculate WPM (words per minute)
-function calculateWPM(charsTyped, elapsedSeconds) {
-  // 1 word = 5 chars (standard)
-  if (elapsedSeconds === 0) return 0;
-  const words = charsTyped / 5;
-  const minutes = elapsedSeconds / 60;
-  return Math.round(words / minutes);
-}
-
-// Utility: Calculate accuracy percentage
-function calculateAccuracy(correct, total) {
-  if (total === 0) return 100;
-  return Math.round((correct / total) * 100);
-}
-
-// Timer: Start the timer and update WPM/accuracy every 0.2 seconds
-function startTimer() {
-  startTime = Date.now();
-  timerInterval = setInterval(() => {
-    const elapsed = (Date.now() - startTime) / 1000;
-    const wpm = calculateWPM(totalTyped, elapsed);
-    const accuracy = calculateAccuracy(correctCount, totalTyped);
-    wpmDisplay.textContent = wpm;
-    accuracyDisplay.textContent = accuracy + "%";
-  }, 200);
-}
-
-// Timer: Stop the timer and show final results
-function stopTimer() {
-  clearInterval(timerInterval);
-  const elapsed = (Date.now() - startTime) / 1000;
-  const wpm = calculateWPM(totalTyped, elapsed);
-  const accuracy = calculateAccuracy(correctCount, totalTyped);
-
-  // Show final results
-  resultBox.innerHTML =
-    `<div class="result-title">Typing Complete!</div>
-     <div class="result-score">WPM: <b>${wpm}</b></div>
-     <div class="result-accuracy">Accuracy: <b>${accuracy}%</b></div>`;
-  resultBox.style.display = "block";
-}
-
-// Event: User input handler
-typingInput.addEventListener("input", function (e) {
-  const userInput = typingInput.value;
-
-  // Start timer on first character
-  if (!started && userInput.length > 0) {
-    started = true;
-    startTimer();
-    resultBox.style.display = "none";
-  }
-
-  // Reset tracking
-  correctCount = 0;
-  errorCount = 0;
-  totalTyped = userInput.length;
-
-  // Calculate correct and error chars
-  for (let i = 0; i < userInput.length; i++) {
-    if (userInput[i] === paragraphText[i]) {
-      correctCount++;
+// Initial check
+if (localStorage.getItem('darkMode') === 'enabled') {
+    setDarkMode(true);
+} else {
+    // Check for system preference if no localStorage setting exists
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+         setDarkMode(true);
     } else {
-      errorCount++;
+        setDarkMode(false);
     }
-  }
+}
 
-  // Render paragraph highlighting
-  renderParagraph(userInput);
-
-  // Update WPM/accuracy in real-time
-  if (started) {
-    const elapsed = (Date.now() - startTime) / 1000;
-    wpmDisplay.textContent = calculateWPM(totalTyped, elapsed);
-    accuracyDisplay.textContent = calculateAccuracy(correctCount, totalTyped) + "%";
-  }
-
-  // If paragraph completed, stop timer and show results
-  if (userInput === paragraphText) {
-    stopTimer();
-    typingInput.disabled = true;
-  }
+darkModeBtn.addEventListener('click', function () {
+    setDarkMode(!body.classList.contains('dark-mode'));
 });
 
-// Utility: Reset the typing test (can be called by a "restart" button)
-function resetTypingTest() {
-  started = false;
-  startTime = null;
-  clearInterval(timerInterval);
-  typingInput.value = "";
-  typingInput.disabled = false;
-  correctCount = 0;
-  errorCount = 0;
-  totalTyped = 0;
-  wpmDisplay.textContent = "0";
-  accuracyDisplay.textContent = "100%";
-  resultBox.style.display = "none";
-  renderParagraph("");
-}
+// --- CARD AND BUTTON ANIMATIONS & REDIRECT ---
 
-// Restart button event
-if (restartBtn) {
-  restartBtn.addEventListener("click", resetTypingTest);
-}
+// Button Animation (using main-btn-card as the wrapper)
+document.querySelectorAll('.main-btn-card').forEach(card => {
+    // Add data-href to button's click behavior
+    const targetUrl = card.getAttribute('data-href');
 
-// Initial Setup: Display paragraph & reset stats
-window.addEventListener("DOMContentLoaded", () => {
-  renderParagraph("");
-  wpmDisplay.textContent = "0";
-  accuracyDisplay.textContent = "100%";
-  resultBox.style.display = "none";
+    card.addEventListener('click', function() {
+        // Animation: Add and remove 'pressed' class
+        card.classList.add('pressed');
+        setTimeout(() => {
+            card.classList.remove('pressed');
+            // Redirect after a short delay for animation visibility
+            if (targetUrl) {
+                window.location.href = targetUrl;
+            }
+        }, 200); 
+    });
+
+    // Hover/Touch effects for visual feedback
+    card.addEventListener('mousedown', () => card.classList.add('pressed'));
+    card.addEventListener('mouseup', () => setTimeout(() => card.classList.remove('pressed'), 100)); // Delay to allow the click effect to take over
+    card.addEventListener('mouseleave', () => card.classList.remove('pressed'));
+    card.addEventListener('touchstart', () => card.classList.add('pressed'));
+    card.addEventListener('touchend', () => setTimeout(() => card.classList.remove('pressed'), 100));
 });
+
+// Card Click: Clicking the achievement card also redirects to the test page
+document.getElementById('achievementCard').addEventListener('click', function() {
+    this.classList.add('pressed'); // Reuse the 'pressed' class for a generic click feel
+    setTimeout(() => {
+        this.classList.remove('pressed');
+        window.location.href = "test.html";
+    }, 200);
+});
+
+
+// --- NAVIGATION LINKS FIX ---
+document.getElementById('testPageLink').addEventListener('click', function(e) {
+    // Prevent default only if the link is not already the current page (e.g., in a multi-page setup)
+    if(window.location.pathname.endsWith("test.html") || window.location.pathname.endsWith("test")) {
+        e.preventDefault();
+        return;
+    }
+    window.location.href = "test.html";
+});
+
+document.getElementById('gamePageLink').addEventListener('click', function(e) {
+    if(window.location.pathname.endsWith("games.html") || window.location.pathname.endsWith("games")) {
+        e.preventDefault();
+        return;
+    }
+    window.location.href = "games.html";
+});
+
+// Setting active class on menu links
+document.querySelectorAll('.menu-link').forEach(link => {
+    const linkPath = link.getAttribute('href');
+    // Check if the current URL path matches the link's href
+    if (window.location.pathname.endsWith(linkPath) || (linkPath === 'index.html' && (window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname === ''))) {
+        link.classList.add('active');
+    } else {
+        link.classList.remove('active');
+    }
+});
+
+
+// --- SCROLL/SHARE BUTTON LOGIC ---
+const scrollDownBtn = document.getElementById('scrollDownBtn');
+const scrollUpBtn = document.getElementById('scrollUpBtn');
+const shareBtn = document.getElementById('shareBtn');
+const sharePopup = document.getElementById('sharePopup');
+
+document.getElementById('scrollDownBtn').addEventListener('click', function () {
+    const footer = document.querySelector('.main-footer');
+    footer.scrollIntoView({ behavior: 'smooth' });
+});
+document.getElementById('scrollUpBtn').addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Share button toggle
+shareBtn.addEventListener('click', function() {
+    sharePopup.classList.toggle('show');
+});
+
+// Hide/Show scroll buttons system
+function updateScrollButtons() {
+    const scrollY = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight;
+    const winHeight = window.innerHeight;
+
+    // Show/Hide Up button
+    scrollUpBtn.style.display = (scrollY > 10) ? "flex" : "none";
+
+    // Show/Hide Down button (only if not at the bottom)
+    const isAtBottom = (scrollY + winHeight >= docHeight - 10);
+    scrollDownBtn.style.display = isAtBottom ? "none" : "flex";
+    
+    // Always show share button
+    shareBtn.style.display = "flex";
+}
+
+window.addEventListener('scroll', updateScrollButtons);
+window.addEventListener('load', updateScrollButtons); // Initial check on load
+window.addEventListener('resize', updateScrollButtons);
