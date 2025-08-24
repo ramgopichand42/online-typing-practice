@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Alphabet Cutting Game</title>
+  <style>
+    body {
+      background: linear-gradient(135deg,#c5e1ef 0%, #fbc2eb 100%);
+      font-family: 'Segoe UI',Arial,sans-serif;
+    }
+    h1 {
+      text-align: center;
+      color: #0a6bcd;
+      margin-top: 32px;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 8px #fff;
+    }
+    #game-container {
+      max-width: 500px;
+      margin: 32px auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 6px 32px rgba(0,0,0,0.12);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .game-stats {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.2em;
+      margin-bottom: 18px;
+      color: #084d8a;
+      font-weight: bold;
+    }
+    #game-area {
+      position: relative;
+      height: 350px;
+      background: linear-gradient(180deg,#f1f8e9 0%, #fbc2eb 100%);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px #eee;
+    }
+    .alphabet {
+      position: absolute;
+      left: calc(var(--x) * 1%);
+      bottom: -60px;
+      font-size: 2.2em;
+      font-weight: bold;
+      padding: 10px 18px;
+      border-radius: 50%;
+      background: var(--color,#6dd5ed);
+      color: #fff;
+      box-shadow: 0 4px 14px 0 rgba(0,0,0,0.14);
+      border: 2px solid #fff;
+      opacity: 0.94;
+      animation: riseUp 3.5s linear forwards;
+      transition: filter 0.3s, transform 0.2s;
+      z-index: 2;
+      user-select: none;
+    }
+    @keyframes riseUp {
+      0% { bottom: -60px; opacity: 0.92;}
+      85% { opacity: 0.98;}
+      100% { bottom: 340px; opacity: 0.25;}
+    }
+    .alphabet.cut {
+      animation: cutAnim 0.34s cubic-bezier(.2,1.8,.7,1.7) forwards;
+      filter: drop-shadow(0 0 12px #fd5d47);
+      background: #fd5d47 !important;
+      transform: rotate(-28deg) scale(1.2);
+      opacity: 0.7;
+      z-index: 5;
+    }
+    @keyframes cutAnim {
+      0% { opacity: 1; transform: rotate(-15deg) scale(1); }
+      40% { opacity: 0.72; transform: rotate(-30deg) scale(1.18);}
+      80% { opacity: 0.5; transform: rotate(-50deg) scale(1.28);}
+      100% { opacity: 0; bottom: 400px; }
+    }
+    .alphabet.missed {
+      animation: missedAnim 0.34s cubic-bezier(.2,1.8,.7,1.7) forwards;
+      filter: brightness(0.5) blur(1px);
+      background: #7e8fa0 !important;
+      opacity: 0.7;
+      z-index:4;
+    }
+    @keyframes missedAnim {
+      0% { opacity: 1; }
+      100% { opacity: 0; bottom: 400px;}
+    }
+    #start-btn, #restart-btn {
+      padding: 9px 32px;
+      background: linear-gradient(90deg,#0a6bcd,#6dd5ed);
+      color: #fff;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 9px;
+      cursor: pointer;
+      margin: 18px 4px 10px 4px;
+      font-weight: bold;
+      box-shadow: 0 2px 8px #6dd5ed44;
+      transition: background 0.23s, transform 0.18s;
+    }
+    #start-btn:hover, #restart-btn:hover {
+      background: linear-gradient(90deg,#084d8a,#fd5d47);
+      transform: scale(1.09);
+    }
+    #final-score {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 1.22em;
+      color: #fd5d47;
+      font-weight: bold;
+      letter-spacing: 1px;
+      background: #fbc2eb44;
+      border-radius: 10px;
+      padding: 12px;
+      display: none;
+    }
+    #life-indicator {
+      color: #fd5d47;
+      font-weight: bold;
+      letter-spacing: 1px;
+      font-size: 1.2em;
+    }
+    #instruction {
+      text-align: center;
+      color: #7e8fa0;
+      font-size: 1.09em;
+      margin-bottom: 7px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Alphabet Cutting Game</h1>
+  <div id="game-container">
+    <div class="game-stats">
+      <span>स्कोर: <span id="score">0</span></span>
+      <span id="life-indicator">लाइफ: <span id="life">5</span></span>
+    </div>
+    <div id="instruction">नीचे से ऊपर आते अल्फाबेट्स को सही key दबाकर काटें!</div>
+    <div id="game-area"></div>
+    <button id="start-btn">Start</button>
+    <button id="restart-btn" style="display:none;">Restart</button>
+    <div id="final-score"></div>
+  </div>
+  <script>
+    // Game variables
+    const colors = [
+      "#6dd5ed","#fd5d47","#6e45e2","#ee0979","#50c9c3","#ffb347","#f7971e",
+      "#43cea2","#185a9d","#5f2c82","#00b4db","#f857a6","#e7e9bb"
+    ];
+    const alphabets = 'abcdefghijklmnopqrstuvwxyz'.split('');
+    let gameActive = false;
+    let score = 0;
+    let life = 5;
+    let intervalId = null;
+    let speed = 3300; // ms for letter rising (difficulty increases)
+    let activeLetters = [];
+    let letterId = 0;
+
+    const scoreEl = document.getElementById('score');
+    const lifeEl = document.getElementById('life');
+    const lifeIndicatorEl = document.getElementById('life-indicator');
+    const gameArea = document.getElementById('game-area');
+    const startBtn = document.getElementById('start-btn');
+    const restartBtn = document.getElementById('restart-btn');
+    const finalScoreEl = document.getElementById('final-score');
+    const instructionEl = document.getElementById('instruction');
+
+    // Helper to randomize positions/colors
+    function getRandomX() {
+      // 10% to 85% horizontal
+      return Math.floor(Math.random() * 75) + 10;
+    }
+    function getRandomColor() {
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    // Adds a new letter to the game area
+    function addLetter() {
+      const letter = alphabets[Math.floor(Math.random() * alphabets.length)];
+      const x = getRandomX();
+      const color = getRandomColor();
+      const id = "letter-" + (++letterId);
+
+      // Create letter element
+      const el = document.createElement('div');
+      el.textContent = letter;
+      el.className = 'alphabet';
+      el.setAttribute('data-letter', letter);
+      el.setAttribute('data-id', id);
+      el.style.setProperty('--x', x);
+      el.style.setProperty('--color', color);
+
+      // Remove when animation ends (if not already cut/missed)
+      el.addEventListener('animationend', function(e) {
+        if (gameActive && !el.classList.contains('cut')) {
+          el.classList.add('missed');
+          // Remove after cut animation
+          setTimeout(()=>gameArea.removeChild(el), 320);
+          // Life down
+          life--;
+          updateLife();
+          checkGameOver();
+        } else {
+          // Remove cut elements
+          setTimeout(()=>gameArea.removeChild(el), 320);
+        }
+        // Remove from activeLetters
+        activeLetters = activeLetters.filter(obj=>obj.id !== id);
+      });
+
+      gameArea.appendChild(el);
+      activeLetters.push({id, letter, el});
+    }
+
+    // Update score/life UI
+    function updateScore() {
+      scoreEl.textContent = score;
+    }
+    function updateLife() {
+      lifeEl.textContent = life;
+      if (life <= 2) {
+        lifeIndicatorEl.style.color = '#fd5d47';
+      } else {
+        lifeIndicatorEl.style.color = '#084d8a';
+      }
+    }
+
+    // Keyboard event: cut the letter!
+    function handleKey(e) {
+      if (!gameActive) return;
+      const key = e.key.toLowerCase();
+      // Find letter at bottom-most
+      let found = null;
+      for (let obj of activeLetters) {
+        if (obj.letter === key && !obj.el.classList.contains('cut')) {
+          found = obj;
+          break;
+        }
+      }
+      if (found) {
+        found.el.classList.add('cut');
+        score++;
+        updateScore();
+        // Remove after cut animation
+        setTimeout(()=> {
+          if (found.el.parentNode) gameArea.removeChild(found.el);
+        }, 320);
+        // Remove from activeLetters
+        activeLetters = activeLetters.filter(obj=>obj.id !== found.id);
+      } else {
+        // Galat key par life down
+        life--;
+        updateLife();
+        checkGameOver();
+      }
+    }
+
+    // Start game
+    function startGame() {
+      gameActive = true;
+      score = 0;
+      life = 5;
+      speed = 3300;
+      activeLetters = [];
+      letterId = 0;
+      updateScore();
+      updateLife();
+      gameArea.innerHTML = '';
+      finalScoreEl.style.display = 'none';
+      startBtn.style.display = 'none';
+      restartBtn.style.display = 'none';
+      instructionEl.style.color = "#7e8fa0";
+      instructionEl.textContent = "नीचे से ऊपर आते अल्फाबेट्स को सही key दबाकर काटें!";
+      document.body.focus();
+
+      // Start creating letters
+      intervalId = setInterval(() => {
+        if (!gameActive) return;
+        addLetter();
+        // Difficulty increases (speed up)
+        if (score > 15 && speed > 2100) {
+          speed -= 75;
+          clearInterval(intervalId);
+          intervalId = setInterval(addLetter, speed);
+        }
+      }, speed);
+
+      window.addEventListener('keydown', handleKey);
+    }
+
+    // End game
+    function endGame() {
+      gameActive = false;
+      clearInterval(intervalId);
+      finalScoreEl.textContent = `Game Over! आपका अंतिम स्कोर: ${score}`;
+      finalScoreEl.style.display = 'block';
+      restartBtn.style.display = 'inline-block';
+      startBtn.style.display = 'none';
+      instructionEl.textContent = "Restart दबाकर फिर खेलें!";
+      // Remove all letters
+      activeLetters.forEach(obj => {
+        if (obj.el.parentNode) obj.el.parentNode.removeChild(obj.el);
+      });
+      activeLetters = [];
+      window.removeEventListener('keydown', handleKey);
+    }
+
+    // Game over check
+    function checkGameOver() {
+      if (life <= 0) {
+        endGame();
+      }
+    }
+
+    // Restart
+    restartBtn.addEventListener('click', () => {
+      startGame();
+    });
+
+    startBtn.addEventListener('click', () => {
+      startGame();
+    });
+
+    // Mobile tap (optional)
+    gameArea.addEventListener('touchstart', function(e) {
+      if (!gameActive) return;
+      let touch = e.touches[0];
+      let el = document.elementFromPoint(touch.clientX, touch.clientY);
+      if (el && el.classList.contains('alphabet')) {
+        let letter = el.getAttribute('data-letter');
+        handleKey({key:letter});
+      }
+    });
+  </script>
+</body>
+</html>

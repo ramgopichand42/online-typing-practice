@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Games</title>
+  <style>
+    body {
+      background: linear-gradient(120deg,#fbc2eb 0%, #a6c1ee 100%);
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    h1 {
+      text-align: center;
+      color: #0a6bcd;
+      margin-top: 32px;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 8px #fff;
+    }
+    .games-container {
+      max-width: 900px;
+      margin: 40px auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      justify-content: center;
+    }
+    .game-card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+      padding: 28px 22px 22px 22px;
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: box-shadow 0.18s;
+    }
+    .game-card:hover {
+      box-shadow: 0 6px 28px #fbc2eb55;
+    }
+    .game-card-title {
+      font-size: 1.28em;
+      font-weight: bold;
+      color: #6e45e2;
+      margin-bottom: 14px;
+      letter-spacing: 1px;
+      text-align: center;
+      text-shadow: 0 1px 6px #e7e9bb44;
+    }
+    .game-card-desc {
+      font-size: 1.02em;
+      color: #7e8fa0;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+    .game-card-btn {
+      padding: 10px 36px;
+      font-size: 1.07em;
+      font-weight: bold;
+      border-radius: 9px;
+      border: none;
+      background: linear-gradient(90deg,#0a6bcd,#6dd5ed);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #6dd5ed44;
+      transition: background 0.22s, transform 0.18s;
+    }
+    .game-card-btn:hover {
+      background: linear-gradient(90deg,#fd5d47,#43cea2);
+      transform: scale(1.08);
+    }
+  </style>
+</head>
+<body>
+  <h1>Games Page</h1>
+  <div class="games-container">
+    <!-- CARD FOR ALPHABET CUTTING GAME -->
+    <div class="game-card">
+      <div class="game-card-title">Alphabet Cutting Game</div>
+      <div class="game-card-desc">
+        Animated गेम जिसमें नीचे से ऊपर आते अल्फाबेट्स को सही key दबाकर काटो!
+      </div>
+      <a href="es-games.html">
+        <button class="game-card-btn">Play Now</button>
+      </a>
+    </div>
+    <!-- CARD FOR SPACE INVADERS TYPING GAME -->
+    <div class="game-card">
+      <div class="game-card-title">Space Invaders Typing</div>
+      <div class="game-card-desc">
+        शब्दों की लहरें ऊपर से नीचे आती हैं, उन्हें सही टाइप करके शूट करें!
+      </div>
+      <a href="space-invaders-typing.html">
+        <button class="game-card-btn">Play Now</button>
+      </a>
+    </div>
+    <!-- CARD FOR TEMPLE RUN TYPING GAME -->
+    <div class="game-card">
+      <div class="game-card-title">Temple Run Typing Game</div>
+      <div class="game-card-desc">
+        दौड़ते किरदार को बाधाओं से बचाने के लिए शब्द टाइप करें, गलत टाइपिंग पर गेम ओवर!
+      </div>
+      <a href="temple-run-typing.html">
+        <button class="game-card-btn">Play Now</button>
+      </a>
+    </div>
+    <!-- CARD FOR PONG TYPING GAME -->
+    <div class="game-card">
+      <div class="game-card-title">Pong Typing Game</div>
+      <div class="game-card-desc">
+        पोंग जैसा गेम जिसमें शब्दों को सही key टाइप करके bounce करो, Paddle छोटा होने से बचाओ!
+      </div>
+      <a href="pong-typing.html">
+        <button class="game-card-btn">Play Now</button>
+      </a>
+    </div>
+    <!-- Aur games ki cards yahan add kar sakte hain -->
+  </div>
+</body>
+</html>
