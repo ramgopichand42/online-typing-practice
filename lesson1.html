@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Typing Ka Tadka - Home Row Blast</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to right, #ffeaa7, #fab1a0);
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      transition: background-color 0.5s ease;
+    }
+
+    header {
+      background: #2d3436;
+      color: white;
+      padding: 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      color: #d63031;
+      margin-bottom: 10px;
+    }
+
+    .description {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .highlighted-text {
+      font-size: 24px;
+      font-family: monospace;
+      margin-bottom: 20px;
+      white-space: pre-wrap;
+      background: #fff;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .correct {
+      color: #00ffcc;
+      font-weight: bold;
+      text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc;
+    }
+
+    .incorrect {
+      color: #ff4d4d;
+      font-weight: bold;
+      text-shadow: 0 0 5px #ff4d4d, 0 0 10px #ff4d4d;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 20px;
+      border: 2px solid #6c5ce7;
+      border-radius: 8px;
+      outline: none;
+      animation: pulse 0.3s ease;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0px #6c5ce7; }
+      50% { box-shadow: 0 0 10px #6c5ce7; }
+      100% { box-shadow: 0 0 0px #6c5ce7; }
+    }
+
+    .flash {
+      animation: flashBg 0.5s ease;
+    }
+
+    @keyframes flashBg {
+      0% { background-color: #ffeaa7; }
+      50% { background-color: #fff176; }
+      100% { background-color: #ffeaa7; }
+    }
+
+    #feedback {
+      margin-top: 15px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    #emoji {
+      font-size: 2rem;
+      margin-top: 10px;
+    }
+
+    #score {
+      font-size: 1rem;
+      margin-top: 10px;
+      color: #6c5ce7;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🔥 Typing Ka Tadka 🔥</h1>
+    <p>Type fast, glow bright, and unlock the next challenge!</p>
+  </header>
+
+  <div class="container">
+    <div class="section-title">🧠 What is the Home Row?</div>
+    <div class="description">
+      The <strong>Home Row</strong> is the central row of keys: <strong>A S D F</strong> (left hand) and <strong>J K L ;</strong> (right hand).  
+      It's your typing base — master it to type faster and smarter! 💪
+    </div>
+
+    <div class="highlighted-text" id="targetText">asdf jkl;</div>
+    <input type="text" id="userInput" placeholder="Type the above text here" />
+    <div id="feedback"></div>
+    <div id="emoji"></div>
+    <div id="score">🏆 Score: 0</div>
+  </div>
+
+  <script>
+    const homeRowTexts = [
+      "asdf jkl;",
+      "a s d f j k l ;",
+      "fj fj fj da da da",
+      "lk lk lk ; ; ; jk jk",
+      "asdf fjkl ;lkj fdsa",
+      "jkl; asdf ;lkj fjda"
+    ];
+
+    let currentIndex = 0;
+    let score = 0;
+    let targetText = homeRowTexts[currentIndex];
+
+    const input = document.getElementById("userInput");
+    const targetDiv = document.getElementById("targetText");
+    const feedback = document.getElementById("feedback");
+    const emoji = document.getElementById("emoji");
+    const scoreBox = document.getElementById("score");
+
+    function updateHighlight() {
+      const userText = input.value;
+      let result = "";
+      let allCorrect = true;
+
+      for (let i = 0; i < targetText.length; i++) {
+        const targetChar = targetText[i];
+        const userChar = userText[i];
+
+        if (userChar == null) {
+          result += `<span>${targetChar}</span>`;
+          allCorrect = false;
+        } else if (userChar === targetChar) {
+          result += `<span class="correct">${targetChar}</span>`;
+        } else {
+          result += `<span class="incorrect">${targetChar}</span>`;
+          allCorrect = false;
+        }
+      }
+
+      targetDiv.innerHTML = result;
+
+      if (userText === targetText) {
+        score += 10;
+        feedback.textContent = funnySuccess();
+        emoji.textContent = "🌩️🎉💥";
+        scoreBox.textContent = `🏆 Score: ${score}`;
+        document.body.classList.add("flash");
+        setTimeout(() => document.body.classList.remove("flash"), 500);
+        setTimeout(() => {
+          currentIndex = (currentIndex + 1) % homeRowTexts.length;
+          targetText = homeRowTexts[currentIndex];
+          targetDiv.textContent = targetText;
+          input.value = "";
+          feedback.textContent = "";
+          emoji.textContent = "";
+        }, 1000);
+      } else {
+        feedback.textContent = funnyFail();
+        emoji.textContent = "🤦‍♂️💥🙈";
+      }
+    }
+
+    function funnySuccess() {
+      const lines = [
+        "🎯 Perfect! Keyboard ka Khatarnak Khiladi!",
+        "🚀 Speed toh cheetah wali hai!",
+        "💪 Typing ka Sultan ban gaya tu!",
+        "🎉 Full Tadka! Agla level unlocked!"
+      ];
+      return lines[Math.floor(Math.random() * lines.length)];
+    }
+
+    function funnyFail() {
+      const lines = [
+        "😵 Arrey bhai! Keyboard ka insult mat karo!",
+        "🙈 Yeh kya ho gaya? Fingers ko GPS chahiye!",
+        "🤷‍♂️ Lagta hai keyboard ne resign kar diya!",
+        "😬 Type karne se pehle chai pee le bhai!"
+      ];
+      return lines[Math.floor(Math.random() * lines.length)];
+    }
+
+    input.addEventListener("input", updateHighlight);
+  </script>
+
+</body>
+</html>
