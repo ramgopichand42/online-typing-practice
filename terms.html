@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service | typer.app</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .terms-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid var(--card-border-color);
+        }
+        .terms-container h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: var(--color-primary);
+        }
+        .terms-container h2 {
+            font-size: 1.8em;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            color: var(--color-dark);
+        }
+        .dark-mode .terms-container h2 {
+            color: var(--text-color-dark);
+        }
+        .terms-container p, .terms-container ul {
+            font-size: 1em;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+        .terms-container li {
+            margin-bottom: 8px;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .back-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <div class="terms-container">
+        <h1>Terms of Service</h1>
+        <p><em>Effective Date: August 24, 2025</em></p>
+        
+        <p>By accessing or using the typer.app website and its services, you agree to be bound by these Terms of Service. If you do not agree with any part of these terms, you are prohibited from using this site.</p>
+
+        <h2>1. Use of Service</h2>
+        <p>The service is provided for your personal, non-commercial use. You may not use this service for any illegal or unauthorized purpose. All content on this site is the property of **typer.app** or its content creators and is protected by intellectual property laws.</p>
+
+        <h2>2. User Conduct</h2>
+        <p>You agree not to:</p>
+        <ul>
+            <li>Use the service to harass, abuse, or harm another person.</li>
+            <li>Attempt to gain unauthorized access to our systems.</li>
+            <li>Introduce viruses or other malicious code.</li>
+            <li>Interfere with the normal operation of the service.</li>
+        </ul>
+        <h2>3. Disclaimer of Warranties</h2>
+        <p>The service is provided "as is," without any warranties, express or implied. We do not guarantee that the service will be uninterrupted, error-free, or secure. Your use of the service is at your sole risk.</p>
+
+        <h2>4. Limitation of Liability</h2>
+        <p>In no event shall **typer.app** or its affiliates be liable for any direct, indirect, incidental, or consequential damages arising out of your use or inability to use the service.</p>
+
+        <h2>5. Changes to Terms</h2>
+        <p>We reserve the right to modify these Terms of Service at any time. Your continued use of the service after any changes constitutes your acceptance of the new terms.</p>
+
+        <h2>6. Governing Law</h2>
+        <p>These terms shall be governed by and construed in accordance with the laws of **[India/jharkhand]**.</p>
+
+        <a href="index.html" class="back-btn">Go Back to Home</a>
+    </div>
+
+    <script>
+        document.documentElement.className = localStorage.getItem('darkMode') === 'enabled' ? 'dark-mode' : '';
+    </script>
+</body>
+</html>
