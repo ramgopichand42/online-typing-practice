@@ -131,38 +131,37 @@
         
         <div class="lessons-grid">
             
-            <div class="lesson-card">
-                data-href="games.html"
+            <div class="lesson-card" data-href="lesson1.html">
                 <div class="lesson-icon">🏠</div>
                 <h2 class="lesson-title">Introduction to Home Row</h2>
                 <p class="lesson-description">Learn to place your fingers correctly on the home row keys (A-S-D-F and J-K-L-;) and practice proper posture. This is the foundation of touch typing.</p>
             </div>
             
-            <div class="lesson-card">
+            <div class="lesson-card" data-href="lesson2.html">
                 <div class="lesson-icon">⬆️</div>
                 <h2 class="lesson-title">Top Row Practice</h2>
                 <p class="lesson-description">Gradually learn to use the top row keys (Q-W-E-R-T and Y-U-I-O-P) by practicing simple patterns.</p>
             </div>
             
-            <div class="lesson-card">
+            <div class="lesson-card" data-href="lesson3.html">
                 <div class="lesson-icon">⬇️</div>
                 <h2 class="lesson-title">Bottom Row Practice</h2>
                 <p class="lesson-description">Practice using the bottom row keys (Z-X-C-V-B and N-M-<->) while maintaining a comfortable hand position.</p>
             </div>
             
-            <div class="lesson-card">
+            <div class="lesson-card" data-href="lesson4.html">
                 <div class="lesson-icon">📝</div>
                 <h2 class="lesson-title">Typing Your First Words</h2>
                 <p class="lesson-description">Learn to type short and common words using the home row and surrounding keys to build muscle memory.</p>
             </div>
             
-            <div class="lesson-card">
+            <div class="lesson-card" data-href="lesson5.html">
                 <div class="lesson-icon">,.-</div>
                 <h2 class="lesson-title">Punctuation Marks</h2>
                 <p class="lesson-description">Practice essential punctuation marks like {`,`} and {`.`} to complete your sentences and improve overall typing flow.</p>
             </div>
             
-            <div class="lesson-card">
+            <div class="lesson-card" data-href="lesson6.html">
                 <div class="lesson-icon">⏱️</div>
                 <h2 class="lesson-title">Speed and Accuracy</h2>
                 <p class="lesson-description">Focus on improving both your speed and accuracy with dedicated exercises designed to challenge your skills.</p>
@@ -173,8 +172,17 @@
     </div>
 
     <script>
-        // Set up dark mode based on localStorage
         document.documentElement.className = localStorage.getItem('darkMode') === 'enabled' ? 'dark-mode' : '';
+
+        // Add click event listeners to all cards
+        document.querySelectorAll('.lesson-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const targetPage = this.getAttribute('data-href');
+                if (targetPage) {
+                    window.location.href = targetPage;
+                }
+            });
+        });
     </script>
 </body>
 </html>
