@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | typer.app</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Bebas+Neue:wght@400&display=swap" rel="stylesheet">
+    <style>
+        .about-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid var(--card-border-color);
+            text-align: center;
+        }
+        .about-container h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3em;
+            margin-bottom: 10px;
+            color: var(--color-primary);
+        }
+        .about-container h2 {
+            font-size: 1.5em;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+        .about-container p {
+            font-size: 1em;
+            line-height: 1.7;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            opacity: 0.9;
+            text-align: left;
+        }
+        .about-container ul {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .about-container li {
+            margin-bottom: 8px;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .back-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="about-container">
+        <h1>About Us</h1>
+        <p style="text-align: center;">The story behind our typing tool</p>
+
+        <p>Typer.app began with a simple idea: to make learning and practicing typing a fun and effective experience. As a student myself, I realized how crucial it is to improve typing speed and accuracy, but traditional methods can often be boring. That's why I decided to create a platform where the learning process could be exciting and engaging.</p>
+        
+        <p>This website is my effort to help fellow students and anyone looking to improve their typing skills. I built it on my own, but its purpose is to empower a larger community.</p>
+
+        <h2>Our Mission</h2>
+        <p>Our mission is to make typing easier, faster, and more enjoyable for everyone. We aim to provide a tool that not only boosts your WPM (Words Per Minute) but also turns the habit of typing into a positive experience.</p>
+
+        <h2>Our Future Plans</h2>
+        <p>This is just the beginning. We are continuously improving Typer.app and plan to add more features, including:</p>
+        <ul>
+            <li>New and exciting typing games.</li>
+            <li>More advanced practice materials and tutorials.</li>
+            <li>A community forum where users can connect and share their progress.</li>
+        </ul>
+        
+        <p>Thank you for joining us on this journey. With every keystroke, you're getting closer to mastery!</p>
+
+        <a href="index.html" class="back-btn">Go Back to Home</a>
+    </div>
+
+    <script>
+        document.documentElement.className = localStorage.getItem('darkMode') === 'enabled' ? 'dark-mode' : '';
+    </script>
+</body>
+</html>
