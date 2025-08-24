@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beginner | typer.app</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .page-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .page-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.5em;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .page-subtitle {
+            font-size: 1.2em;
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-bottom: 40px;
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            justify-content: center;
+        }
+
+        .lesson-card {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: 1px solid var(--card-border-color);
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .dark-mode .lesson-card {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        .lesson-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 123, 255, 0.1) 0%, transparent 50%, rgba(0, 123, 255, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: var(--glow-shadow);
+        }
+        
+        .lesson-card:hover::after {
+            opacity: 1;
+        }
+
+        .lesson-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            color: var(--color-primary);
+        }
+
+        .lesson-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .lesson-description {
+            font-size: 0.9em;
+            line-height: 1.6;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 30px;
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .back-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Responsive styles */
+        @media (max-width: 600px) {
+            .page-title {
+                font-size: 2.5em;
+            }
+            .lessons-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <h1 class="page-title">Beginner Typing Lessons</h1>
+        <p class="page-subtitle">यहाँ से अपनी टाइपिंग यात्रा शुरू करें और बुनियादी बातों में महारत हासिल करें।</p>
+        
+        <div class="lessons-grid">
+            
+            <div class="lesson-card">
+                <div class="lesson-icon">🏠</div>
+                <h2 class="lesson-title">होम रो का परिचय</h2>
+                <p class="lesson-description">अपनी उंगलियों को सही जगह पर रखें (A-S-D-F और J-K-L-;) और सही पोस्चर सीखें। यह टाइपिंग की नींव है।</p>
+            </div>
+            
+            <div class="lesson-card">
+                <div class="lesson-icon">⬆️</div>
+                <h2 class="lesson-title">ऊपरी रो का अभ्यास</h2>
+                <p class="lesson-description">धीरे-धीरे ऊपरी रो की कीज़ (Q-W-E-R-T और Y-U-I-O-P) का उपयोग करना सीखें।</p>
+            </div>
+            
+            <div class="lesson-card">
+                <div class="lesson-icon">⬇️</div>
+                <h2 class="lesson-title">निचली रो का अभ्यास</h2>
+                <p class="lesson-description">अब निचली रो की कीज़ (Z-X-C-V-B और N-M-<->) का अभ्यास करें।</p>
+            </div>
+            
+            <div class="lesson-card">
+                <div class="lesson-icon">📝</div>
+                <h2 class="lesson-title">पहले शब्द</h2>
+                <p class="lesson-description">होम रो और आस-पास की कीज़ का उपयोग करके छोटे और सामान्य शब्द टाइप करना सीखें।</p>
+            </div>
+            
+            <div class="lesson-card">
+                <div class="lesson-icon">,.-</div>
+                <h2 class="lesson-title">विराम चिह्न</h2>
+                <p class="lesson-description">वाक्य को पूरा करने के लिए ज़रूरी विराम चिह्न जैसे कि {`,`} और {`.`} का अभ्यास करें।</p>
+            </div>
+            
+            <div class="lesson-card">
+                <div class="lesson-icon">⏱️</div>
+                <h2 class="lesson-title">गति और सटीकता</h2>
+                <p class="lesson-description">बिना देखे (touch typing) अभ्यास के साथ अपनी गति और सटीकता को बेहतर बनाने पर ध्यान दें।</p>
+            </div>
+        </div>
+        
+        <a href="index.html" class="back-btn">होम पेज पर वापस जाएं</a>
+    </div>
+
+    <script>
+        // Set up dark mode based on localStorage
+        document.documentElement.className = localStorage.getItem('darkMode') === 'enabled' ? 'dark-mode' : '';
+    </script>
+</body>
+</html>
