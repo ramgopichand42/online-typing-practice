@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bottom Row Typing Practice</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom, #e3f2fd, #bbdefb);
+      margin: 0;
+      padding: 0;
+      color: #0d47a1;
+      text-align: center;
+    }
+
+    header {
+      background-color: #1976d2;
+      color: white;
+      padding: 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #90caf9;
+      border: 2px solid #64b5f6;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      color: #1565c0;
+      margin-bottom: 10px;
+    }
+
+    .description {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .highlighted-text {
+      font-size: 24px;
+      font-family: monospace;
+      margin-bottom: 20px;
+      white-space: pre-wrap;
+      background: #e3f2fd;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: inset 0 0 10px #64b5f6;
+      color: #0d47a1;
+    }
+
+    .correct {
+      color: #2e7d32;
+      font-weight: bold;
+    }
+
+    .incorrect {
+      color: #c62828;
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 20px;
+      border: 2px solid #42a5f5;
+      border-radius: 8px;
+      outline: none;
+      background: #ffffff;
+      color: #0d47a1;
+      box-shadow: 0 0 10px #90caf9;
+    }
+
+    #feedback {
+      margin-top: 15px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #1976d2;
+    }
+
+    #emoji {
+      font-size: 2rem;
+      margin-top: 10px;
+    }
+
+    #score {
+      font-size: 1rem;
+      margin-top: 10px;
+      color: #0d47a1;
+    }
+
+    footer {
+      margin-top: 50px;
+      padding: 20px;
+      background-color: #1976d2;
+      color: white;
+      font-size: 1rem;
+      text-align: center;
+      box-shadow: 0 0 10px #64b5f6;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>⌨️ Bottom Row Typing Practice</h1>
+    <p>Master Z X C V B N M with style and speed!</p>
+  </header>
+
+  <div class="container">
+    <div class="section-title">🔍 What is the Bottom Row?</div>
+    <div class="description">
+      The <strong>Bottom Row</strong> includes the keys: <strong>Z X C V B N M</strong>.  
+      These are typed using your pinky, ring, and middle fingers.  
+      Practice this row to build control and precision — and unlock your typing powers! 💪
+    </div>
+
+    <div class="highlighted-text" id="targetText">zxcvbnm</div>
+    <input type="text" id="userInput" placeholder="Type the above text here" />
+    <div id="feedback"></div>
+    <div id="emoji"></div>
+    <div id="score">🏆 Score: 0</div>
+  </div>
+
+  <footer>
+    ✨ Designed by <strong>Gopichand Ram</strong> — Making Typing Legendary ⚡
+  </footer>
+
+  <script>
+    const bottomRowTexts = [
+      "zxcvbnm",
+      "z x c v b n m",
+      "zz xx cc vv bb nn mm",
+      "zoom next move",
+      "crazy ninja mode"
+    ];
+
+    let currentIndex = 0;
+    let score = 0;
+    let targetText = bottomRowTexts[currentIndex];
+
+    const input = document.getElementById("userInput");
+    const targetDiv = document.getElementById("targetText");
+    const feedback = document.getElementById("feedback");
+    const emoji = document.getElementById("emoji");
+    const scoreBox = document.getElementById("score");
+
+    function updateHighlight() {
+      const userText = input.value;
+      let result = "";
+      let allCorrect = true;
+
+      for (let i = 0; i < targetText.length; i++) {
+        const targetChar = targetText[i];
+        const userChar = userText[i];
+
+        if (userChar == null) {
+          result += `<span>${targetChar}</span>`;
+          allCorrect = false;
+        } else if (userChar === targetChar) {
+          result += `<span class="correct">${targetChar}</span>`;
+        } else {
+          result += `<span class="incorrect">${targetChar}</span>`;
+          allCorrect = false;
+        }
+      }
+
+      targetDiv.innerHTML = result;
+
+      if (userText === targetText) {
+        score += 10;
+        feedback.textContent = funnySuccess();
+        emoji.textContent = "💥🎯🎉";
+        scoreBox.textContent = `🏆 Score: ${score}`;
+        setTimeout(() => {
+          currentIndex = (currentIndex + 1) % bottomRowTexts.length;
+          targetText = bottomRowTexts[currentIndex];
+          targetDiv.textContent = targetText;
+          input.value = "";
+          feedback.textContent = "";
+          emoji.textContent = "";
+        }, 1000);
+      } else {
+        feedback.textContent = funnyFail();
+        emoji.textContent = "🤖🙈💤";
+      }
+    }
+
+    function funnySuccess() {
+      const lines = [
+        "🎯 Boom! Bottom row conquered!",
+        "🕹️ Fingers flying like rockets!",
+        "💥 You just vaporized that line!",
+        "⚡ Typing level: Sky Master!"
+      ];
+      return lines[Math.floor(Math.random() * lines.length)];
+    }
+
+    function funnyFail() {
+      const lines = [
+        "😵 Arrey bhai! Z ke jagah X kyun dabaya?",
+        "🙈 Lagta hai fingers disco kar rahe hain!",
+        "🤷‍♂️ Bottom row ka boss banne ke liye thoda aur try karo!",
+        "😬 Type karne se pehle chai pee le bhai!"
+      ];
+      return lines[Math.floor(Math.random() * lines.length)];
+    }
+
+    input.addEventListener("input", updateHighlight);
+  </script>
+
+</body>
+</html>
