@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Advanced Typing Practice</title>
   <style>
-    /* Reset and base styles */
     * {
       margin: 0;
       padding: 0;
@@ -17,6 +16,8 @@
       background: linear-gradient(to right, #ffecd2, #fcb69f);
       color: #333;
       line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
     }
 
     header {
@@ -24,12 +25,13 @@
       color: #fff;
       padding: 50px 20px;
       text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     }
 
     header h1 {
       font-size: 2.8rem;
       margin-bottom: 10px;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
     }
 
     header p {
@@ -48,16 +50,33 @@
 
     .module {
       background: #fff;
-      border-radius: 16px;
+      border-radius: 20px;
       padding: 25px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
       border-top: 8px solid;
+      position: relative;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      cursor: pointer;
     }
 
     .module:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+      transform: scale(1.03);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+      animation: pulse 1.2s infinite;
+    }
+
+    .module::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 20px;
+      background: radial-gradient(circle, rgba(0,0,0,0.2), transparent);
+      border-radius: 50%;
+      filter: blur(6px);
+      z-index: -1;
     }
 
     .module h2 {
@@ -84,12 +103,52 @@
       font-weight: bold;
     }
 
-    /* Color accents for each module */
     .module:nth-child(1) { border-color: #ff6f61; }
     .module:nth-child(2) { border-color: #6dd5ed; }
     .module:nth-child(3) { border-color: #f7971e; }
     .module:nth-child(4) { border-color: #00c9a7; }
     .module:nth-child(5) { border-color: #c471ed; }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+
+    /* Cursor trail effect */
+    .trail {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: #ff6f61;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      animation: trailAnim 0.6s ease-out forwards;
+      box-shadow: 0 0 10px #ff6f61, 0 0 20px #ff6f61;
+    }
+
+    @keyframes trailAnim {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(3); }
+    }
+
+    /* Ripple effect on click */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 111, 97, 0.4);
+      transform: scale(0);
+      animation: rippleAnim 0.6s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes rippleAnim {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
 
     @media (max-width: 600px) {
       header h1 {
@@ -109,7 +168,7 @@
   </header>
 
   <section>
-    <div class="module">
+    <div class="module" onclick="createRipple(event)">
       <h2>Touch Typing Mastery</h2>
       <ul>
         <li>Type without looking at the keyboard</li>
@@ -118,7 +177,7 @@
       </ul>
     </div>
 
-    <div class="module">
+    <div class="module" onclick="createRipple(event)">
       <h2>Speed & Accuracy</h2>
       <ul>
         <li>Time-bound tests to boost WPM</li>
@@ -127,7 +186,7 @@
       </ul>
     </div>
 
-    <div class="module">
+    <div class="module" onclick="createRipple(event)">
       <h2>Dynamic Content Typing</h2>
       <ul>
         <li>Practice code snippets and special characters</li>
@@ -135,7 +194,7 @@
       </ul>
     </div>
 
-    <div class="module">
+    <div class="module" onclick="createRipple(event)">
       <h2>Gamified Progression</h2>
       <ul>
         <li>Earn badges, points, and level up</li>
@@ -143,7 +202,7 @@
       </ul>
     </div>
 
-    <div class="module">
+    <div class="module" onclick="createRipple(event)">
       <h2>Mindful Typing</h2>
       <ul>
         <li>Stay focused while typing</li>
@@ -152,6 +211,31 @@
       </ul>
     </div>
   </section>
+
+  <script>
+    // Cursor trail
+    document.addEventListener("mousemove", function(e) {
+      const trail = document.createElement("div");
+      trail.className = "trail";
+      trail.style.left = e.pageX + "px";
+      trail.style.top = e.pageY + "px";
+      document.body.appendChild(trail);
+      setTimeout(() => trail.remove(), 600);
+    });
+
+    // Ripple effect
+    function createRipple(e) {
+      const module = e.currentTarget;
+      const ripple = document.createElement("div");
+      ripple.className = "ripple";
+      const rect = module.getBoundingClientRect();
+      ripple.style.left = (e.clientX - rect.left) + "px";
+      ripple.style.top = (e.clientY - rect.top) + "px";
+      ripple.style.width = ripple.style.height = "100px";
+      module.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    }
+  </script>
 
 </body>
 </html>
