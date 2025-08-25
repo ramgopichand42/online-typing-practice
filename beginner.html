@@ -1,188 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beginner | typer.app</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        .page-container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 20px;
-            text-align: center;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Beginner | typer.app</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto+Slab&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #00f0ff;
+      --text-color: #333;
+      --card-bg: #fff;
+      --card-border-color: #ccc;
+      --glow-shadow: 0 0 20px #00f0ff;
+    }
 
-        .page-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 3.5em;
-            color: var(--color-primary);
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-        }
+    body {
+      margin: 0;
+      font-family: 'Roboto Slab', serif;
+      background-color: #f0f8ff;
+      overflow-x: hidden;
+    }
 
-        .page-subtitle {
-            font-size: 1.2em;
-            color: var(--text-color);
-            opacity: 0.8;
-            margin-bottom: 40px;
-        }
+    .page-container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+      text-align: center;
+    }
 
-        .lessons-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            justify-content: center;
-        }
+    .page-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5em;
+      color: var(--color-primary);
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    }
 
-        .lesson-card {
-            background-color: var(--card-bg);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-            border: 1px solid var(--card-border-color);
-            position: relative;
-            overflow: hidden;
-            text-align: left;
-        }
+    .page-subtitle {
+      font-size: 1.2em;
+      color: var(--text-color);
+      opacity: 0.8;
+      margin-bottom: 40px;
+    }
 
-        .dark-mode .lesson-card {
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-        }
+    .lessons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      justify-content: center;
+    }
 
-        .lesson-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(0, 123, 255, 0.1) 0%, transparent 50%, rgba(0, 123, 255, 0.1) 100%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
+    .lesson-card {
+      background-color: var(--card-bg);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      border: 1px solid var(--card-border-color);
+      position: relative;
+      overflow: hidden;
+      text-align: left;
+    }
 
-        .lesson-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: var(--glow-shadow);
-        }
-        
-        .lesson-card:hover::after {
-            opacity: 1;
-        }
+    .lesson-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: var(--glow-shadow);
+    }
 
-        .lesson-icon {
-            font-size: 2.5em;
-            margin-bottom: 15px;
-            color: var(--color-primary);
-        }
+    .lesson-card:active {
+      animation: pulseGlow 1s infinite;
+    }
 
-        .lesson-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.8em;
-            margin-bottom: 10px;
-            color: var(--text-color);
-        }
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 10px var(--color-primary); transform: scale(1.01); }
+      50% { box-shadow: 0 0 20px var(--color-primary); transform: scale(1.03); }
+      100% { box-shadow: 0 0 10px var(--color-primary); transform: scale(1.01); }
+    }
 
-        .lesson-description {
-            font-size: 0.9em;
-            line-height: 1.6;
-            color: var(--text-color);
-            opacity: 0.7;
-        }
+    .lesson-icon {
+      font-size: 2.5em;
+      margin-bottom: 15px;
+      color: var(--color-primary);
+    }
 
-        .back-btn {
-            display: inline-block;
-            margin-top: 40px;
-            padding: 12px 30px;
-            background-color: var(--color-primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.1em;
-            text-decoration: none;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        .back-btn:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
+    .lesson-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8em;
+      margin-bottom: 10px;
+      color: var(--text-color);
+    }
 
-        /* Responsive styles */
-        @media (max-width: 600px) {
-            .page-title {
-                font-size: 2.5em;
-            }
-            .lessons-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    .lesson-description {
+      font-size: 0.9em;
+      line-height: 1.6;
+      color: var(--text-color);
+      opacity: 0.7;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 40px;
+      padding: 12px 30px;
+      background-color: var(--color-primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1em;
+      text-decoration: none;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .back-btn:hover {
+      background-color: #0056b3;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 600px) {
+      .page-title { font-size: 2.5em; }
+      .lessons-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Cursor trail */
+    .trail-dot {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: var(--color-primary);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      animation: fadeOut 0.8s forwards;
+    }
+
+    @keyframes fadeOut {
+      to { opacity: 0; transform: scale(2); }
+    }
+  </style>
 </head>
 <body>
-    <div class="page-container">
-        <h1>Beginner Typing Lessons</h1>
-        <p class="page-subtitle">Start your typing journey here and master the fundamentals.</p>
-        
-        <div class="lessons-grid">
-            
-            <div class="lesson-card" data-href="lesson1.html">
-                <div class="lesson-icon">🏠</div>
-                <h2 class="lesson-title">Introduction to Home Row</h2>
-                <p class="lesson-description">Learn to place your fingers correctly on the home row keys (A-S-D-F and J-K-L-;) and practice proper posture. This is the foundation of touch typing.</p>
-            </div>
-            
-            <div class="lesson-card" data-href="lesson2.html">
-                <div class="lesson-icon">⬆️</div>
-                <h2 class="lesson-title">Top Row Practice</h2>
-                <p class="lesson-description">Gradually learn to use the top row keys (Q-W-E-R-T and Y-U-I-O-P) by practicing simple patterns.</p>
-            </div>
-            
-            <div class="lesson-card" data-href="lesson3.html">
-                <div class="lesson-icon">⬇️</div>
-                <h2 class="lesson-title">Bottom Row Practice</h2>
-                <p class="lesson-description">Practice using the bottom row keys (Z-X-C-V-B and N-M-<->) while maintaining a comfortable hand position.</p>
-            </div>
-            
-            <div class="lesson-card" data-href="lesson4.html">
-                <div class="lesson-icon">📝</div>
-                <h2 class="lesson-title">Typing Your First Words</h2>
-                <p class="lesson-description">Learn to type short and common words using the home row and surrounding keys to build muscle memory.</p>
-            </div>
-            
-            <div class="lesson-card" data-href="lesson5.html">
-                <div class="lesson-icon">,.-</div>
-                <h2 class="lesson-title">Punctuation Marks</h2>
-                <p class="lesson-description">Practice essential punctuation marks like {`,`} and {`.`} to complete your sentences and improve overall typing flow.</p>
-            </div>
-            
-            <div class="lesson-card" data-href="lesson6.html">
-                <div class="lesson-icon">⏱️</div>
-                <h2 class="lesson-title">Speed and Accuracy</h2>
-                <p class="lesson-description">Focus on improving both your speed and accuracy with dedicated exercises designed to challenge your skills.</p>
-            </div>
-        </div>
-        
-        <a href="index.html" class="back-btn">Go Back to Home</a>
+  <div class="page-container">
+    <h1 class="page-title">Beginner Typing Lessons</h1>
+    <p class="page-subtitle">Start your typing journey here and master the fundamentals.</p>
+
+    <div class="lessons-grid">
+      <div class="lesson-card" data-href="lesson1.html">
+        <div class="lesson-icon">🏠</div>
+        <h2 class="lesson-title">Introduction to Home Row</h2>
+        <p class="lesson-description">Learn to place your fingers correctly on the home row keys (A-S-D-F and J-K-L-;) and practice proper posture.</p>
+      </div>
+
+      <div class="lesson-card" data-href="lesson2.html">
+        <div class="lesson-icon">⬆️</div>
+        <h2 class="lesson-title">Top Row Practice</h2>
+        <p class="lesson-description">Gradually learn to use the top row keys (Q-W-E-R-T and Y-U-I-O-P) by practicing simple patterns.</p>
+      </div>
+
+      <div class="lesson-card" data-href="lesson3.html">
+        <div class="lesson-icon">⬇️</div>
+        <h2 class="lesson-title">Bottom Row Practice</h2>
+        <p class="lesson-description">Practice using the bottom row keys (Z-X-C-V-B and N-M-<->) while maintaining a comfortable hand position.</p>
+      </div>
+
+      <div class="lesson-card" data-href="lesson4.html">
+        <div class="lesson-icon">📝</div>
+        <h2 class="lesson-title">Typing Your First Words</h2>
+        <p class="lesson-description">Learn to type short and common words using the home row and surrounding keys to build muscle memory.</p>
+      </div>
+
+      <div class="lesson-card" data-href="lesson5.html">
+        <div class="lesson-icon">,.-</div>
+        <h2 class="lesson-title">Punctuation Marks</h2>
+        <p class="lesson-description">Practice essential punctuation marks like {`,`} and {`.`} to complete your sentences and improve overall typing flow.</p>
+      </div>
+
+      <div class="lesson-card" data-href="lesson6.html">
+        <div class="lesson-icon">⏱️</div>
+        <h2 class="lesson-title">Speed and Accuracy</h2>
+        <p class="lesson-description">Focus on improving both your speed and accuracy with dedicated exercises designed to challenge your skills.</p>
+      </div>
     </div>
 
-    <script>
-        document.documentElement.className = localStorage.getItem('darkMode') === 'enabled' ? 'dark-mode' : '';
+    <a href="index.html" class="back-btn">Go Back to Home</a>
+  </div>
 
-        // Add click event listeners to all cards
-        document.querySelectorAll('.lesson-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const targetPage = this.getAttribute('data-href');
-                if (targetPage) {
-                    window.location.href = targetPage;
-                }
-            });
-        });
-    </script>
+  <script>
+    // Dark mode toggle
+    document.documentElement.className = localStorage.getItem('darkMode') === 'enabled' ? 'dark-mode' : '';
+
+    // Card click navigation
+    document.querySelectorAll('.lesson-card').forEach(card => {
+      card.addEventListener('click', function() {
+        const targetPage = this.getAttribute('data-href');
+        if (targetPage) window.location.href = targetPage;
+      });
+    });
+
+    // Cursor trail effect
+    document.addEventListener('mousemove', e => {
+      const dot = document.createElement('div');
+      dot.className = 'trail-dot';
+      dot.style.left = `${e.pageX}px`;
+      dot.style.top = `${e.pageY}px`;
+      document.body.appendChild(dot);
+      setTimeout(() => dot.remove(), 800);
+    });
+  </script>
 </body>
 </html>
