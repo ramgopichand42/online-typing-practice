@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Punctuation Practice</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+      color: #fff;
+      text-align: center;
+    }
+
+    header {
+      padding: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      background: linear-gradient(to right, #ff6a00, #ee0979);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .container {
+      margin-top: 40px;
+    }
+
+    .punct-box {
+      font-size: 36px;
+      padding: 20px 40px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 16px;
+      display: inline-block;
+      box-shadow: 0 0 20px #ff6a00;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .punct-box:hover {
+      transform: scale(1.05);
+    }
+
+    input {
+      font-size: 20px;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      width: 60%;
+      max-width: 400px;
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      outline: none;
+      box-shadow: 0 0 10px #ee0979;
+    }
+
+    input::placeholder {
+      color: #ccc;
+    }
+
+    .reaction {
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #ffeb3b;
+      text-shadow: 0 0 6px #ffeb3b;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: linear-gradient(to right, #ff6a00, #ee0979);
+      color: #000;
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .progress-container {
+      width: 60%;
+      background: #444;
+      border-radius: 12px;
+      margin: 20px auto;
+      height: 22px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, #ff6a00, #ee0979);
+      transition: width 0.3s ease;
+    }
+
+    .stats {
+      margin-top: 20px;
+      font-size: 20px;
+    }
+
+    .report {
+      margin-top: 30px;
+      padding: 20px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 0 15px #ee0979;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>Punctuation Marks Practice</header>
+
+  <div class="container">
+    <div class="punct-box" id="punctBox">,.;:</div><br>
+    <input type="text" id="userInput" placeholder="Type punctuation..." autofocus>
+    <div class="reaction" id="reaction"></div>
+    <button onclick="nextPunct()">Next</button>
+
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="stats">
+      <span id="wpm">WPM: 0</span> | 
+      <span id="accuracy">Accuracy: 0%</span>
+    </div>
+
+    <div class="report">
+      <h3>📊 Session Report</h3>
+      <p id="completed">Completed: 0</p>
+      <p id="avgWpm">Avg WPM: 0</p>
+      <p id="avgAccuracy">Avg Accuracy: 0%</p>
+    </div>
+
+    <br>
+    <a href="beginner.html"><button>⬅ Back to Beginner</button></a>
+  </div>
+
+  <script>
+    const puncts = [",.;:", "!?", "'\"", "-()", "[]{}", ":;!", ".,", ";'", "?-", "[.]", "{:}", "(!)", "\"-\"", ":'", "!?"];
+    let current = "";
+    let typed = 0, correct = 0;
+    let start = null;
+    let completed = 0, totalWpm = 0, totalAcc = 0;
+
+    const box = document.getElementById("punctBox");
+    const input = document.getElementById("userInput");
+    const reaction = document.getElementById("reaction");
+
+    function nextPunct() {
+      current = puncts[Math.floor(Math.random() * puncts.length)];
+      renderText();
+      input.value = "";
+      document.getElementById("progressBar").style.width = "0%";
+      reaction.innerText = "";
+      start = null;
+    }
+
+    function renderText() {
+      let html = "";
+      for (let i = 0; i < current.length; i++) {
+        html += `<span id="char-${i}" style="padding:2px 4px;">${current[i]}</span>`;
+      }
+      box.innerHTML = html;
+    }
+
+    input.addEventListener("input", function () {
+      if (!start) start = Date.now();
+      let val = this.value;
+      typed = val.length;
+      correct = 0;
+
+      for (let i = 0; i < current.length; i++) {
+        const span = document.getElementById(`char-${i}`);
+        if (val[i] == null) {
+          span.style.color = "#fff";
+          span.style.textShadow = "none";
+        } else if (val[i] === current[i]) {
+          span.style.color = "#00ff90";
+          span.style.textShadow = "0 0 8px #00ff90";
+          correct++;
+        } else {
+          span.style.color = "#ff1744";
+          span.style.textShadow = "0 0 8px #ff1744";
+        }
+      }
+
+      let acc = Math.round((correct / typed) * 100) || 0;
+      let time = (Date.now() - start) / 60000;
+      let wpm = Math.round((typed / 5) / time) || 0;
+
+      document.getElementById("progressBar").style.width = `${(typed / current.length) * 100}%`;
+      document.getElementById("wpm").innerText = "WPM: " + wpm;
+      document.getElementById("accuracy").innerText = "Accuracy: " + acc + "%";
+
+      if (val === current) {
+        completed++;
+        totalWpm += wpm;
+        totalAcc += acc;
+        document.getElementById("completed").innerText = "Completed: " + completed;
+        document.getElementById("avgWpm").innerText = "Avg WPM: " + Math.round(totalWpm / completed);
+        document.getElementById("avgAccuracy").innerText = "Avg Accuracy: " + Math.round(totalAcc / completed) + "%";
+
+        const reactions = ["Boom! Nailed it 💥", "Punctual with punctuation 😎", "You're on fire 🔥", "Smooth operator 😏"];
+        reaction.innerText = reactions[Math.floor(Math.random() * reactions.length)];
+
+        setTimeout(() => {
+          nextPunct();
+        }, 1000);
+      } else if (typed >= current.length) {
+        reaction.innerText = "Oopsie daisy! 😬 Try again...";
+      }
+    });
+
+    nextPunct();
+  </script>
+</body>
+</html>
