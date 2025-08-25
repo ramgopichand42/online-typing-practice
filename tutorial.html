@@ -5,25 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Typing Tutorial</title>
   <style>
+    /* Base styles */
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #d9afd9, #97d9e1);
+      background: radial-gradient(circle at top left, #1e1e2f, #2c3e50);
       margin: 0;
       padding: 0;
-      color: #333;
+      color: #eee;
+      overflow-x: hidden;
+      animation: fadeIn 1s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     header {
-      background: #34495e;
+      background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
       color: white;
       padding: 40px 20px;
       text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
     }
 
     header h1 {
-      font-size: 2.5rem;
+      font-size: 2.8rem;
       margin-bottom: 10px;
+      letter-spacing: 1px;
     }
 
     header p {
@@ -37,42 +46,109 @@
       padding: 0 20px;
     }
 
+    a.tutorial-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
     .tutorial-block {
-      background: #fff;
-      border-radius: 12px;
+      position: relative;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid transparent;
+      border-image: linear-gradient(45deg, #00f0ff, #ff00c8) 1;
+      border-radius: 16px;
       padding: 25px;
       margin-bottom: 30px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
+      box-shadow: 0 0 20px rgba(0,255,255,0.1);
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .tutorial-block:hover {
       transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(0,255,255,0.3);
+      animation: pulseGlow 1.5s infinite;
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 20px rgba(0,255,255,0.2); }
+      50% { box-shadow: 0 0 30px rgba(255,0,255,0.4); }
+      100% { box-shadow: 0 0 20px rgba(0,255,255,0.2); }
+    }
+
+    .tutorial-block::before {
+      content: "";
+      position: absolute;
+      top: -10px; left: -10px;
+      right: -10px; bottom: -10px;
+      border-radius: 20px;
+      background: radial-gradient(circle, rgba(0,255,255,0.2), transparent);
+      z-index: -1;
+      transition: opacity 0.3s ease;
+      opacity: 0;
+    }
+
+    .tutorial-block:hover::before {
+      opacity: 1;
     }
 
     .tutorial-block h2 {
-      color: #2c3e50;
+      color: #00f0ff;
       margin-bottom: 15px;
+      font-size: 1.6rem;
     }
 
     .tutorial-block p {
       margin-bottom: 10px;
+      font-size: 1rem;
     }
 
     .highlight {
-      background: #f1f8ff;
+      background: rgba(0, 255, 255, 0.1);
       padding: 10px;
-      border-left: 4px solid #3498db;
+      border-left: 4px solid #ff00c8;
       margin-top: 10px;
       border-radius: 6px;
+      color: #fff;
     }
 
     footer {
       text-align: center;
       padding: 20px;
-      background: #ecf0f1;
+      background: #111;
       font-size: 0.9rem;
-      color: #555;
+      color: #aaa;
+    }
+
+    /* Animated background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(120deg, #0f0c29, #302b63, #24243e);
+      background-size: 600% 600%;
+      animation: bgShift 20s ease infinite;
+      z-index: -2;
+    }
+
+    @keyframes bgShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Floating particles */
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url('https://www.transparenttextures.com/patterns/stardust.png');
+      opacity: 0.2;
+      z-index: -1;
+      pointer-events: none;
     }
   </style>
 </head>
@@ -85,44 +161,58 @@
 
   <section>
 
-    <div class="tutorial-block">
-      <h2>1. Introduction to Touch Typing</h2>
-      <p>Touch typing is the ability to type without looking at the keyboard. It improves speed, accuracy, and reduces strain.</p>
-      <div class="highlight">Tip: Start slow, focus on accuracy first.</div>
-    </div>
+    <a href="lesson1.html" class="tutorial-link">
+      <div class="tutorial-block">
+        <h2>1. Introduction to Touch Typing</h2>
+        <p>Touch typing is the ability to type without looking at the keyboard. It improves speed, accuracy, and reduces strain.</p>
+        <div class="highlight">Tip: Start slow, focus on accuracy first.</div>
+      </div>
+    </a>
 
-    <div class="tutorial-block">
-      <h2>2. Finger Placement Guide</h2>
-      <p>Place your fingers on the home row keys: A S D F for the left hand and J K L ; for the right hand. Thumbs rest on the spacebar.</p>
-      <div class="highlight">Visuals coming soon: Interactive finger map</div>
-    </div>
+    <a href="lesson2.html" class="tutorial-link">
+      <div class="tutorial-block">
+        <h2>2. Finger Placement Guide</h2>
+        <p>Place your fingers on the home row keys: A S D F for the left hand and J K L ; for the right hand. Thumbs rest on the spacebar.</p>
+        <div class="highlight">Visuals coming soon: Interactive finger map</div>
+      </div>
+    </a>
 
-    <div class="tutorial-block">
-      <h2>3. Home Row Practice</h2>
-      <p>Practice typing only the home row keys to build muscle memory. Repeat sequences like “asdf jkl;” and “fjda lk;d”.</p>
-    </div>
+    <a href="lesson3.html" class="tutorial-link">
+      <div class="tutorial-block">
+        <h2>3. Home Row Practice</h2>
+        <p>Practice typing only the home row keys to build muscle memory. Repeat sequences like “asdf jkl;” and “fjda lk;d”.</p>
+      </div>
+    </a>
 
-    <div class="tutorial-block">
-      <h2>4. Speed vs Accuracy</h2>
-      <p>Speed will come naturally with time. Focus on typing correctly first, then gradually increase pace.</p>
-      <div class="highlight">Use WPM trackers and error counters to monitor progress.</div>
-    </div>
+    <a href="lesson4.html" class="tutorial-link">
+      <div class="tutorial-block">
+        <h2>4. Speed vs Accuracy</h2>
+        <p>Speed will come naturally with time. Focus on typing correctly first, then gradually increase pace.</p>
+        <div class="highlight">Use WPM trackers and error counters to monitor progress.</div>
+      </div>
+    </a>
 
-    <div class="tutorial-block">
-      <h2>5. Common Mistakes</h2>
-      <p>Looking at the keyboard, inconsistent finger use, and rushing are common errors. Stay relaxed and consistent.</p>
-    </div>
+    <a href="lesson5.html" class="tutorial-link">
+      <div class="tutorial-block">
+        <h2>5. Common Mistakes</h2>
+        <p>Looking at the keyboard, inconsistent finger use, and rushing are common errors. Stay relaxed and consistent.</p>
+      </div>
+    </a>
 
-    <div class="tutorial-block">
-      <h2>6. Interactive Exercises</h2>
-      <p>Try our practice modules with real-time feedback, level progression, and gamified challenges.</p>
-      <div class="highlight">Link: <a href="index.html">Go to Practice Page</a></div>
-    </div>
+    <a href="lesson6.html" class="tutorial-link">
+      <div class="tutorial-block">
+        <h2>6. Interactive Exercises</h2>
+        <p>Try our practice modules with real-time feedback, level progression, and gamified challenges.</p>
+        <div class="highlight">Link: <a href="index.html">Go to Practice Page</a></div>
+      </div>
+    </a>
 
-    <div class="tutorial-block">
-      <h2>7. Track Your Progress</h2>
-      <p>Keep a log of your WPM, accuracy, and completed levels. Celebrate small wins to stay motivated!</p>
-    </div>
+    <a href="lesson7.html" class="tutorial-link">
+      <div class="tutorial-block">
+        <h2>7. Track Your Progress</h2>
+        <p>Keep a log of your WPM, accuracy, and completed levels. Celebrate small wins to stay motivated!</p>
+      </div>
+    </a>
 
   </section>
 
@@ -130,5 +220,15 @@
     &copy; 2025 Typer.app | Designed by Gopichndram
   </footer>
 
-</body>
-</html>
+  <script>
+    const trail = document.createElement('div');
+    trail.style.position = 'fixed';
+    trail.style.width = '12px';
+    trail.style.height = '12px';
+    trail.style.borderRadius = '50%';
+    trail.style.background = 'linear-gradient(45deg, #00f0ff, #ff00c8)';
+    trail.style.pointerEvents = 'none';
+    trail.style.zIndex = '9999';
+    document.body.appendChild(trail);
+
+    document.addEventListener('mousemove', e => {
