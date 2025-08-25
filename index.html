@@ -1,125 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>typer.app | Typing Tool</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <title>typer.app | Typing Tool</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-    <header class="main-header" id="mainHeader">
-        <div class="header-left">
-            <div class="tool-logo" aria-label="Tool Logo">
-                <img src="logo.png" alt="Logo" />
-            </div>
-        </div>
-        <div class="header-center">
-            <h1 class="header-title">typer.app</h1>
-            <nav class="menu-nav" id="menuNav">
-                <ul>
-                    <li><a href="index.html" class="menu-link active">Home</a></li>
-                    <li><a href="test.html" class="menu-link" id="testPageLink">Test</a></li>
-                    <li><a href="games.html" class="menu-link" id="gamePageLink">Games</a></li>
-                </ul>
-            </nav>
-        </div>
-        <div class="header-right">
-            <button class="dark-mode-toggle" id="darkModeToggle" title="Toggle dark mode"><span id="darkModeIcon">🌙</span></button>
-        </div>
-    </header>
-
-    <main class="main-body">
-        <section class="center-content">
-            <div class="website-title">typing tool by student</div>
-            <div class="website-description">
-                Practice your typing, improve your speed and accuracy, and track your progress in a fun way!
-            </div>
-            <div class="achievement-goal-card" id="achievementCard">
-                <div class="achievement-goal-row">
-                    <div class="achievement-goal-left">
-                        <h3>Last Achievement 🏆</h3>
-                        <div class="score">
-                            <span class="score-label">Score:</span>
-                            <span class="score-value">98</span>
-                        </div>
-                        <div class="wpm">
-                            <span class="wpm-label">WPM:</span>
-                            <span class="wpm-value">72</span>
-                        </div>
-                        <div class="accuracy">
-                            <span class="accuracy-label">Accuracy:</span>
-                            <span class="accuracy-value">94%</span>
-                        </div>
-                    </div>
-                    <div class="achievement-goal-divider"></div>
-                    <div class="achievement-goal-right">
-                        <h3>Daily Goal 🎯</h3>
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 65%"></div>
-                        </div>
-                        <span class="progress-text">65% Complete</span>
-                    </div>
-                </div>
-            </div>
-            <div class="button-row">
-                <div class="main-btn-card" data-href="beginner.html"><button class="main-btn">Beginner</button></div>
-                <div class="main-btn-card" data-href="intermediate.html"><button class="main-btn">Intermediat</button></div>
-                <div class="main-btn-card" data-href="advance.html"><button class="main-btn">Advance</button></div>
-                <div class="main-btn-card" data-href="tutorial.html"><button class="main-btn">Tutorial</button></div>
-                <div class="main-btn-card" data-href="games.html"><button class="main-btn">Games</button></div>
-            </div>
-            <div class="call-to-action">
-                Start your journey today! <span class="motivation">"Every keystroke brings you closer to mastery."</span>
-            </div>
-        </section>
-    </main>
-
-    <button class="scroll-down-btn" id="scrollDownBtn" title="Scroll Down">
-        <span class="arrow">&#8595;</span>
-    </button>
-    <button class="scroll-up-btn" id="scrollUpBtn" title="Scroll Up">
-        <span class="arrow">&#8593;</span>
-    </button>
-    <button class="share-btn" id="shareBtn" title="Share">
-        <span class="share-icon">&#128257;</span>
-    </button>
-    <div class="share-popup" id="sharePopup">
-        <div class="share-popup-inner">
-            <div class="share-title">Share on:</div>
-            <div class="share-socials">
-                <a href="#" class="social-icon" id="shareTwitter" title="Share on Twitter" target="_blank" rel="noopener">
-                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter">
-                </a>
-                <a href="#" class="social-icon" id="shareFacebook" title="Share on Facebook" target="_blank" rel="noopener">
-                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
-                </a>
-                <a href="#" class="social-icon" id="shareWhatsapp" title="Share on WhatsApp" target="_blank" rel="noopener">
-                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp">
-                </a>
-                <a href="#" class="social-icon" id="shareTelegram" title="Share on Telegram" target="_blank" rel="noopener">
-                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="Telegram">
-                </a>
-                <a href="#" class="social-icon" id="shareCopy" title="Copy link">
-                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/link.svg" alt="Copy Link">
-                </a>
-            </div>
-        </div>
+  <header class="main-header" id="mainHeader">
+    <div class="header-left">
+      <div class="tool-logo" aria-label="Tool Logo">
+        <img src="logo.png" alt="Logo" />
+      </div>
     </div>
-
-    <footer class="main-footer">
+    <div class="header-center">
+      <h1 class="header-title">typer.app</h1>
+      <nav class="menu-nav" id="menuNav">
         <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="Privacy-Policy.html">Privacy Policy</a></li>
-            <li><a href="terms.html">Terms of Service</a></li>
-            <li><a href="about.html">About Us</a></li>
-             <li><a href="Contact-Us.html">Contact Us</a></li>
+          <li><a href="index.html" class="menu-link active">Home</a></li>
+          <li><a href="test.html" class="menu-link" id="testPageLink">Test</a></li>
+          <li><a href="games.html" class="menu-link" id="gamePageLink">Games</a></li>
         </ul>
-        <div class="copyright">
-            © <span id="year"></span> Copyright
-        </div>
-    </footer>
+      </nav>
+    </div>
+    <div class="header-right">
+      <button class="dark-mode-toggle" id="darkModeToggle" title="Toggle dark mode"><span id="darkModeIcon">🌙</span></button>
+    </div>
+  </header>
 
-    <script src="script.js"></script>
+  <main class="main-body">
+    <section class="center-content">
+      <div class="website-title">typing tool by student</div>
+      <div class="website-description">
+        Practice your typing, improve your speed and accuracy, and track your progress in a fun way!
+      </div>
+      <div class="achievement-goal-card" id="achievementCard">
+        <div class="achievement-goal-row">
+          <div class="achievement-goal-left">
+            <h3>Last Achievement 🏆</h3>
+            <div class="score"><span class="score-label">Score:</span><span class="score-value">98</span></div>
+            <div class="wpm"><span class="wpm-label">WPM:</span><span class="wpm-value">72</span></div>
+            <div class="accuracy"><span class="accuracy-label">Accuracy:</span><span class="accuracy-value">94%</span></div>
+          </div>
+          <div class="achievement-goal-divider"></div>
+          <div class="achievement-goal-right">
+            <h3>Daily Goal 🎯</h3>
+            <div class="progress-bar"><div class="progress" style="width: 65%"></div></div>
+            <span class="progress-text">65% Complete</span>
+          </div>
+        </div>
+      </div>
+      <div class="button-row">
+        <div class="main-btn-card" data-href="beginner.html"><button class="main-btn">Beginner</button></div>
+        <div class="main-btn-card" data-href="intermediate.html"><button class="main-btn">Intermediat</button></div>
+        <div class="main-btn-card" data-href="advance.html"><button class="main-btn">Advance</button></div>
+        <div class="main-btn-card" data-href="tutorial.html"><button class="main-btn">Tutorial</button></div>
+        <div class="main-btn-card" data-href="games.html"><button class="main-btn">Games</button></div>
+      </div>
+      <div class="call-to-action">
+        Start your journey today! <span class="motivation">"Every keystroke brings you closer to mastery."</span>
+      </div>
+    </section>
+  </main>
+
+  <button class="scroll-down-btn" id="scrollDownBtn" title="Scroll Down"><span class="arrow">&#8595;</span></button>
+  <button class="scroll-up-btn" id="scrollUpBtn" title="Scroll Up"><span class="arrow">&#8593;</span></button>
+  <button class="share-btn" id="shareBtn" title="Share"><span class="share-icon">&#128257;</span></button>
+
+  <div class="share-popup" id="sharePopup">
+    <div class="share-popup-inner">
+      <div class="share-title">Share on:</div>
+      <div class="share-socials">
+        <a href="#" class="social-icon" id="shareTwitter" title="Share on Twitter" target="_blank" rel="noopener"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter" /></a>
+        <a href="#" class="social-icon" id="shareFacebook" title="Share on Facebook" target="_blank" rel="noopener"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" /></a>
+        <a href="#" class="social-icon" id="shareWhatsapp" title="Share on WhatsApp" target="_blank" rel="noopener"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp" /></a>
+        <a href="#" class="social-icon" id="shareTelegram" title="Share on Telegram" target="_blank" rel="noopener"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="Telegram" /></a>
+        <a href="#" class="social-icon" id="shareCopy" title="Copy link"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/link.svg" alt="Copy Link" /></a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="main-footer">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="Privacy-Policy.html">Privacy Policy</a></li>
+      <li><a href="terms.html">Terms of Service</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="Contact-Us.html">Contact Us</a></li>
+    </ul>
+    <div class="copyright">© <span id="year"></span> Copyright</div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
