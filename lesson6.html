@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Typing Practice</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    select, button {
+      padding: 10px 15px;
+      margin: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    select:hover, button:hover {
+      transform: scale(1.05);
+    }
+    #textDisplay {
+      font-size: 20px;
+      margin: 20px 0;
+      line-height: 1.6;
+      background: #f4f6f7;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: left;
+    }
+    #textDisplay span.correct { color: green; }
+    #textDisplay span.incorrect { color: red; }
+    #inputArea {
+      width: 100%;
+      height: 100px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: 2px solid #ccc;
+      padding: 10px;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      display: none;
+    }
+    .btn {
+      background: #2ecc71;
+      color: white;
+    }
+    .btn-danger { background: #e74c3c; color: white; }
+    .btn-next { background: #6a5acd; color: white; }
+    .btn-share { background: #f39c12; color: white; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Typing Practice</h1>
+
+    <label>⏳ Select Time: </label>
+    <select id="timeSelect">
+      <option value="30">30 sec</option>
+      <option value="60">60 sec</option>
+      <option value="120">120 sec</option>
+    </select>
+
+    <label>🌐 Select Language: </label>
+    <select id="langSelect">
+      <option value="english">English</option>
+      <option value="hindi">Hindi</option>
+    </select>
+
+    <button onclick="startGame()" class="btn">Start</button>
+
+    <div id="gameArea" style="display:none;">
+      <div id="textDisplay"></div>
+      <textarea id="inputArea" placeholder="Start typing here..." oninput="checkInput()"></textarea>
+      <div id="timer"></div>
+    </div>
+
+    <div id="result"></div>
+  </div>
+
+<script>
+  const texts = {
+    english: [
+      "Success is the result of hard work and persistence.",
+      "Typing fast requires daily practice and focus.",
+      "Discipline is the bridge between goals and achievements.",
+      "Keep improving your typing speed and accuracy.",
+      "Motivation gets you started, habit keeps you going."
+    ],
+    hindi: [
+      "सफलता मेहनत और धैर्य का परिणाम होती है।",
+      "तेज़ टाइपिंग के लिए रोज़ अभ्यास ज़रूरी है।",
+      "अनुशासन लक्ष्य और उपलब्धि के बीच का पुल है।",
+      "अपनी गति और शुद्धता को लगातार बेहतर करो।",
+      "प्रेरणा आपको शुरू कराती है, आदत आपको बनाए रखती है।"
+    ]
+  };
+
+  let currentText = "";
+  let currentLevel = 0;
+  let timer;
+  let timeLeft;
+  let totalWords;
+
+  function startGame() {
+    document.getElementById("result").style.display = "none";
+    document.getElementById("gameArea").style.display = "block";
+    document.getElementById("inputArea").value = "";
+
+    const lang = document.getElementById("langSelect").value;
+    const levelTexts = texts[lang];
+    currentText = levelTexts[currentLevel % levelTexts.length];
+    totalWords = currentText.split(" ").length;
+
+    document.getElementById("textDisplay").innerHTML = currentText.split("").map(ch => `<span>${ch}</span>`).join("");
+
+    timeLeft = parseInt(document.getElementById("timeSelect").value);
+    document.getElementById("timer").innerText = "Time Left: " + timeLeft + "s";
+    clearInterval(timer);
+    timer = setInterval(updateTimer, 1000);
+  }
+
+  function updateTimer() {
+    timeLeft--;
+    document.getElementById("timer").innerText = "Time Left: " + timeLeft + "s";
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      showResult();
+    }
+  }
+
+  function checkInput() {
+    const input = document.getElementById("inputArea").value;
+    const spans = document.querySelectorAll("#textDisplay span");
+
+    let correctChars = 0;
+    let errors = 0;
+
+    for (let i = 0; i < spans.length; i++) {
+      const char = input[i];
+      if (char == null) {
+        spans[i].classList.remove("correct", "incorrect");
+      } else if (char === spans[i].innerText) {
+        spans[i].classList.add("correct");
+        spans[i].classList.remove("incorrect");
+        correctChars++;
+      } else {
+        spans[i].classList.add("incorrect");
+        spans[i].classList.remove("correct");
+        errors++;
+      }
+    }
+
+    // अगर पूरा टाइप हो गया तो result दिखाओ
+    if (input.length === currentText.length) {
+      clearInterval(timer);
+      showResult();
+    }
+  }
+
+  function showResult() {
+    const input = document.getElementById("inputArea").value;
+    const timeTaken = parseInt(document.getElementById("timeSelect").value) - timeLeft;
+    const wordsTyped = input.trim().split(/\s+/).filter(w => w).length;
+    const wpm = Math.round((wordsTyped / timeTaken) * 60);
+    const accuracy = Math.round((input.length / currentText.length) * 100);
+
+    let resultHTML = `
+      <h2>Result</h2>
+      ⏳ Time Taken: ${timeTaken}s <br>
+      📚 Total Words: ${totalWords} <br>
+      ⚡ Speed: ${wpm} WPM <br>
+      🎯 Accuracy: ${accuracy}% <br>
+      ❌ Errors: ${(currentText.length - input.length) < 0 ? 0 : currentText.length - input.length} <br><br>
+      <button onclick="startGame()" class="btn">🔁 Restart</button>
+      <button onclick="nextLevel()" class="btn btn-next">⏭️ Next</button>
+      <button onclick="shareResult(${wpm},${accuracy},${totalWords})" class="btn btn-share">📤 Share</button>
+    `;
+    document.getElementById("result").innerHTML = resultHTML;
+    document.getElementById("result").style.display = "block";
+    document.getElementById("gameArea").style.display = "none";
+  }
+
+  function nextLevel() {
+    currentLevel++;
+    startGame();
+  }
+
+  function shareResult(wpm, accuracy, words) {
+    const text = `My Typing Result: ⚡ Speed: ${wpm} WPM 🎯 Accuracy: ${accuracy}% 📚 Words: ${words} \nTry it here: https://yourwebsite.com`;
+    const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+    window.open(url, "_blank");
+  }
+</script>
+</body>
+</html>
