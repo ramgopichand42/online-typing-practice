@@ -1,0 +1,328 @@
+<!--
+  Punctuation & Numbers Typing Practice
+  Author: RockYbhi
+  Date: 2025-08-26
+  How to customize:
+    - You can change practice characters in JS (chars array)
+    - Colors: edit :root CSS variables
+    - Add more symbols or instructions as needed
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Punctuation & Numbers Master - Typing Practice</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practice typing punctuation and numbers with animated feedback.">
+  <style>
+    :root {
+      --main-bg: #18181b;
+      --main-fg: #f7fafc;
+      --accent: #10f0b2;
+      --danger: #fa3666;
+      --shadow: 0 4px 24px rgba(16,240,178,0.09);
+      --radius: 1.4em;
+      --font: 'Segoe UI', 'Inter', Arial, sans-serif;
+      --font-mono: 'Fira Mono', 'Consolas', monospace;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--main-bg);
+      color: var(--main-fg);
+      font-family: var(--font);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      transition: background 0.3s;
+    }
+    header {
+      margin-top: 2.5em;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.2em;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25em;
+      color: var(--accent);
+      text-shadow: 0 2px 12px var(--accent);
+      animation: glow 2.2s infinite alternate cubic-bezier(.6,-0.28,.735,.045);
+    }
+    @keyframes glow {
+      0% { text-shadow: 0 2px 12px var(--accent); }
+      100% { text-shadow: 0 2px 32px #0bbf85; }
+    }
+    .tagline {
+      color: #fff;
+      font-size: 1.15em;
+      opacity: 0.7;
+      margin-bottom: 1em;
+    }
+    .practice-box {
+      background: #22232a;
+      padding: 2em 2em 1em;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      max-width: 430px;
+      width: 98vw;
+      margin: 1.5em auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .practice-char {
+      font-size: 3.3em;
+      font-family: var(--font-mono);
+      background: linear-gradient(90deg, var(--accent), #089d7e 70%);
+      color: #18181b;
+      border-radius: 0.5em;
+      padding: 0.2em 0.7em;
+      margin-bottom: 0.7em;
+      box-shadow: 0 2px 18px var(--accent);
+      user-select: none;
+      animation: bounceIn 0.4s;
+    }
+    @keyframes bounceIn {
+      0% { transform: scale(0.5); opacity: 0.2;}
+      100% { transform: scale(1); opacity: 1;}
+    }
+    .prompt {
+      color: #cfcfcf;
+      font-size: 1.1em;
+      margin-bottom: 0.4em;
+      text-align: center;
+      font-family: var(--font-mono);
+    }
+    .input-area {
+      width: 90%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1em;
+    }
+    input[type="text"] {
+      font-size: 2em;
+      padding: 0.25em 0.7em;
+      border-radius: 0.5em;
+      border: 2px solid #444;
+      background: #18181b;
+      color: var(--main-fg);
+      font-family: var(--font-mono);
+      outline: none;
+      box-shadow: 0 2px 8px #0002;
+      transition: border 0.25s;
+      width: 2.7em;
+      text-align: center;
+      letter-spacing: 0.1em;
+    }
+    input[type="text"]:focus {
+      border-color: var(--accent);
+    }
+    .feedback {
+      min-height: 2em;
+      font-size: 1.15em;
+      margin-bottom: 0.5em;
+      text-align: center;
+      transition: color 0.25s;
+    }
+    .feedback.success {
+      color: var(--accent);
+      animation: correctAnim 0.8s;
+    }
+    .feedback.error {
+      color: var(--danger);
+      animation: shake 0.3s;
+    }
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-7px);}
+      50% { transform: translateX(6px);}
+      75% { transform: translateX(-5px);}
+      100% { transform: translateX(0);}
+    }
+    @keyframes correctAnim {
+      0% { color: #fff; transform: scale(1);}
+      40% { color: var(--accent); transform: scale(1.2);}
+      100% { color: var(--accent); transform: scale(1);}
+    }
+    .stats {
+      font-size: 1em;
+      color: #bdfedc;
+      margin-bottom: 0.2em;
+    }
+    .progress-bar {
+      width: 100%;
+      background: #18181b;
+      border-radius: 999px;
+      height: 12px;
+      margin-bottom: 1.1em;
+      overflow: hidden;
+      box-shadow: 0 1px 9px #0bbf85a2;
+    }
+    .progress-bar-inner {
+      background: linear-gradient(90deg, var(--accent), #0bbf85 90%);
+      height: 100%;
+      width: 0;
+      transition: width 0.4s;
+      border-radius: 999px;
+    }
+    .instructions {
+      font-size: 1em;
+      color: #bdbdbd;
+      text-align: center;
+      margin-top: 1.3em;
+      margin-bottom: 1em;
+    }
+    .reset-btn {
+      margin-top: 0.5em;
+      background: var(--accent);
+      color: #18181b;
+      border: none;
+      border-radius: 0.8em;
+      padding: 0.5em 1.2em;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    .reset-btn:hover, .reset-btn:focus {
+      background: #0bbf85;
+      outline: none;
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 1.25em; }
+      .practice-char { font-size: 2em; }
+      .practice-box { padding: 1em 0.5em 0.5em;}
+      input[type="text"] { font-size: 1.2em; width: 2em;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Punctuation & Numbers Master</h1>
+    <div class="tagline">Learn to type symbols, punctuation and numbers with perfect shift key control!</div>
+  </header>
+  <div class="practice-box">
+    <div class="prompt">Type the character shown below:</div>
+    <div class="practice-char" id="practiceChar">#</div>
+    <div class="input-area">
+      <input type="text" maxlength="1" id="userInput" autocomplete="off" aria-label="Type the character shown">
+    </div>
+    <div class="feedback" id="feedback"></div>
+    <div class="stats" id="stats"></div>
+    <div class="progress-bar">
+      <div class="progress-bar-inner" id="progressBar"></div>
+    </div>
+    <button class="reset-btn" id="resetBtn" title="Restart Practice">Restart</button>
+    <div class="instructions">
+      <strong>Instructions:</strong><br>
+      Type the character shown (use <b>Shift</b> for symbols). <br>
+      Your progress animates as you master each character. <br>
+      <span style="color:#9df0ca;">Try to complete all without mistakes!</span>
+    </div>
+  </div>
+  <script>
+    // Punctuation, numbers, and shift-required symbols
+    const chars = [
+      '1','2','3','4','5','6','7','8','9','0',
+      '!','@','#','$','%','^','&','*','(',')',
+      '-','_','=','+','[',']','{','}','\\','|',
+      ';',':','\'','"','<','>','.',',','/','?'
+    ];
+    let current = 0, correct = 0, mistakes = 0;
+
+    // DOM refs
+    const practiceChar = document.getElementById('practiceChar');
+    const userInput = document.getElementById('userInput');
+    const feedback = document.getElementById('feedback');
+    const stats = document.getElementById('stats');
+    const progressBar = document.getElementById('progressBar');
+    const resetBtn = document.getElementById('resetBtn');
+
+    // Shuffle chars for randomness
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+    let practiceList = shuffle(chars.slice());
+
+    function updateChar() {
+      practiceChar.textContent = practiceList[current];
+      userInput.value = '';
+      userInput.focus();
+      feedback.textContent = '';
+      feedback.className = 'feedback';
+      updateStats();
+    }
+
+    function updateStats() {
+      stats.textContent = `Progress: ${current} / ${practiceList.length} | Correct: ${correct} | Mistakes: ${mistakes}`;
+      let pct = Math.round(100 * current / practiceList.length);
+      progressBar.style.width = pct + '%';
+    }
+    userInput.addEventListener('input', function(e) {
+      const val = userInput.value;
+      if (!val) {
+        feedback.textContent = '';
+        feedback.className = 'feedback';
+        return;
+      }
+      if (val === practiceList[current]) {
+        feedback.textContent = '✔ Correct!';
+        feedback.className = 'feedback success';
+        correct++;
+        setTimeout(nextChar, 400);
+      } else {
+        feedback.textContent = '✖ Wrong! Try again.';
+        feedback.className = 'feedback error';
+        mistakes++;
+        setTimeout(()=>{feedback.textContent='';feedback.className='feedback';userInput.value='';userInput.focus();}, 550);
+      }
+      updateStats();
+    });
+
+    function nextChar() {
+      current++;
+      if (current < practiceList.length) {
+        updateChar();
+      } else {
+        // Finished!
+        feedback.textContent = `🎉 Finished! Correct: ${correct}, Mistakes: ${mistakes}`;
+        feedback.className = 'feedback success';
+        stats.textContent = 'Practice Complete!';
+        progressBar.style.width = '100%';
+        userInput.disabled = true;
+      }
+    }
+
+    resetBtn.addEventListener('click', function() {
+      current = 0; correct = 0; mistakes = 0;
+      practiceList = shuffle(chars.slice());
+      userInput.disabled = false;
+      updateChar();
+      progressBar.style.width = '0%';
+      feedback.textContent = '';
+      feedback.className = 'feedback';
+    });
+
+    // Accessibility: focus input on load
+    window.addEventListener('DOMContentLoaded', () => {
+      updateChar();
+      userInput.focus();
+    });
+
+    // Keyboard shortcut: Enter/Space for restart if finished
+    document.addEventListener('keydown', function(e){
+      if (userInput.disabled && (e.key === 'Enter' || e.key === ' ')) {
+        resetBtn.click();
+      }
+    });
+  </script>
+</body>
+</html>
