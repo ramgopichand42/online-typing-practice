@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Flow Word Practice — Upgraded</title>
+  <meta name="description" content="Flow Word Practice — improve typing rhythm with word flows. Hindi pack, metronome, live WPM, accuracy, errors, and best score saved."/>
+  <style>
+    :root{
+      --bg:#061018; --panel:#07131b; --muted:#9bb3c9; --text:#e6f6ff; --accent:#00ffd8; --accent-2:#5ef1ff;
+      --good:#2bd07a; --bad:#ff6576; --glass: rgba(255,255,255,0.03);
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial; background:
+      radial-gradient(800px 600px at 10% -10%, #052233 0%, var(--bg) 40%); color:var(--text);
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      display:flex; flex-direction:column;
+    }
+    header{
+      padding:14px 18px; display:flex; gap:12px; align-items:center; justify-content:space-between;
+      position:sticky; top:0; background:linear-gradient(180deg, rgba(0,0,0,0.25), transparent 60%);
+      z-index:10; border-bottom:1px solid rgba(255,255,255,0.02);
+    }
+    .brand{font-weight:800; letter-spacing:.3px}
+    .brand span{color:var(--accent)}
+    .controls{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+    select, button, label.switch{
+      background:var(--panel); color:var(--text); border:1px solid rgba(255,255,255,0.04);
+      padding:8px 10px; border-radius:10px; font-weight:700; cursor:pointer;
+    }
+    button.primary{background:linear-gradient(90deg,#06b8ff,#00ffd8); color:#00222a; border:none}
+    button.ghost{background:transparent; border:1px solid rgba(255,255,255,0.04)}
+    main{width:min(1100px,96%); margin:18px auto 40px; display:grid; gap:14px}
+    .stats{display:grid; grid-template-columns:repeat(5,minmax(110px,1fr)); gap:12px}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border:1px solid rgba(255,255,255,0.03); border-radius:var(--radius); padding:12px 14px;
+      box-shadow: 0 6px 30px rgba(0,0,0,0.6);
+    }
+    .stat h4{margin:0; font-size:12px; color:var(--muted); font-weight:700}
+    .stat p{margin:8px 0 0; font-size:24px; font-weight:900}
+    .typing-area{min-height:170px; padding:18px; border-radius:14px; position:relative; overflow:hidden}
+    #words{line-height:2.1; font-size:20px; user-select:none; caret-color:transparent}
+    .word{display:inline-block; padding:0 6px; margin:0 4px 8px 0; border-radius:8px; transition:all .15s}
+    .word.active{background:linear-gradient(90deg, rgba(0,255,216,0.06), rgba(96,255,229,0.03)); box-shadow:0 0 18px rgba(0,255,216,0.06) inset}
+    .word.done{opacity:.45}
+    .char.good{color:var(--good)}
+    .char.bad{color:var(--bad); text-decoration:underline wavy rgba(255,101,118,0.45)}
+    .caret{position:absolute; width:2px; height:1.1em; background:var(--accent); animation:blink .9s step-end infinite}
+    @keyframes blink{50%{opacity:.25}}
+    .input-wrap{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+    .hidden-input{position:absolute; opacity:0; pointer-events:none}
+    .hint{color:var(--muted); font-size:13px; margin-top:6px}
+    footer{padding:14px; text-align:center; color: #7f9fb8; font-size:13px}
+    .progress{height:8px; background:rgba(255,255,255,0.03); border-radius:8px; overflow:hidden}
+    .progress > i{display:block;height:100%; width:0%; background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+    .small{font-size:12px;color:var(--muted)}
+    /* responsive */
+    @media (max-width:880px){
+      .stats{grid-template-columns:repeat(2,1fr)}
+      header{padding:10px}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div style="display:flex;gap:12px;align-items:center">
+    <div class="brand">Flow <span>Practice</span></div>
+    <div class="small" style="opacity:.9">Rhythm typing — now with Hindi pack & metronome</div>
+  </div>
+
+  <div class="controls">
+    <select id="pack">
+      <option value="basic">Common (EN)</option>
+      <option value="verbs">Verbs (EN)</option>
+      <option value="mix" selected>Mixed (EN)</option>
+      <option value="hindi">हिन्दी पैक (HI)</option>
+    </select>
+
+    <select id="duration">
+      <option value="60">1 min</option>
+      <option value="120" selected>2 min</option>
+      <option value="180">3 min</option>
+      <option value="300">5 min</option>
+    </select>
+
+    <label style="display:flex;align-items:center;gap:8px">
+      <input type="checkbox" id="metronome" /> <span class="small">Metronome</span>
+    </label>
+
+    <label style="display:flex;align-items:center;gap:8px">
+      <input type="checkbox" id="sound" checked /> <span class="small">Sound</span>
+    </label>
+
+    <button id="start" class="primary">Start</button>
+    <button id="restart" class="ghost">Restart</button>
+  </div>
+</header>
+
+<main>
+  <section class="stats">
+    <div class="card stat"><h4>Time</h4><p id="time">02:00</p></div>
+    <div class="card stat"><h4>WPM</h4><p id="wpm">0</p></div>
+    <div class="card stat"><h4>Accuracy</h4><p id="acc">100%</p></div>
+    <div class="card stat"><h4>Errors</h4><p id="errs">0</p></div>
+    <div class="card stat small"><h4>Best (local)</h4><p id="best">—</p></div>
+  </section>
+
+  <div class="card typing-area" id="typing" aria-label="Typing area">
+    <div id="words" role="list"></div>
+    <input id="realInput" class="hidden-input" autocomplete="off" autocapitalize="off" spellcheck="false" />
+    <div style="position:absolute;right:14px;bottom:12px;width:40%;text-align:right" class="small">Tip: Press <b>Space</b> for next word</div>
+  </div>
+
+  <div class="card input-wrap">
+    <div style="flex:1">
+      <div class="small">Progress</div>
+      <div class="progress" aria-hidden="true"><i id="prog"></i></div>
+    </div>
+    <div style="min-width:220px;text-align:right" class="small">
+      <div>Mode: <span id="modeLabel">Mixed</span></div>
+      <div id="summary" style="margin-top:6px"></div>
+    </div>
+  </div>
+</main>
+
+<footer>Made with ❤️ — Gopi’s Typing Tools</footer>
+
+<script>
+(() => {
+  /* ---------- WORD PACKS (EN + HINDI) ---------- */
+  const packs = {
+    basic: `the of and a to in is you that it he was for on are as with i his they be at one have this from or had by not word but what some we can out other were all there when up use your how said an each she which do their time if will way about many then them would write like so these her long make thing see him two has look more day could go come did number sound no most people my over know`.split(/\s+/),
+    verbs: `make get do take see need know would find give tell work call try ask seem feel leave put mean keep let begin help talk turn start show hear play run move live believe bring happen write provide sit stand lose pay meet include continue set learn change lead understand watch follow stop create speak read allow add spend grow open walk win offer remember love consider appear buy wait serve die send expect build stay fall cut reach kill remain suggest`.split(/\s+/),
+    mix: null,
+    hindi: `मैं तुम वह यह क्या क्यों कैसे आज कल फिर से बहुत अच्छा काम सपना दोस्त परिवार स्कूल किताब पानी खेत किसान बजार चलना खाना पीना सोचना सीखना खेलना तेज़ धीमा सही गलत हाथ पैर आँखें कान बोलना लिखना पढ़ना चलो जल्दी बैठो उठो`.split(/\s+/)
+  };
+  packs.mix = [...new Set([...packs.basic.slice(0,250), ...packs.verbs.slice(0,120)])];
+
+  /* ---------- ELEMENTS ---------- */
+  const els = {
+    words: document.getElementById('words'),
+    input: document.getElementById('realInput'),
+    time: document.getElementById('time'),
+    wpm: document.getElementById('wpm'),
+    acc: document.getElementById('acc'),
+    errs: document.getElementById('errs'),
+    best: document.getElementById('best'),
+    duration: document.getElementById('duration'),
+    pack: document.getElementById('pack'),
+    start: document.getElementById('start'),
+    restart: document.getElementById('restart'),
+    metronomeCheckbox: document.getElementById('metronome'),
+    soundCheckbox: document.getElementById('sound'),
+    prog: document.getElementById('prog'),
+    modeLabel: document.getElementById('modeLabel'),
+    summary: document.getElementById('summary')
+  };
+
+  let state = {
+    started:false, seconds:120, timer:null, words:[], wordIndex:0, charIndex:0,
+    charsCorrect:0, charsWrong:0, totalChars:0, durationSec:120, metronomeTick:null
+  };
+
+  /* ---------- UTILS ---------- */
+  const fmtTime = s => {
+    const m = Math.floor(s/60).toString().padStart(2,'0');
+    const ss = (s%60).toString().padStart(2,'0');
+    return `${m}:${ss}`;
+  };
+  const randWords = (packName, count=300) => {
+    const src = packs[packName] || packs.mix;
+    const out = [];
+    for(let i=0;i<count;i++) out.push(src[Math.floor(Math.random()*src.length)]);
+    return out;
+  };
+
+  /* ---------- BUILD / RENDER ---------- */
+  function buildWords(){
+    els.words.innerHTML = '';
+    state.words.forEach((w,i)=>{
+      const span = document.createElement('span');
+      span.className = 'word' + (i===state.wordIndex ? ' active' : (i<state.wordIndex ? ' done' : ''));
+      span.setAttribute('role','listitem');
+      // for hindi, keep characters as unicode
+      for(let ch of w){
+        const c = document.createElement('span');
+        c.className='char'; c.textContent = ch;
+        span.appendChild(c);
+      }
+      // trailing space visual
+      const sp = document.createElement('span'); sp.className='char'; sp.textContent=' ';
+      span.appendChild(sp);
+      els.words.appendChild(span);
+    });
+    positionCaret();
+    updateProgress();
+  }
+
+  function reset(){
+    clearInterval(state.timer); stopMetronome();
+    state.durationSec = parseInt(els.duration.value,10);
+    state.seconds = state.durationSec;
+    state.started=false; state.wordIndex=0; state.charIndex=0;
+    state.charsCorrect=0; state.charsWrong=0; state.totalChars=0;
+    state.words = randWords(els.pack.value, 400);
+    buildWords();
+    updateUI();
+    els.input.value='';
+    els.input.focus();
+    updateModeLabel();
+    loadBest();
+  }
+
+  function updateUI(){
+    els.time.textContent = fmtTime(state.seconds);
+    els.wpm.textContent = '0';
+    els.acc.textContent = '100%';
+    els.errs.textContent = '0';
+    els.prog.style.width = `0%`;
+    els.summary.textContent = '';
+  }
+
+  function updateProgress(){
+    const percent = Math.min(100, Math.round((state.wordIndex / (state.words.length-1)) * 100));
+    els.prog.style.width = percent + '%';
+  }
+
+  /* ---------- CARET ---------- */
+  function positionCaret(){
+    document.querySelectorAll('.caret').forEach(c=>c.remove());
+    const active = document.querySelector('.word.active');
+    if(!active) return;
+    const chars = active.querySelectorAll('.char');
+    const idx = Math.min(state.charIndex, chars.length-1);
+    const target = chars[idx];
+    if(!target) return;
+    const caret = document.createElement('span'); caret.className='caret';
+    // calculate left relative to active
+    active.style.position='relative';
+    const left = [...active.childNodes].slice(0, idx).reduce((acc,n)=> acc + (n.getBoundingClientRect? n.getBoundingClientRect().width : 10), 0);
+    caret.style.left = left + 'px';
+    active.appendChild(caret);
+    // scroll into view
+    const top = active.offsetTop;
+    els.words.parentElement.scrollTop = Math.max(0, top - 20);
+  }
+
+  /* ---------- STATS ---------- */
+  function updateStats(){
+    const elapsed = (state.durationSec - state.seconds) / 60 || 1/60;
+    const grossWPM = Math.round((state.charsCorrect / 5) / elapsed);
+    const acc = Math.max(0, Math.round((state.charsCorrect / Math.max(1, (state.charsCorrect + state.charsWrong))) * 100));
+    els.wpm.textContent = isFinite(grossWPM) ? grossWPM : 0;
+    els.acc.textContent = acc + '%';
+    els.errs.textContent = state.charsWrong;
+  }
+
+  /* ---------- INPUT HANDLING ---------- */
+  els.typingArea = document.getElementById('typing');
+  els.typingArea.addEventListener('click', ()=> els.input.focus());
+  document.addEventListener('keydown', (e)=> { if(e.key==='Tab'){ e.preventDefault(); els.input.focus(); } });
+
+  els.input.addEventListener('input', (e)=>{
+    if(!state.started) start();
+    const val = e.target.value;
+    if(val.length===0){ positionCaret(); return; }
+    const active = document.querySelector('.word.active');
+    if(!active) return;
+    const chars = active.querySelectorAll('.char');
+    const typed = val[val.length-1];
+    state.totalChars++;
+    const expected = active.textContent[state.charIndex] || ' ';
+    // compare
+    if(typed === expected){
+      if(chars[state.charIndex]) chars[state.charIndex].classList.add('good');
+      state.charsCorrect++;
+      if(els.soundCheckbox.checked) playTone('correct');
+    } else {
+      if(chars[Math.min(state.charIndex, chars.length-1)]) chars[Math.min(state.charIndex, chars.length-1)].classList.add('bad');
+      state.charsWrong++;
+      if(els.soundCheckbox.checked) playTone('wrong');
+    }
+    state.charIndex++;
+    // word finished or space typed
+    if(typed === ' ' || state.charIndex >= chars.length){
+      active.classList.remove('active');
+      active.classList.add('done');
+      state.wordIndex++;
+      state.charIndex = 0;
+      // ensure next exists
+      if(state.wordIndex >= state.words.length - 40){
+        state.words.push(...randWords(els.pack.value, 200));
+      }
+      const next = document.querySelectorAll('.word')[state.wordIndex];
+      if(next) next.classList.add('active');
+      e.target.value = '';
+    }
+    updateStats();
+    positionCaret();
+    updateProgress();
+  });
+
+  /* ---------- START / TIMER ---------- */
+  function start(){
+    if(state.started) return;
+    state.started = true;
+    els.input.focus();
+    // start timer
+    state.timer = setInterval(()=>{
+      state.seconds--;
+      els.time.textContent = fmtTime(state.seconds);
+      if(state.seconds <= 0){
+        finish();
+      }
+    }, 1000);
+    if(els.metronomeCheckbox.checked) startMetronome();
+  }
+
+  function finish(){
+    clearInterval(state.timer);
+    state.started = false;
+    stopMetronome();
+    els.input.blur();
+    // save best
+    const finalWPM = parseInt(els.wpm.textContent,10) || 0;
+    saveBest(finalWPM);
+    els.summary.textContent = `Session finished — WPM: ${finalWPM}, Acc: ${els.acc.textContent}, Errors: ${state.charsWrong}`;
+  }
+
+  els.start.addEventListener('click', ()=> { reset(); start(); });
+  els.restart.addEventListener('click', ()=> { reset(); });
+
+  els.duration.addEventListener('change', ()=> reset());
+  els.pack.addEventListener('change', ()=> reset());
+
+  /* ---------- METRONOME (WEB AUDIO) ---------- */
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  let metroInterval = null;
+  function playClick(){
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.type = 'sine';
+    o.frequency.value = 880;
+    g.gain.value = 0.08;
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start();
+    setTimeout(()=>{ o.stop(); }, 80);
+  }
+  function startMetronome(){
+    stopMetronome();
+    const bpm = 60; // 60 bpm = 1 tick per second (adjustable)
+    const interval = 60000 / bpm;
+    metroInterval = setInterval(()=>{ if(els.metronomeCheckbox.checked) playClick(); }, interval);
+  }
+  function stopMetronome(){ if(metroInterval) { clearInterval(metroInterval); metroInterval = null; } }
+
+  /* ---------- SOUND FEEDBACK (tiny tones) ---------- */
+  function playTone(type){
+    try{
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      o.type = 'sine';
+      o.frequency.value = (type === 'correct') ? 900 : 220;
+      g.gain.value = (type === 'correct') ? 0.02 : 0.04;
+      o.connect(g); g.connect(audioCtx.destination);
+      o.start();
+      setTimeout(()=> o.stop(), 90);
+    }catch(e){}
+  }
+
+  /* ---------- BEST SCORE (localStorage) ---------- */
+  function saveBest(wpm){
+    try{
+      const key = 'flow_best_' + els.pack.value + '_' + els.duration.value;
+      const prev = localStorage.getItem(key);
+      if(!prev || parseInt(prev,10) < wpm){
+        localStorage.setItem(key, String(wpm));
+      }
+      loadBest();
+    }catch(e){}
+  }
+  function loadBest(){
+    try{
+      const key = 'flow_best_' + els.pack.value + '_' + els.duration.value;
+      const v = localStorage.getItem(key);
+      els.best.textContent = v ? v + ' wpm' : '—';
+    }catch(e){}
+  }
+
+  /* ---------- MODE LABEL ---------- */
+  function updateModeLabel(){
+    const txt = els.pack.value === 'hindi' ? 'हिन्दी' : (els.pack.value === 'mix' ? 'Mixed' : els.pack.value === 'verbs' ? 'Verbs' : 'Common');
+    els.modeLabel.textContent = txt;
+  }
+
+  /* ---------- INIT ---------- */
+  function init(){
+    reset();
+    // accessibility focus
+    els.input.setAttribute('aria-label','Hidden typing input');
+    window.addEventListener('focus', ()=> { if(state.started) els.input.focus(); });
+  }
+  init();
+
+  /* ---------- Expose small helpers to console (dev) ---------- */
+  window.__flow = { state, reset, start, finish, playClick };
+
+})();
+</script>
+</body>
+</html>
