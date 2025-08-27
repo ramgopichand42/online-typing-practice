@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🚀 Speed Drills & Challenge Break | Reaction Practice & Fast Clicking Game</title>
+  <meta name="description" content="Speed Drills & Challenge Break - Practice fast clicking, improve reaction time, and boost focus. Includes a break timer for healthy training. Learn how to use this fun and effective web app for self-improvement, gaming, and competitive exams." />
+  <meta name="keywords" content="Speed Drills, Reaction Time, Fast Clicking, Challenge Break, Focus Training, Gaming Practice, Typing Speed, Reflex Game, Productivity, Self Improvement" />
+  <meta name="author" content="ramgopichand42" />
+  <meta property="og:title" content="🚀 Speed Drills & Challenge Break | Fast Clicking Reaction Practice" />
+  <meta property="og:description" content="Practice your speed and reaction time, track your score, and use challenge breaks for healthy improvement. Perfect for gamers, students, and anyone who loves a challenge!" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://onlinetypingpractice.app/speed-drills.html" />
+  <meta property="og:image" content="https://yourdomain.com/speed-drills-image.png" />
+  <link rel="canonical" href="https://onlinetypingpractice.app/speed-drills.html" />
+  <style>
+    :root {
+      --primary-bg: #0f0f0f;
+      --secondary-bg: #1a1a2e;
+      --accent: #ff00cc;
+      --accent2: #3333ff;
+      --text: #fff;
+      --shadow: 0 0 20px #222;
+      --radius: 14px;
+      --transition: 0.2s ease;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Orbitron', Arial, sans-serif;
+      background: radial-gradient(circle at center, var(--primary-bg), #000000);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    h1 {
+      text-align: center;
+      font-size: clamp(2em, 4vw, 2.7em);
+      margin: 24px 0 12px 0;
+      text-shadow: 0 0 10px #0ff;
+      letter-spacing: 2px;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .content {
+      background: rgba(20,30,40,0.12);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      margin-bottom: 8px;
+      width: 100%;
+    }
+    .how-to-use {
+      background: rgba(0,0,32,0.18);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 14px 0 0 0;
+      box-shadow: 0 0 6px #0ff6;
+    }
+    .drill-break-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      justify-content: space-between;
+      align-items: flex-start;
+      width: 100%;
+    }
+    .drill-zone, .break-zone {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1 1 380px;
+      min-width: 260px;
+      background: rgba(30,40,60,0.14);
+      margin: 0;
+      border-radius: var(--radius);
+      box-shadow: 0 2px 12px #1116;
+      padding: 18px 14px 18px 14px;
+    }
+    .drill-zone { margin-bottom: 0; }
+    .timer, .break-timer {
+      font-size: clamp(2em,4vw,3em);
+      margin: 14px 0;
+      color: #0ff;
+      text-shadow: 0 0 20px #0ff;
+      letter-spacing: 2px;
+      user-select: none;
+    }
+    .score {
+      font-size: clamp(1.5em, 2vw, 2em);
+      margin: 12px 0;
+      color: #ff0;
+      text-shadow: 0 0 10px #ff0;
+      user-select: none;
+    }
+    button {
+      padding: 13px 28px;
+      font-size: clamp(1em, 1.2vw, 1.2em);
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(45deg, var(--accent), var(--accent2));
+      color: white;
+      box-shadow: 0 0 13px var(--accent);
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+      margin-bottom: 10px;
+      outline: none;
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    button:active {
+      background: linear-gradient(45deg, var(--accent2), var(--accent));
+      box-shadow: 0 0 24px #00f9;
+      transform: scale(0.96);
+    }
+    button:hover {
+      transform: scale(1.07);
+      box-shadow: 0 0 25px var(--accent);
+    }
+    .break-zone #breakMsg {
+      font-size: 1.2em;
+      color: #0f0;
+      margin-top: 10px;
+      min-height: 28px;
+      text-align: center;
+    }
+    .click-trail {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff, transparent);
+      pointer-events: none;
+      animation: fadeOut 1s forwards;
+      z-index: 100;
+    }
+    @keyframes fadeOut {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(3); }
+    }
+    .seo-footer {
+      text-align: center;
+      font-size: 1.08em;
+      color: #ccc;
+      margin-top: 32px;
+      padding-bottom: 20px;
+      background: rgba(30,30,30,0.09);
+      border-radius: 9px;
+      box-shadow: 0 0 8px #2222;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    @media (max-width: 950px) {
+      .container { max-width: 98vw; }
+      .drill-break-wrapper { flex-direction: column; gap: 14px; }
+      .drill-zone, .break-zone { min-width: 0; width: 100%; }
+    }
+    @media (max-width: 650px) {
+      h1 { font-size: 2em; }
+      .timer, .break-timer { font-size: 2em; }
+      button { font-size: 1em; padding: 10px 20px; }
+      .score { font-size: 1.2em; }
+      .content, .seo-footer {
+        padding: 7px;
+        font-size: 0.98em;
+      }
+      .how-to-use { padding: 7px; }
+      .drill-zone, .break-zone {
+        padding: 12px 4px 14px 4px;
+      }
+      .drill-break-wrapper { gap: 9px; }
+    }
+    @media (max-width: 400px) {
+      h1 { font-size: 1.2em; }
+      .timer, .break-timer { font-size: 1.1em; }
+      .score { font-size: 1em; }
+      button { font-size: 0.9em; padding: 6px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <h1>🚀 Speed Drills & Challenge Break</h1>
+  <div class="container">
+    <div class="drill-break-wrapper">
+      <div class="drill-zone">
+        <div class="timer" id="timer">00:10</div>
+        <div class="score" id="score">Clicks: 0</div>
+        <button id="startBtn" onclick="startDrill()">Start Challenge</button>
+        <button id="clickBtn" style="display:none;" onclick="registerClick()">Click Me!</button>
+        <button id="restartBtn" style="display:none;" onclick="restartDrill()">Restart</button>
+      </div>
+      <div class="break-zone">
+        <div class="break-timer" id="breakTimer">00:30</div>
+        <button id="startBreakBtn" onclick="startBreak()">Start Break</button>
+        <div id="breakMsg"></div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="how-to-use">
+        <h2 style="color:#0ff;">कैसे इस्तेमाल करें (How to Use):</h2>
+        <ol>
+          <li><strong>Start Challenge</strong> बटन दबाएं – आपकी स्पीड टेस्ट शुरू होगी।
+            <ul>
+              <li>टाइमर स्टार्ट होगा और <strong>Click Me!</strong> बटन दिखेगा।</li>
+              <li>10 सेकंड में जितना ज़्यादा हो सके <strong>Click Me!</strong> बटन दबाएं।</li>
+              <li>हर क्लिक पर स्कोर बढ़ेगा।</li>
+            </ul>
+          </li>
+          <li>जब टाइमर खत्म होता है:
+            <ul>
+              <li>आपका फाइनल स्कोर दिखता है।</li>
+              <li><strong>Restart</strong> बटन से फिर से कोशिश कर सकते हैं।</li>
+            </ul>
+          </li>
+          <li>हर ड्रिल के बाद, <strong>Start Break</strong> बटन दबाकर ब्रेक लें:
+            <ul>
+              <li>ब्रेक टाइमर (30 सेकंड) चलेगा।</li>
+              <li>ब्रेक खत्म होने पर मैसेज मिलेगा, फिर आप अगला चैलेंज शुरू करें!</li>
+              <li>ब्रेक लेना आपकी सेहत, फोकस और परफॉर्मेंस के लिए अच्छा है।</li>
+            </ul>
+          </li>
+          <li>क्लिक करते समय स्क्रीन पर <strong>Click Trail</strong> इफेक्ट भी दिखेगा – जिससे मज़ा और बढ़े!</li>
+        </ol>
+        <p><strong>Tip:</strong> जितनी बार चाहें, अपने स्कोर को बेहतर करने की कोशिश करें और अपनी स्पीड बढ़ाएं!</p>
+      </div>
+      <div style="margin: 12px 0; color:#ff0;">
+        <strong>यह ऐप किसके लिए फायदेमंद है?</strong><br />
+        - गेमर्स, स्टूडेंट्स, टाइपिंग प्रैक्टिस करने वाले, और सभी जो अपनी reaction time, speed या focus improve करना चाहते हैं।
+      </div>
+    </div>
+
+    <div class="seo-footer">
+      <hr style="border:0; border-top:1px solid #222; margin-bottom:12px;" />
+      <strong>Speed Drills & Challenge Break</strong> - Improve your fast clicking speed, reaction time, and focus. Take healthy breaks for maximum productivity.<br />
+      Perfect for competitive gaming, typing practice, and anyone who loves a challenge.<br />
+      <em>Made by RockYbhi — Practice Fast, Rest Smart!</em>
+    </div>
+  </div>
+  <script>
+    // Drill Logic
+    let timeLeft = 10;
+    let timerInterval;
+    let clicks = 0;
+    let drillActive = false;
+
+    function startDrill() {
+      clicks = 0;
+      timeLeft = 10;
+      drillActive = true;
+      document.getElementById('score').textContent = "Clicks: 0";
+      document.getElementById('timer').textContent = "00:10";
+      document.getElementById('startBtn').style.display = "none";
+      document.getElementById('clickBtn').style.display = "";
+      document.getElementById('restartBtn').style.display = "none";
+
+      timerInterval = setInterval(() => {
+        if (timeLeft > 0) {
+          timeLeft--;
+          document.getElementById('timer').textContent = `00:${String(timeLeft).padStart(2, '0')}`;
+        } else {
+          endDrill();
+        }
+      }, 1000);
+    }
+
+    function registerClick() {
+      if (drillActive && timeLeft > 0) {
+        clicks++;
+        document.getElementById('score').textContent = `Clicks: ${clicks}`;
+      }
+    }
+
+    function endDrill() {
+      clearInterval(timerInterval);
+      drillActive = false;
+      document.getElementById('clickBtn').style.display = "none";
+      document.getElementById('restartBtn').style.display = "";
+      document.getElementById('score').textContent = `Final Score: ${clicks} clicks!`;
+      document.getElementById('timer').textContent = "00:00";
+    }
+
+    function restartDrill() {
+      startDrill();
+    }
+
+    // Break Logic
+    let breakLeft = 30;
+    let breakInterval;
+    let breakActive = false;
+
+    function startBreak() {
+      breakLeft = 30;
+      breakActive = true;
+      document.getElementById('breakTimer').textContent = "00:30";
+      document.getElementById('breakMsg').textContent = "";
+      document.getElementById('startBreakBtn').style.display = "none";
+      breakInterval = setInterval(() => {
+        if (breakLeft > 0) {
+          breakLeft--;
+          document.getElementById('breakTimer').textContent = `00:${String(breakLeft).padStart(2, '0')}`;
+        } else {
+          endBreak();
+        }
+      }, 1000);
+    }
+
+    function endBreak() {
+      clearInterval(breakInterval);
+      breakActive = false;
+      document.getElementById('breakMsg').textContent = "Break Over! Get Ready for Next Challenge!";
+      document.getElementById('breakTimer').textContent = "00:00";
+      setTimeout(() => {
+        document.getElementById('startBreakBtn').style.display = "";
+        document.getElementById('breakMsg').textContent = "";
+        document.getElementById('breakTimer').textContent = "00:30";
+      }, 4000);
+    }
+
+    // Click Trail
+    document.addEventListener('click', (e) => {
+      const trail = document.createElement('div');
+      trail.className = 'click-trail';
+      trail.style.left = `${e.pageX - 11}px`;
+      trail.style.top = `${e.pageY - 11}px`;
+      document.body.appendChild(trail);
+      setTimeout(() => trail.remove(), 1000);
+    });
+  </script>
+</body>
+</html>
