@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Online Typing & Error Correction Tool</title>
+  <meta name="description" content="Paste your paragraph and correct all English spelling mistakes instantly online. Practice typing, error correction and copy corrected text easily." />
+  <meta name="keywords" content="error corrector, online typing practice, paragraph correction, spelling check, grammar correct, copy corrected text, English typing, typing test, instant correction" />
+  <meta name="author" content="RockYbhi" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at center, #0f0c29, #302b63, #24243e);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      min-height: 100vh;
+      width: 100vw;
+      box-sizing: border-box;
+      color: #fff;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      width: 100vw;
+    }
+    h1 {
+      text-shadow: 0 0 15px #00f7ff;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      font-size: 2.8rem;
+      text-align: center;
+      width: 100%;
+      letter-spacing: 1px;
+      font-weight: bold;
+    }
+    .main-box {
+      background: rgba(20, 20, 35, 0.97);
+      padding: 38px 35px 35px 35px;
+      border-radius: 18px;
+      box-shadow: 0 0 16px #00f7ff;
+      max-width: 700px;
+      width: 95vw;
+      margin-top: 10px;
+      margin-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-sizing: border-box;
+    }
+    .main-box label {
+      margin-bottom: 12px;
+      color: #00f7ff;
+      font-size: 1.35rem;
+      font-weight: bold;
+      width: 100%;
+      text-align: left;
+      letter-spacing: 0.5px;
+    }
+    textarea {
+      width: 100%;
+      min-height: 160px;
+      resize: vertical;
+      border-radius: 12px;
+      border: none;
+      padding: 18px 18px;
+      font-size: 1.21rem;
+      background: #111;
+      color: #fff;
+      box-shadow: 0 0 18px #00f7ff, 0 0 18px #00f7ff inset;
+      margin-bottom: 18px;
+      outline: none;
+      transition: box-shadow 0.3s;
+      box-sizing: border-box;
+      line-height: 1.7;
+    }
+    textarea:focus {
+      box-shadow: 0 0 28px #ff00ff, 0 0 30px #ff00ff inset;
+    }
+    .btn-row {
+      display: flex;
+      gap: 25px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+      width: 100%;
+      justify-content: center;
+    }
+    button {
+      padding: 15px 34px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #00f7ff, #ff00ff);
+      color: #fff;
+      font-size: 1.23rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 16px #ff00ff, 0 0 12px #00f7ff inset;
+      transition: background 0.18s, transform 0.15s;
+      margin-bottom: 7px;
+      min-width: 140px;
+      letter-spacing: 0.5px;
+    }
+    button:active {
+      background: linear-gradient(90deg, #ff00ff, #00f7ff);
+      transform: scale(0.97);
+    }
+    .correct-box {
+      width: 100%;
+      background: rgba(30,30,40,0.96);
+      border-radius: 12px;
+      box-shadow: 0 0 15px #00f7ff;
+      padding: 17px 18px;
+      min-height: 70px;
+      margin-top: 8px;
+      margin-bottom: 10px;
+      font-size: 1.19rem;
+      word-break: break-word;
+      color: #fff;
+      position: relative;
+      box-sizing: border-box;
+      overflow-x: auto;
+      line-height: 1.7;
+    }
+    .copied-note {
+      color: #00ff99;
+      font-size: 1.08rem;
+      font-weight: bold;
+      position: absolute;
+      top: 10px;
+      right: 23px;
+      z-index: 2;
+    }
+    .mistake {
+      color: #ff61d9;
+      font-weight: bold;
+      background: #fff2;
+      border-radius: 4px;
+      padding: 0 3px;
+      text-shadow: 0 0 5px #ff00ff;
+      word-break: break-word;
+    }
+    @media (max-width: 900px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      .main-box {
+        max-width: 95vw;
+        padding: 26px 12px 22px 12px;
+      }
+      .main-box label { font-size: 1.08rem;}
+      textarea { font-size: 1rem; min-height: 100px; }
+      button { font-size: 1rem; padding: 10px 16px; min-width: 85px;}
+      .correct-box { font-size: 1rem; padding: 9px 8px; min-height: 38px;}
+      .copied-note { font-size: 0.95rem; right: 8px; top: 7px;}
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 1.15rem; margin-top: 8px; margin-bottom: 8px;}
+      .main-box { padding: 8px 2vw 10px 2vw; border-radius: 8px; margin-bottom:10px;}
+      .main-box label { font-size: 0.96rem; margin-bottom:6px;}
+      textarea { font-size: 0.92rem; padding: 7px 6px; min-height: 54px; margin-bottom:5px;}
+      .btn-row { gap: 7px; margin-bottom:7px;}
+      button { font-size: 0.91rem; padding: 7px 7px; min-width: 70px;}
+      .correct-box { font-size: 0.94rem; padding: 7px 7px; min-height: 24px;}
+      .copied-note { font-size: 0.87rem; right: 8px; top: 7px;}
+    }
+    @media (max-width: 400px) {
+      .main-box { padding: 6px 1vw 6px 1vw;}
+      .btn-row { gap: 3px;}
+      button { font-size: 0.81rem; padding: 5px 5px; min-width: 54px;}
+    }
+    .sparkle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: radial-gradient(circle, #ff00ff, transparent);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: fadeOut 1s forwards;
+      z-index: 9999;
+    }
+    @keyframes fadeOut {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(2); }
+    }
+  </style>
+</head>
+<body>
+  <h1>🧠 Error Corrector & Typing Practice</h1>
+  <div class="main-box">
+    <label for="inputText">Paste your paragraph or text below:</label>
+    <textarea id="inputText" placeholder="Paste or type your paragraph here..."></textarea>
+    <div class="btn-row">
+      <button onclick="showCorrections()">Show Errors</button>
+      <button onclick="autoCorrect()">Correct</button>
+    </div>
+    <div class="correct-box" id="resultArea"></div>
+    <button style="margin-top:8px; display:none;" id="copyBtn" onclick="copyCorrected()">Copy Corrected Text</button>
+  </div>
+  <script>
+    // Sparkle effect for fun
+    document.addEventListener("mousemove", (e) => {
+      const sparkle = document.createElement("div");
+      sparkle.className = "sparkle";
+      sparkle.style.left = `${e.pageX}px`;
+      sparkle.style.top = `${e.pageY}px`;
+      document.body.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 1000);
+    });
+
+    // Common spelling mistakes dictionary
+    const corrections = {
+      recieve: "receive",
+      accomodate: "accommodate",
+      seperate: "separate",
+      definately: "definitely",
+      occured: "occurred",
+      freind: "friend",
+      adress: "address",
+      thier: "their",
+      goverment: "government",
+      enviroment: "environment",
+      beleive: "believe",
+      untill: "until",
+      tommorow: "tomorrow",
+      wich: "which",
+      acheive: "achieve",
+      begining: "beginning"
+    };
+
+    // Show errors highlighted
+    function showCorrections() {
+      let text = document.getElementById("inputText").value;
+      let words = text.split(/\b/);
+      let mistakes = [];
+      let checkedText = words.map(word => {
+        let clean = word.toLowerCase().replace(/[^a-z]/g,"");
+        if (corrections[clean]) {
+          mistakes.push({wrong: word, right: corrections[clean]});
+          return `<span class="mistake" title="Should be: ${corrections[clean]}">${word}</span>`;
+        }
+        return word;
+      }).join('');
+      let result = "";
+      if (mistakes.length > 0) {
+        result += `<div>Highlighted mistakes:</div>`;
+        result += `<div>${checkedText}</div>`;
+        result += `<div style="margin-top:10px;">Suggestions:</div>`;
+        mistakes.forEach(m => {
+          result += `<div><span class="mistake">${m.wrong}</span> → <span style="color:#00f7ff;font-weight:bold">${m.right}</span></div>`;
+        });
+        document.getElementById("copyBtn").style.display = "none";
+      } else if (text.trim().length === 0) {
+        result = "Paste or type something to check for errors!";
+        document.getElementById("copyBtn").style.display = "none";
+      } else {
+        result = "No mistakes detected. Great job!";
+        document.getElementById("copyBtn").style.display = "none";
+      }
+      document.getElementById("resultArea").innerHTML = result;
+    }
+
+    // Auto correct all errors and show copy button
+    function autoCorrect() {
+      let text = document.getElementById("inputText").value;
+      let words = text.split(/\b/);
+      let correctedText = words.map(word => {
+        let clean = word.toLowerCase().replace(/[^a-z]/g,"");
+        if (corrections[clean]) {
+          // Preserve punctuation
+          let prefix = word.match(/^[^a-zA-Z]*/)[0];
+          let suffix = word.match(/[^a-zA-Z]*$/)[0];
+          // Preserve case of first letter
+          let correction = corrections[clean];
+          if (word[0] === word[0].toUpperCase()) {
+            correction = correction.charAt(0).toUpperCase() + correction.slice(1);
+          }
+          return prefix + correction + suffix;
+        }
+        return word;
+      }).join('');
+      let result = `<div>Corrected Text:</div><div style="color:#00ff99;margin-top:6px;">${correctedText}</div>`;
+      document.getElementById("resultArea").innerHTML = result;
+      document.getElementById("copyBtn").style.display = "inline-block";
+      document.getElementById("copyBtn").setAttribute("data-corrected", correctedText);
+      removeCopiedNote();
+    }
+
+    // Copy corrected text to clipboard
+    function copyCorrected() {
+      const btn = document.getElementById("copyBtn");
+      const corrected = btn.getAttribute("data-corrected");
+      navigator.clipboard.writeText(corrected).then(() => {
+        showCopiedNote();
+      });
+    }
+    function showCopiedNote() {
+      let area = document.getElementById("resultArea");
+      let note = document.createElement("span");
+      note.className = "copied-note";
+      note.textContent = "Copied!";
+      area.appendChild(note);
+      setTimeout(removeCopiedNote, 1400);
+    }
+    function removeCopiedNote() {
+      let note = document.querySelector(".copied-note");
+      if (note) note.remove();
+    }
+  </script>
+</body>
+</html>
