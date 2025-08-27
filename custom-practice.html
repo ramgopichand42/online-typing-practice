@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⚡ Cosmic Typing Practice</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(circle at center, #0f0f0f, #000000);
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px #0ff;
+    }
+
+    textarea, input {
+      width: 90%;
+      max-width: 600px;
+      font-size: 1.1em;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      background: #111;
+      color: #fff;
+      box-shadow: 0 0 10px #0ff;
+      margin-bottom: 15px;
+    }
+
+    .glow-btn {
+      padding: 12px 25px;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(45deg, #ff00cc, #3333ff);
+      color: white;
+      box-shadow: 0 0 15px #ff00cc;
+      cursor: pointer;
+      margin-bottom: 20px;
+      transition: box-shadow 0.2s;
+    }
+    .glow-btn:hover {
+      box-shadow: 0 0 35px #ff00cc, 0 0 15px #3333ff;
+    }
+
+    .highlight-box {
+      width: 90%;
+      max-width: 600px;
+      margin: auto;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      box-shadow: 0 0 20px #00ffff55;
+      font-size: 1.2em;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      text-align: left;
+      min-height: 3em;
+    }
+
+    .correct {
+      color: #0f0;
+      text-shadow: 0 0 5px #0f0;
+    }
+
+    .wrong {
+      color: #f00;
+      text-shadow: 0 0 5px #f00;
+      background: rgba(255,0,0,0.15);
+      border-radius: 2px;
+    }
+
+    .instructions {
+      max-width: 600px;
+      margin: 40px auto 0;
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #3333ff;
+      text-align: left;
+      font-size: 1em;
+      line-height: 1.6;
+    }
+
+    .instructions h2 {
+      color: #0ff;
+      text-shadow: 0 0 5px #0ff;
+      margin-bottom: 10px;
+    }
+
+    /* Particle Magic Animation */
+    .magic-particle {
+      position: fixed;
+      pointer-events: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #00fff9 60%, #ff00cc 100%);
+      opacity: 0.8;
+      z-index: 9999;
+      animation: magic-particle-fade 1s linear forwards;
+      box-shadow: 0 0 15px #00fff9, 0 0 3px #ff00cc;
+    }
+
+    @keyframes magic-particle-fade {
+      0% { opacity: 1; transform: scale(1); }
+      80% { opacity: 0.7; transform: scale(1.6); }
+      100% { opacity: 0; transform: scale(2.2); }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5em; }
+      textarea, input { font-size: 1em; }
+      .instructions { font-size: 0.95em; }
+    }
+  </style>
+</head>
+<body>
+  <h1>⚡ Cosmic Typing Practice</h1>
+  <textarea id="customText" placeholder="Paste your own text here..."></textarea><br>
+  <button class="glow-btn" onclick="startPractice()">Start Practice</button>
+
+  <div id="practiceZone" style="display:none;">
+    <input type="text" id="typingInput" placeholder="Start typing here..." oninput="highlightText()" autocomplete="off" />
+    <div class="highlight-box" id="highlightDisplay"></div>
+  </div>
+
+  <div class="instructions">
+    <h2>🛠️ How to Use</h2>
+    <ul>
+      <li>📋 Paste any text you want to practice typing into the top box.</li>
+      <li>⚡ Click <strong>Start Practice</strong> to begin.</li>
+      <li>⌨️ Start typing in the input box below.</li>
+      <li>✅ Correct letters will glow green, ❌ wrong ones will glow red.</li>
+      <li>🎇 Enjoy the magic particles as you type and click!</li>
+      <li>📱 Works beautifully on mobile, laptop, and desktop.</li>
+    </ul>
+  </div>
+
+  <script>
+    let originalText = "";
+
+    function startPractice() {
+      originalText = document.getElementById("customText").value.trim();
+      if (!originalText) return alert("Paste some text first!");
+      document.getElementById("practiceZone").style.display = "block";
+      document.getElementById("typingInput").value = "";
+      document.getElementById("highlightDisplay").innerHTML = "";
+      document.getElementById("typingInput").focus();
+    }
+
+    function highlightText() {
+      const userInput = document.getElementById("typingInput").value;
+      let highlighted = "";
+
+      for (let i = 0; i < originalText.length; i++) {
+        if (i < userInput.length) {
+          if (userInput[i] === originalText[i]) {
+            highlighted += `<span class="correct">${originalText[i]}</span>`;
+          } else {
+            highlighted += `<span class="wrong">${originalText[i]}</span>`;
+          }
+        } else {
+          highlighted += originalText[i];
+        }
+      }
+
+      document.getElementById("highlightDisplay").innerHTML = highlighted;
+    }
+
+    // MAGIC PARTICLE ANIMATION ON MOUSE MOVE & CLICK
+    function createMagicParticle(x, y) {
+      const particle = document.createElement('div');
+      particle.className = 'magic-particle';
+      particle.style.left = (x - 6) + 'px';
+      particle.style.top = (y - 6) + 'px';
+      const colors = [
+        'radial-gradient(circle, #00fff9 60%, #ff00cc 100%)',
+        'radial-gradient(circle, #fff700 60%, #ff00cc 100%)',
+        'radial-gradient(circle, #00ffb3 60%, #3333ff 100%)',
+        'radial-gradient(circle, #ff00cc 60%, #00fff9 100%)',
+      ];
+      particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+      document.body.appendChild(particle);
+      setTimeout(() => particle.remove(), 1000);
+    }
+
+    document.addEventListener('mousemove', e => {
+      if (Math.random() < 0.35) createMagicParticle(e.clientX, e.clientY);
+    });
+
+    document.addEventListener('click', e => {
+      for (let i = 0; i < 5; i++) {
+        const angle = Math.random() * 2 * Math.PI;
+        const radius = 10 + Math.random() * 20;
+        const x = e.clientX + Math.cos(angle) * radius;
+        const y = e.clientY + Math.sin(angle) * radius;
+        setTimeout(() => createMagicParticle(x, y), i * 40);
+      }
+    });
+  </script>
+</body>
+</html>
