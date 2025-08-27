@@ -18,6 +18,7 @@
       radial-gradient(800px 600px at 10% -10%, #052233 0%, var(--bg) 40%); color:var(--text);
       -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
       display:flex; flex-direction:column;
+      min-height:100vh;
     }
     header{
       padding:14px 18px; display:flex; gap:12px; align-items:center; justify-content:space-between;
@@ -42,8 +43,8 @@
     }
     .stat h4{margin:0; font-size:12px; color:var(--muted); font-weight:700}
     .stat p{margin:8px 0 0; font-size:24px; font-weight:900}
-    .typing-area{min-height:170px; padding:18px; border-radius:14px; position:relative; overflow:hidden}
-    #words{line-height:2.1; font-size:20px; user-select:none; caret-color:transparent}
+    .typing-area{min-height:170px; padding:18px; border-radius:14px; position:relative; overflow:auto; /* overflow-y:auto for mobile fix */}
+    #words{line-height:2.1; font-size:20px; user-select:none; caret-color:transparent; max-height:38vh; overflow-y:auto;}
     .word{display:inline-block; padding:0 6px; margin:0 4px 8px 0; border-radius:8px; transition:all .15s}
     .word.active{background:linear-gradient(90deg, rgba(0,255,216,0.06), rgba(96,255,229,0.03)); box-shadow:0 0 18px rgba(0,255,216,0.06) inset}
     .word.done{opacity:.45}
@@ -60,9 +61,36 @@
     .small{font-size:12px;color:var(--muted)}
     /* responsive */
     @media (max-width:880px){
+      main{width:100%; margin:8px auto 24px;}
       .stats{grid-template-columns:repeat(2,1fr)}
       header{padding:10px}
+      .typing-area{padding:9px;}
     }
+    @media (max-width:600px){
+      main{width:100%; margin:6px auto 8px;}
+      .stats{grid-template-columns:1fr;}
+      .input-wrap{flex-direction:column; gap:8px;}
+      .typing-area{min-height:120px; padding:8px;}
+      #words{font-size:17px;}
+    }
+    @media (max-width:420px){
+      .stats{grid-template-columns:1fr;}
+      header{flex-direction:column; gap:6px;}
+      .brand{font-size:16px;}
+      .typing-area{min-height:90px;}
+      #words{font-size:15px;}
+      .input-wrap{min-width:100px;}
+    }
+    /* touch-friendly improvements */
+    button, select, label.switch, input[type="checkbox"]{
+      font-size:16px;
+      min-width:40px;
+      min-height:36px;
+      touch-action:manipulation;
+    }
+    /* scroll bar for words */
+    #words::-webkit-scrollbar{width:6px;background:rgba(0,0,0,0.1);}
+    #words::-webkit-scrollbar-thumb{background:rgba(0,255,216,0.15);}
   </style>
 </head>
 <body>
@@ -214,6 +242,8 @@
     els.input.focus();
     updateModeLabel();
     loadBest();
+    // scroll to top of words area for mobile/desktop
+    els.words.scrollTop = 0;
   }
 
   function updateUI(){
@@ -245,9 +275,16 @@
     const left = [...active.childNodes].slice(0, idx).reduce((acc,n)=> acc + (n.getBoundingClientRect? n.getBoundingClientRect().width : 10), 0);
     caret.style.left = left + 'px';
     active.appendChild(caret);
-    // scroll into view
-    const top = active.offsetTop;
-    els.words.parentElement.scrollTop = Math.max(0, top - 20);
+
+    // ----------- FIX: Prevent auto-scroll of page (mobile/desktop) ----------
+    // Instead, only scroll the #words container to keep caret in view
+    // Also, if the active word is outside of #words view (overflow), scroll to it
+    const wordsRect = els.words.getBoundingClientRect();
+    const activeRect = active.getBoundingClientRect();
+    // Only scroll #words if active word is outside visible area
+    if(activeRect.top < wordsRect.top || activeRect.bottom > wordsRect.bottom){
+      els.words.scrollTop += (activeRect.top - wordsRect.top) - 20; // offset for visibility
+    }
   }
 
   /* ---------- STATS ---------- */
