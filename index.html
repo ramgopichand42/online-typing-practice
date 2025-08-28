@@ -6,21 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary SEO Meta Tags -->
-  <meta name="description" content="Practice online typing for free. Improve your speed and accuracy with our typing lessons, tests, and games. Best online typing practice for everyone." />
-  <meta name="keywords" content="online typing practice, free typing test, typing lessons, typing games, improve typing, typing speed, WPM, accuracy" />
+  <meta name="description" content="Online typing practice for free! Take typing speed tests, improve your accuracy, and master keyboard skills. Best free typing tool for students, professionals & beginners." />
+  <meta name="keywords" content="online typing practice, typing test, free typing test, typing lessons, typing games, improve typing speed, typing accuracy, WPM, keyboard practice, fast typing, learn typing" />
   <link rel="canonical" href="https://onlinetypingpractice.app/" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Online Typing Practice | Free Typing Speed Test & Lessons" />
-  <meta property="og:description" content="Practice online typing for free. Lessons, tests & games to improve your typing speed and accuracy." />
+  <meta property="og:description" content="Free online typing practice app with lessons, speed tests & games. Boost your typing speed and accuracy with fun tools!" />
   <meta property="og:url" content="https://onlinetypingpractice.app/" />
   <meta property="og:image" content="https://onlinetypingpractice.app/logo.png" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Online Typing Practice | Free Typing Speed Test & Lessons" />
-  <meta name="twitter:description" content="Practice online typing for free. Improve your speed and accuracy with our typing lessons, tests, and games." />
+  <meta name="twitter:description" content="Practice typing online for free. Improve speed and accuracy with typing lessons, tests and games." />
   <meta name="twitter:image" content="https://onlinetypingpractice.app/logo.png" />
 
   <!-- Structured Data (JSON-LD) -->
@@ -30,11 +30,40 @@
     "@type": "WebSite",
     "name": "Online Typing Practice",
     "url": "https://onlinetypingpractice.app/",
-    "description": "Practice online typing for free. Improve your typing speed and accuracy with our lessons, tests and games.",
+    "description": "Online typing practice and free typing speed test. Learn, practice and improve keyboard skills.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://onlinetypingpractice.app/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    },
     "sameAs": [
       "https://twitter.com/yourhandle",
       "https://facebook.com/yourpage"
     ]
+  }
+  </script>
+
+  <!-- FAQ Structured Data (Google Rich Results) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "How can I improve my typing speed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Practice regularly using our online typing practice tool, take speed tests, and focus on accuracy."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this online typing practice tool free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! All typing lessons, tests, and games are 100% free for everyone."
+      }
+    }]
   }
   </script>
 
@@ -44,8 +73,8 @@
 <body>
   <header class="main-header" id="mainHeader">
     <div class="header-left">
-      <div class="tool-logo" aria-label="Tool Logo">
-        <img src="logo.png" alt="Online Typing Practice Logo" />
+      <div class="tool-logo" aria-label="Online Typing Practice Logo">
+        <img src="logo.png" alt="Online Typing Practice Tool Logo" />
       </div>
     </div>
     <div class="header-center">
@@ -53,8 +82,8 @@
       <nav class="menu-nav" id="menuNav" aria-label="Main Menu">
         <ul>
           <li><a href="index.html" class="menu-link active">Home</a></li>
-          <li><a href="test.html" class="menu-link" id="testPageLink">Test</a></li>
-          <li><a href="games.html" class="menu-link" id="gamePageLink">Games</a></li>
+          <li><a href="test.html" class="menu-link" id="testPageLink">Typing Test</a></li>
+          <li><a href="games.html" class="menu-link" id="gamePageLink">Typing Games</a></li>
         </ul>
       </nav>
     </div>
@@ -65,11 +94,11 @@
 
   <main class="main-body">
     <section class="center-content">
-      <div class="website-title"><h2>Typing Tool by Student</h2></div>
+      <div class="website-title"><h2>Free Online Typing Practice Tool</h2></div>
       <div class="website-description">
         <p>
-          Practice your typing, improve your speed and accuracy, and track your progress in a fun way!
-          Our free online typing practice tool offers lessons, tests, and games for all levels.
+          Welcome! Our <strong>online typing practice</strong> tool helps you master keyboard skills.  
+          Take free typing tests, play typing games, and learn typing lessons to improve your <strong>typing speed</strong> and <strong>accuracy</strong>.
         </p>
       </div>
       <div class="achievement-goal-card" id="achievementCard">
@@ -77,48 +106,71 @@
           <div class="achievement-goal-left">
             <h3>Last Achievement 🏆</h3>
             <div class="score"><span class="score-label">Score:</span><span class="score-value">98</span></div>
-            <div class="wpm"><span class="wpm-label">WPM:</span><span class="wpm-value">72</span></div>
+            <div class="wpm"><span class="wpm-label">WPM (Words Per Minute):</span><span class="wpm-value">72</span></div>
             <div class="accuracy"><span class="accuracy-label">Accuracy:</span><span class="accuracy-value">94%</span></div>
           </div>
           <div class="achievement-goal-divider"></div>
           <div class="achievement-goal-right">
-            <h3>Daily Goal 🎯</h3>
+            <h3>Daily Typing Goal 🎯</h3>
             <div class="progress-bar"><div class="progress" style="width: 65%"></div></div>
             <span class="progress-text">65% Complete</span>
           </div>
         </div>
       </div>
-      <div class="button-row">
-        <div class="main-btn-card" data-href="beginner.html"><button class="main-btn">Beginner</button></div>
-        <div class="main-btn-card" data-href="intermediate.html"><button class="main-btn">Intermediate</button></div>
-        <div class="main-btn-card" data-href="advance.html"><button class="main-btn">Advance</button></div>
-        <div class="main-btn-card" data-href="tutorial.html"><button class="main-btn">Tutorial</button></div>
-        <div class="main-btn-card" data-href="games.html"><button class="main-btn">Games</button></div>
-      </div>
+      <nav class="button-row" aria-label="Typing Levels">
+        <div class="main-btn-card" data-href="beginner.html"><button class="main-btn" aria-label="Beginner Typing Lessons">Beginner</button></div>
+        <div class="main-btn-card" data-href="intermediate.html"><button class="main-btn" aria-label="Intermediate Typing Lessons">Intermediate</button></div>
+        <div class="main-btn-card" data-href="advance.html"><button class="main-btn" aria-label="Advance Typing Lessons">Advance</button></div>
+        <div class="main-btn-card" data-href="tutorial.html"><button class="main-btn" aria-label="Typing Tutorials">Tutorial</button></div>
+        <div class="main-btn-card" data-href="games.html"><button class="main-btn" aria-label="Typing Games">Games</button></div>
+      </nav>
       <div class="call-to-action">
-        <p>Start your journey today! <span class="motivation">"Every keystroke brings you closer to mastery."</span></p>
+        <p>Start your online typing practice journey today! <span class="motivation">"Every keystroke brings you closer to mastery."</span></p>
       </div>
+      <!-- Internal links for SEO -->
+      <div class="internal-links" style="margin-top:2em;">
+        <a href="test.html">Try our Free Typing Test</a> |
+        <a href="tutorial.html">Read Typing Tips & Tutorials</a> |
+        <a href="games.html">Play Typing Games</a>
+      </div>
+      <!-- FAQ Section for SEO -->
+      <section class="faq-section" aria-label="Typing Practice FAQs">
+        <h2>Frequently Asked Questions about Online Typing Practice</h2>
+        <div class="faq-item">
+          <h3>How do I improve my typing speed?</h3>
+          <p>Practice regularly using our free typing tests and lessons. Focus on accuracy first, then gradually increase speed.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Is online typing practice free here?</h3>
+          <p>Yes, all our typing lessons, games and speed tests are totally free for everyone!</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can I track my typing progress?</h3>
+          <p>Yes! Your scores and achievements are saved to help you improve over time.</p>
+        </div>
+      </section>
     </section>
   </main>
 
-  <button class="scroll-down-btn" id="scrollDownBtn" title="Scroll Down"><span class="arrow">&#8595;</span></button>
-  <button class="scroll-up-btn" id="scrollUpBtn" title="Scroll Up"><span class="arrow">&#8593;</span></button>
-  <button class="share-btn" id="shareBtn" title="Share"><span class="share-icon">&#128257;</span></button>
+  <!-- Buttons for accessibility -->
+  <button class="scroll-down-btn" id="scrollDownBtn" title="Scroll Down" aria-label="Scroll Down"><span class="arrow">&#8595;</span></button>
+  <button class="scroll-up-btn" id="scrollUpBtn" title="Scroll Up" aria-label="Scroll Up"><span class="arrow">&#8593;</span></button>
+  <button class="share-btn" id="shareBtn" title="Share" aria-label="Share"><span class="share-icon">&#128257;</span></button>
 
   <div class="share-popup" id="sharePopup">
     <div class="share-popup-inner">
       <div class="share-title">Share on:</div>
       <div class="share-socials">
-        <a href="#" class="social-icon" id="shareTwitter" title="Share on Twitter" target="_blank" rel="noopener"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Share on Twitter" /></a>
-        <a href="#" class="social-icon" id="shareFacebook" title="Share on Facebook" target="_blank" rel="noopener"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Share on Facebook" /></a>
-        <a href="#" class="social-icon" id="shareWhatsapp" title="Share on WhatsApp" target="_blank" rel="noopener"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="Share on WhatsApp" /></a>
-        <a href="#" class="social-icon" id="shareTelegram" title="Share on Telegram" target="_blank" rel="noopener"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="Share on Telegram" /></a>
-        <a href="#" class="social-icon" id="shareCopy" title="Copy link"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/link.svg" alt="Copy Link" /></a>
+        <a href="#" class="social-icon" id="shareTwitter" title="Share on Twitter" target="_blank" rel="noopener"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Share Online Typing Practice on Twitter" /></a>
+        <a href="#" class="social-icon" id="shareFacebook" title="Share on Facebook" target="_blank" rel="noopener"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Share Online Typing Practice on Facebook" /></a>
+        <a href="#" class="social-icon" id="shareWhatsapp" title="Share on WhatsApp" target="_blank" rel="noopener"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="Share Online Typing Practice on WhatsApp" /></a>
+        <a href="#" class="social-icon" id="shareTelegram" title="Share on Telegram" target="_blank" rel="noopener"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="Share Online Typing Practice on Telegram" /></a>
+        <a href="#" class="social-icon" id="shareCopy" title="Copy link"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/link.svg" alt="Copy Online Typing Practice Link" /></a>
       </div>
     </div>
   </div>
 
-  <footer class="main-footer">
+  <footer class="main-footer" aria-label="Footer">
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="Privacy-Policy.html">Privacy Policy</a></li>
@@ -126,7 +178,7 @@
       <li><a href="about.html">About Us</a></li>
       <li><a href="Contact-Us.html">Contact Us</a></li>
     </ul>
-    <div class="copyright">© <span id="year"></span> Copyright</div>
+    <div class="copyright">© <span id="year"></span> OnlineTypingPractice.app</div>
   </footer>
 
   <script src="script.js"></script>
