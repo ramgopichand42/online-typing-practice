@@ -8,22 +8,30 @@
   <!-- Primary SEO Meta Tags -->
   <meta name="description" content="Online typing practice for free! Take typing speed tests, improve your accuracy, and master keyboard skills. Best free typing tool for students, professionals & beginners." />
   <meta name="keywords" content="online typing practice, typing test, free typing test, typing lessons, typing games, improve typing speed, typing accuracy, WPM, keyboard practice, fast typing, learn typing" />
+  <meta name="author" content="OnlineTypingPractice.app" />
   <link rel="canonical" href="https://onlinetypingpractice.app/" />
+
+  <!-- Google Site Verification (update code in content) -->
+  <meta name="google-site-verification" content="YOUR_GOOGLE_VERIFICATION_CODE" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Online Typing Practice | Free Typing Speed Test & Lessons" />
   <meta property="og:description" content="Free online typing practice app with lessons, speed tests & games. Boost your typing speed and accuracy with fun tools!" />
   <meta property="og:url" content="https://onlinetypingpractice.app/" />
-  <meta property="og:image" content="https://onlinetypingpractice.app/logo.png" />
+  <meta property="og:image" content="https://onlinetypingpractice.app/online-typing-practice-logo.png" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Online Typing Practice | Free Typing Speed Test & Lessons" />
   <meta name="twitter:description" content="Practice typing online for free. Improve speed and accuracy with typing lessons, tests and games." />
-  <meta name="twitter:image" content="https://onlinetypingpractice.app/logo.png" />
+  <meta name="twitter:image" content="https://onlinetypingpractice.app/online-typing-practice-logo.png" />
 
-  <!-- Structured Data (JSON-LD) -->
+  <!-- Structured Data (JSON-LD) Website -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -67,18 +75,24 @@
   }
   </script>
 
+  <!-- Performance: Preload important resources -->
+  <link rel="preload" href="style.css" as="style" />
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Accessibility: Language -->
+  <meta http-equiv="Content-Language" content="en" />
+
 </head>
 <body>
   <header class="main-header" id="mainHeader">
     <div class="header-left">
       <div class="tool-logo" aria-label="Online Typing Practice Logo">
-        <img src="logo.png" alt="Online Typing Practice Tool Logo" />
+        <img src="online-typing-practice-logo.png" alt="Online Typing Practice Tool Logo | Free Typing Speed Test" />
       </div>
     </div>
     <div class="header-center">
-      <h1 class="header-title">Online Typing Practice</h1>
+      <h1 class="header-title"><strong>Online Typing Practice</strong></h1>
       <nav class="menu-nav" id="menuNav" aria-label="Main Menu">
         <ul>
           <li><a href="index.html" class="menu-link active">Home</a></li>
@@ -94,13 +108,36 @@
 
   <main class="main-body">
     <section class="center-content">
-      <div class="website-title"><h2>Free Online Typing Practice Tool</h2></div>
+      <div class="website-title">
+        <h2>Free Online Typing Practice Tool</h2>
+      </div>
       <div class="website-description">
         <p>
           Welcome! Our <strong>online typing practice</strong> tool helps you master keyboard skills.  
           Take free typing tests, play typing games, and learn typing lessons to improve your <strong>typing speed</strong> and <strong>accuracy</strong>.
         </p>
       </div>
+
+      <!-- SEO: Detailed Keyword-rich Section -->
+      <section>
+        <h2>Why Use Online Typing Practice?</h2>
+        <p>
+          <strong>Online typing practice</strong> is the fastest way to improve your typing speed and accuracy. Our typing test and lessons are designed for beginners and professionals. Whether you want to learn touch typing, increase your WPM, or simply have fun with typing games, this website provides everything for free.
+        </p>
+        <ul>
+          <li>Free typing speed tests and lessons</li>
+          <li>Track progress with achievements</li>
+          <li>Practice keyboard skills anywhere, anytime</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Benefits of Practicing Typing Online</h2>
+        <p>
+          Practicing typing online helps you work faster, reduces errors, and improves your confidence. Our free typing tool is trusted by students, professionals, and teachers worldwide. Try our typing test today and see how much you can improve in just a week!
+        </p>
+      </section>
+
       <div class="achievement-goal-card" id="achievementCard">
         <div class="achievement-goal-row">
           <div class="achievement-goal-left">
@@ -133,6 +170,7 @@
         <a href="tutorial.html">Read Typing Tips & Tutorials</a> |
         <a href="games.html">Play Typing Games</a>
       </div>
+
       <!-- FAQ Section for SEO -->
       <section class="faq-section" aria-label="Typing Practice FAQs">
         <h2>Frequently Asked Questions about Online Typing Practice</h2>
@@ -178,9 +216,18 @@
       <li><a href="about.html">About Us</a></li>
       <li><a href="Contact-Us.html">Contact Us</a></li>
     </ul>
+    <div class="social-footer">
+      <a href="https://twitter.com/yourhandle" rel="noopener" target="_blank">Twitter</a> |
+      <a href="https://facebook.com/yourpage" rel="noopener" target="_blank">Facebook</a>
+    </div>
     <div class="copyright">© <span id="year"></span> OnlineTypingPractice.app</div>
   </footer>
 
-  <script src="script.js"></script>
+  <!-- Accessibility JS: Add year dynamically -->
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+  <!-- Defer JS for performance -->
+  <script src="script.js" defer></script>
 </body>
 </html>
