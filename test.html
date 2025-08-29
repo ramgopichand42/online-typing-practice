@@ -2,17 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Online Typing Practice: Improve Your WPM in English & Hindi</title>
+  <title>Online Typing Test: Free English & Hindi Typing Practice</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Master online typing practice for free! Our tool helps you improve your WPM and accuracy with engaging English and Hindi tests. Start your typing journey today.">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' fonts.googleapis.com fonts.gstatic.com;">
+  <meta name="description" content="Improve your typing speed with our free online typing test. Practice in English and Hindi with WPM, accuracy, and history tracking. Start your typing journey today!">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary1: #43e97b;
+      --primary2: #38f9d7;
+      --accent1: #4e54c8;
+      --accent2: #8f94fb;
+      --bg: #fcfcff;
+      --box: #fff;
+      --shadow: 0 8px 24px rgba(60,60,60,0.12);
+      --radius: 18px;
+      --dark-bg: #191c26;
+      --dark-box: #23263a;
+      --dark-text: #f7f8fa;
+      --dark-shadow: 0 8px 24px rgba(20,20,30,0.22);
+      --dark-primary: #43e97b;
+      --dark-accent: #38f9d7;
+      --highlight: #fff8a3;
+    }
     body {
       min-height: 100vh;
       margin: 0;
       font-family: 'Segoe UI', Verdana, Arial, sans-serif;
-      background: linear-gradient(120deg, #4e54c8, #8f94fb, #43e97b);
+      background: linear-gradient(120deg, var(--accent1), var(--accent2), var(--primary1));
       background-size: 200% 200%;
       animation: bgGradientMove 7s ease-in-out infinite alternate;
       display: flex;
@@ -25,15 +41,15 @@
       100% {background-position: right bottom;}
     }
     body.dark {
-      background: linear-gradient(120deg, #191c26, #23263a, #313c50);
-      color: #f7f8fa;
+      background: linear-gradient(120deg, var(--dark-bg), #23263a, #313c50);
+      color: var(--dark-text);
     }
     .container {
-      background: #fff;
-      border-radius: 18px;
-      box-shadow: 0 8px 24px rgba(60,60,60,0.12);
+      background: var(--box);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
       padding: 38px 32px;
-      max-width: 600px;
+      max-width: 600px; /* Increased for better desktop/tablet view */
       width: 97vw;
       min-width: 320px;
       text-align: center;
@@ -44,19 +60,19 @@
       transition: background 0.3s, box-shadow 0.3s, color 0.3s;
     }
     body.dark .container {
-      background: #23263a;
-      box-shadow: 0 8px 24px rgba(20,20,30,0.22);
-      color: #f7f8fa;
+      background: var(--dark-box);
+      box-shadow: var(--dark-shadow);
+      color: var(--dark-text);
     }
     @keyframes popIn {
       0% { transform: scale(0.7); opacity: 0; }
       100% { transform: scale(1); opacity: 1; }
     }
     h1 {
-      background: linear-gradient(90deg, #43e97b, #38f9d7 80%);
+      background: linear-gradient(90deg, var(--primary1), var(--primary2) 80%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      font-size: clamp(1.5rem, 4vw, 2.1rem);
+      font-size: clamp(1.5rem, 4vw, 2.1rem); /* Responsive font size */
       margin-bottom: 5px;
       font-weight: 800;
       letter-spacing: 2px;
@@ -83,23 +99,23 @@
       transition: color 0.2s;
     }
     .theme-btn:hover {
-      color: #43e97b;
+      color: var(--primary1);
       transform: scale(1.2);
     }
     label {
-      font-size: clamp(0.9rem, 2vw, 1.05rem);
+      font-size: clamp(0.9rem, 2vw, 1.05rem); /* Responsive font size */
       font-weight: 600;
       color: #4e54c8;
       transition: color 0.2s;
     }
     body.dark label {
-      color: #43e97b;
+      color: var(--dark-primary);
     }
     select {
-      font-size: clamp(0.9rem, 2vw, 1.08rem);
+      font-size: clamp(0.9rem, 2vw, 1.08rem); /* Responsive font size */
       border-radius: 9px;
       padding: 5px 14px;
-      border: 1.5px solid #38f9d7;
+      border: 1.5px solid var(--primary2);
       background: #f6faff;
       color: #24292f;
       outline: none;
@@ -108,7 +124,7 @@
       margin-right: 10px;
     }
     select:focus {
-      border: 2px solid #43e97b;
+      border: 2px solid var(--primary1);
       background: #e8ffe8;
     }
     select:disabled {
@@ -117,21 +133,21 @@
     }
     body.dark select {
       background: #23263a;
-      color: #f7f8fa;
-      border-color: #43e97b;
+      color: var(--dark-text);
+      border-color: var(--dark-primary);
     }
     .stats {
       display: flex;
       justify-content: space-between;
       margin: 12px 0 16px 0;
-      font-size: clamp(0.95rem, 2vw, 1.06rem);
+      font-size: clamp(0.95rem, 2vw, 1.06rem); /* Responsive font size */
       color: #57606f;
       flex-wrap: wrap;
       gap: 8px;
       transition: color 0.3s;
     }
     body.dark .stats {
-      color: #43e97b;
+      color: var(--dark-primary);
     }
     .progress-bar-bg {
       width: 100%;
@@ -147,7 +163,7 @@
     }
     .progress-bar {
       height: 100%;
-      background: linear-gradient(90deg, #43e97b, #38f9d7);
+      background: linear-gradient(90deg, var(--primary1), var(--primary2));
       border-radius: 8px;
       width: 0;
       transition: width 0.5s cubic-bezier(.68,-0.55,.27,1.55);
@@ -157,7 +173,7 @@
     .test-area {
       width: 100%;
       min-height: 52px;
-      font-size: clamp(1rem, 2.5vw, 1.12rem);
+      font-size: clamp(1rem, 2.5vw, 1.12rem); /* Responsive font size */
       background: #f0f4ff;
       border-radius: 11px;
       margin-bottom: 10px;
@@ -179,12 +195,12 @@
       border-color: #313c50;
     }
     .test-area.active {
-      border-color: #43e97b;
-      box-shadow: 0 0 0 2px #43e97b33;
+      border-color: var(--primary1);
+      box-shadow: 0 0 0 2px var(--primary1)33;
     }
     .test-area.hindi, textarea.hindi {
       font-family: 'Noto Sans Devanagari', 'Mangal', Arial, sans-serif;
-      font-size: clamp(1rem, 2.5vw, 1.16rem);
+      font-size: clamp(1rem, 2.5vw, 1.16rem); /* Responsive font size */
       letter-spacing: 0.5px;
     }
     .test-area .word,
@@ -198,7 +214,7 @@
       position: relative;
     }
     .test-area .next {
-      background: #fff8a3;
+      background: var(--highlight);
       color: #222;
       box-shadow: 0 2px 8px #ffc93355;
       z-index: 1;
@@ -209,7 +225,7 @@
       100% { box-shadow: 0 4px 16px #ffc93399; }
     }
     .test-area .correct {
-      color: #43e97b;
+      color: var(--primary1);
       background: #e8ffe8;
       transform: scale(1.13);
       animation: popWord 0.22s cubic-bezier(.68,-0.55,.27,1.55);
@@ -236,39 +252,39 @@
     }
     textarea {
       width: 100%;
-      font-size: clamp(1rem, 2.5vw, 1.13rem);
+      font-size: clamp(1rem, 2.5vw, 1.13rem); /* Responsive font size */
       padding: 13px;
       border-radius: 11px;
-      border: 2px solid #8f94fb;
+      border: 2px solid var(--accent2);
       margin-bottom: 13px;
       outline: none;
       resize: none;
       box-sizing: border-box;
       transition: border 0.2s, background 0.2s;
-      background: #fcfcff;
+      background: var(--bg);
       min-height: 40px;
       font-family: inherit;
     }
     body.dark textarea {
       background: #23263a;
-      color: #f7f8fa;
-      border-color: #43e97b;
+      color: var(--dark-text);
+      border-color: var(--dark-primary);
     }
     textarea.hindi {
       font-family: 'Noto Sans Devanagari', 'Mangal', Arial, sans-serif;
-      font-size: clamp(1rem, 2.5vw, 1.16rem);
+      font-size: clamp(1rem, 2.5vw, 1.16rem); /* Responsive font size */
       letter-spacing: 0.5px;
     }
     textarea:focus {
-      border: 2px solid #43e97b;
+      border: 2px solid var(--primary1);
       background: #f6ffe8;
     }
     button {
       padding: 11px 29px;
-      font-size: clamp(0.9rem, 2vw, 1.11rem);
+      font-size: clamp(0.9rem, 2vw, 1.11rem); /* Responsive font size */
       border-radius: 29px;
       border: none;
-      background: linear-gradient(90deg, #43e97b, #38f9d7);
+      background: linear-gradient(90deg, var(--primary1), var(--primary2));
       color: white;
       font-weight: 600;
       cursor: pointer;
@@ -282,12 +298,12 @@
       z-index: 2;
     }
     button:hover, button:focus-visible {
-      background: linear-gradient(90deg, #38f9d7, #43e97b);
+      background: linear-gradient(90deg, var(--primary2), var(--primary1));
       box-shadow: 0 4px 12px rgba(60,60,60,0.22);
     }
     button:active {
       transform: scale(0.97);
-      background: linear-gradient(90deg, #38f9d7, #43e97b);
+      background: linear-gradient(90deg, var(--primary2), var(--primary1));
     }
     button:disabled {
       opacity: 0.7;
@@ -297,7 +313,7 @@
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 8px; /* Added gap for better spacing on mobile */
     }
     .reload-btn {
       background: linear-gradient(90deg, #ffc933, #ff6767);
@@ -312,7 +328,7 @@
     }
     .result {
       margin-top: 15px;
-      font-size: clamp(1rem, 2.5vw, 1.13rem);
+      font-size: clamp(1rem, 2.5vw, 1.13rem); /* Responsive font size */
       background: #d4eeff;
       border-radius: 11px;
       padding: 10px 0;
@@ -324,7 +340,7 @@
     }
     body.dark .result {
       background: #23263a;
-      color: #f7f8fa;
+      color: var(--dark-text);
       box-shadow: 0 2px 8px #43e97b55;
     }
     @keyframes slideInResult {
@@ -342,7 +358,7 @@
       color: #333;
       border-radius: 12px;
       margin: 16px 0 0 0;
-      font-size: clamp(0.9rem, 2vw, 1rem);
+      font-size: clamp(0.9rem, 2vw, 1rem); /* Responsive font size */
       padding: 10px;
       box-shadow: 0 2px 8px #43e97b22;
       text-align: left;
@@ -352,18 +368,20 @@
     }
     body.dark .history {
       background: #23263a;
-      color: #f7f8fa;
+      color: var(--dark-text);
     }
     .history-title {
       font-weight: 600;
-      color: #4e54c8;
+      color: var(--accent1);
       margin-bottom: 6px;
-      font-size: clamp(0.95rem, 2vw, 1.03rem);
+      font-size: clamp(0.95rem, 2vw, 1.03rem); /* Responsive font size */
       display: block;
     }
     body.dark .history-title {
-      color: #43e97b;
+      color: var(--dark-primary);
     }
+    
+    /* Removed redundant media queries by using clamp() and flexbox gap */
     @media (max-width: 700px) {
       .container {
         padding: 16px 3vw;
@@ -374,8 +392,9 @@
         padding: 7px 1vw;
       }
     }
+
     button:focus-visible {
-      outline: 3px solid #38f9d7;
+      outline: 3px solid var(--primary2);
     }
     ::-webkit-scrollbar {
       width: 0px;
@@ -384,9 +403,9 @@
   </style>
 </head>
 <body>
-  <main class="container">
-    <h1>Online Typing Practice <span style="font-size:clamp(0.8rem, 2vw, 1rem);">(WPM & Accuracy)</span></h1>
-    <section class="row">
+  <div class="container">
+    <h1>Online Typing Test <span style="font-size:clamp(0.8rem, 2vw, 1rem);"> (Practice in English & Hindi)</span></h1>
+    <div class="row">
       <label for="langSelect">Language:</label>
       <select id="langSelect">
         <option value="en">English</option>
@@ -402,49 +421,48 @@
         <option value="120">120s</option>
       </select>
       <button class="theme-btn" id="themeBtn" title="Switch theme" aria-label="Switch theme">🌗</button>
-    </section>
-    <section class="stats">
+    </div>
+    <div class="stats">
       <span id="timer">⏱️ 60s</span>
       <span id="wpm">WPM: 0</span>
       <span id="accuracy">Accuracy: 100%</span>
-    </section>
+    </div>
     <div class="progress-bar-bg">
       <div class="progress-bar" id="progressBar"></div>
     </div>
     <div class="test-area" id="testArea"></div>
     <textarea id="inputArea" rows="3" placeholder="Start typing here..." disabled></textarea>
-    <div class="button-group">
-      <button id="startBtn">Start</button>
+    <div class="button-group"> <button id="startBtn">Start</button>
       <button id="resetBtn">Reset</button>
       <button id="reloadBtn" class="reload-btn" title="Random text">🔄</button>
     </div>
     <div class="result" id="resultBox" style="display:none"></div>
     <canvas id="confettiCanvas" class="confetti" style="display:none"></canvas>
     <div class="history" id="historyBox" style="display:none"></div>
-  </main>
+  </div>
   <script>
-    // Typing texts for English and Hindi
+    // Practice texts (English + Hindi)
     const texts = {
       en: [
-        "Online typing practice is essential for a fast career. Improve your WPM and accuracy to excel.",
-        "A regular online typing practice routine will significantly boost your words per minute. Consistency is key.",
-        "The quick brown fox jumps over the lazy dog. This sentence is a classic for online typing tests, using every letter of the alphabet.",
-        "Learning to type quickly opens up new possibilities in coding, writing, and communication. Start your typing practice online today!",
+        "Speed and accuracy matter in typing tests. Practice daily to improve your skills.",
+        "GitHub Copilot can help you write better code, faster and smarter than ever before.",
+        "The quick brown fox jumps over the lazy dog. Typing this phrase tests every key.",
+        "Consistency is the key to mastering typing. Try to type without looking at the keyboard.",
+        "Learning to type quickly opens up new possibilities in coding, writing, and communication.",
         "A fast typist can save countless hours on projects and assignments. The keyboard is your most powerful tool.",
-        "Improve your cognitive skills and hand-eye coordination by consistently practicing typing. It's a skill that pays off.",
-        "Dedicate time to a free online typing practice to see your speed and accuracy soar. Small steps lead to big improvements."
+        "Improve your cognitive skills and hand-eye coordination by consistently practicing typing. It's a skill that pays off."
       ],
       hi: [
-        "ऑनलाइन टाइपिंग अभ्यास गति और शुद्धता के लिए बहुत ज़रूरी है। रोज़ अभ्यास करें और अपनी क्षमता बढ़ाएँ।",
-        "कंप्यूटर पर हिंदी में टाइप करना सीखना अब बहुत आसान हो गया है। ऑनलाइन अभ्यास से यह संभव है।",
-        "सफलता का राज़ मेहनत और लगन में छुपा है। नियमित ऑनलाइन टाइपिंग प्रैक्टिस से सब कुछ संभव है।",
-        "अगर आप बिना देखे टाइप करना सीख लें तो आपकी स्पीड और सटीकता बहुत बढ़ जाएगी। यह ऑनलाइन अभ्यास से ही मुमकिन है।",
-        "शुरुआत में गलतियाँ होना सामान्य है, लेकिन लगातार अभ्यास करते रहें। हमारा ऑनलाइन टूल इसमें आपकी मदद करेगा।",
-        "डिजिटल युग में तेज़ी से टाइप करना एक आवश्यक कौशल है। यह आपको दूसरों से आगे रखेगा। आज ही ऑनलाइन प्रैक्टिस शुरू करें।",
-        "प्रतिदिन पाँच मिनट का ऑनलाइन अभ्यास आपकी टाइपिंग गति को आश्चर्यजनक रूप से बढ़ा सकता है। आज ही से शुरुआत करें।"
+        "टाइपिंग टेस्ट में गति और शुद्धता बहुत ज़रूरी है। रोज़ अभ्यास करें और अपनी क्षमता बढ़ाएँ।",
+        "कंप्यूटर पर हिंदी में टाइप करना सीखना अब बहुत आसान हो गया है।",
+        "सफलता का राज़ मेहनत और लगन में छुपा है। अभ्यास से सब कुछ संभव है।",
+        "अगर आप बिना देखे टाइप करना सीख लें तो आपकी स्पीड और सटीकता बहुत बढ़ जाएगी।",
+        "शुरुआत में गलतियाँ होना सामान्य है, लेकिन लगातार अभ्यास करते रहें।",
+        "डिजिटल युग में तेज़ी से टाइप करना एक आवश्यक कौशल है। यह आपको दूसरों से आगे रखेगा।",
+        "प्रतिदिन पाँच मिनट का अभ्यास आपकी टाइपिंग गति को आश्चर्यजनक रूप से बढ़ा सकता है।"
       ]
     };
-    // DOM elements
+
     const testArea = document.getElementById('testArea');
     const inputArea = document.getElementById('inputArea');
     const timerEl = document.getElementById('timer');
@@ -461,7 +479,6 @@
     const confettiCanvas = document.getElementById('confettiCanvas');
     const historyBox = document.getElementById('historyBox');
 
-    // State variables
     let timer = parseInt(timerSelect.value);
     let timerInterval = null;
     let started = false;
@@ -472,7 +489,7 @@
     let wrongWords = 0;
     let scoreHistory = [];
 
-    // Confetti animation
+    // Confetti for celebration
     function fireConfetti() {
       confettiCanvas.style.display = 'block';
       const ctx = confettiCanvas.getContext('2d');
@@ -516,14 +533,13 @@
       loop();
     }
 
-    // Render test text with highlighting
     function renderTestText(text, userInput = '') {
       testArea.classList.toggle('hindi', currentLang === 'hi');
       testArea.classList.toggle('active', started);
-      testArea.innerHTML = '';
       if (currentLang === 'hi') {
         let words = text.split(' ');
         let userWords = userInput.trim().split(' ');
+        testArea.innerHTML = '';
         words.forEach((word, i) => {
           const span = document.createElement('span');
           span.classList.add('word');
@@ -543,6 +559,7 @@
         });
       } else {
         testArea.classList.remove('hindi');
+        testArea.innerHTML = '';
         for (let i = 0; i < text.length; i++) {
           const span = document.createElement('span');
           span.classList.add('char');
@@ -560,33 +577,30 @@
       }
     }
 
-    // Update stats display
     function updateStats() {
       let wpm, acc;
       let timeSpent = (parseInt(timerSelect.value) - timer) / 60 || 1;
       if (currentLang === 'hi') {
         let words = inputArea.value.trim().split(/\s+/).filter(Boolean).length;
-        wpm = Math.round(words / (timeSpent || 1));
+        wpm = Math.round(words / timeSpent);
         wpmEl.textContent = `शब्द प्रति मिनट: ${wpm}`;
-        acc = (correctWords + wrongWords) ? Math.max(0, Math.round((correctWords/(correctWords+wrongWords))*100)) : 100;
+        acc = correctWords + wrongWords ? Math.max(0, Math.round((correctWords/(correctWords+wrongWords))*100)) : 100;
         accuracyEl.textContent = `शुद्धता: ${acc}%`;
       } else {
-        let chars = inputArea.value.replace(/\s/g, '').length;
-        wpm = Math.round((chars/5) / (timeSpent || 1));
+        let words = inputArea.value.trim().split(/\s+/).filter(Boolean).length;
+        wpm = Math.round(words / timeSpent);
         wpmEl.textContent = `WPM: ${wpm}`;
         acc = totalTyped ? Math.max(0, Math.round((correctWords/totalTyped)*100)) : 100;
         accuracyEl.textContent = `Accuracy: ${acc}%`;
       }
     }
 
-    // Progress bar update
     function updateProgressBar() {
       let totalTime = parseInt(timerSelect.value);
       let percent = ((totalTime - timer) / totalTime) * 100;
       progressBar.style.width = percent + '%';
     }
 
-    // Start test
     function startTest() {
       currentText = pickText();
       renderTestText(currentText);
@@ -620,7 +634,6 @@
       }, 1000);
     }
 
-    // End test, calculate & show result
     function endTest() {
       started = false;
       inputArea.disabled = true;
@@ -631,31 +644,36 @@
       clearInterval(timerInterval);
       updateStats();
       updateProgressBar();
+      
       let finalWPM;
       let finalAccuracy;
-      let resultStr = "";
       if (currentLang === 'en') {
         let typedChars = totalTyped;
         let timeInMinutes = parseInt(timerSelect.value) / 60;
-        finalWPM = Math.round((correctWords / 5) / (timeInMinutes || 1));
-        finalAccuracy = typedChars ? Math.max(0, Math.round((correctWords / typedChars) * 100)) : 100;
-        resultStr =
-          `🎉 Test Finished!<br>
-          WPM: ${finalWPM}<br>
-          Accuracy: ${finalAccuracy}%<br>
-          Correct Chars: ${correctWords} | Incorrect: ${wrongWords}`;
+        finalWPM = Math.round((correctWords / 5) / timeInMinutes);
+        finalAccuracy = typedChars ? Math.max(0, Math.round((correctWords/typedChars)*100)) : 100;
       } else {
         let words = inputArea.value.trim().split(/\s+/).filter(Boolean).length;
         let timeInMinutes = parseInt(timerSelect.value) / 60;
-        finalWPM = Math.round(words / (timeInMinutes || 1));
-        finalAccuracy = correctWords + wrongWords ? Math.max(0, Math.round((correctWords / (correctWords + wrongWords)) * 100)) : 100;
-        resultStr =
-          `🎉 टेस्ट समाप्त!<br>
-          शब्द प्रति मिनट: ${finalWPM}<br>
-          शुद्धता: ${finalAccuracy}%<br>
-          सही शब्द: ${correctWords} | गलत: ${wrongWords}`;
+        finalWPM = Math.round(words / timeInMinutes);
+        finalAccuracy = correctWords + wrongWords ? Math.max(0, Math.round((correctWords/(correctWords+wrongWords))*100)) : 100;
       }
-      resultBox.innerHTML = resultStr;
+
+      if (currentLang === 'hi') {
+        resultBox.innerHTML =
+          `<b>🎉 टेस्ट समाप्त!</b> <br>
+          <span style="font-size:1.5rem;">🥳</span><br>
+          शब्द प्रति मिनट: <b>${finalWPM}</b><br>
+          शुद्धता: <b>${finalAccuracy}%</b><br>
+          सही शब्द: <b>${correctWords}</b> | गलत: <b>${wrongWords}</b>`;
+      } else {
+        resultBox.innerHTML =
+          `<b>🎉 Test Finished!</b><br>
+          <span style="font-size:1.5rem;">🥳</span><br>
+          WPM: <b>${finalWPM}</b><br>
+          Accuracy: <b>${finalAccuracy}%</b><br>
+          Correct Chars: <b>${correctWords}</b> | Incorrect: <b>${wrongWords}</b>`;
+      }
       resultBox.style.display = 'block';
       fireConfetti();
       let score = {
@@ -671,7 +689,6 @@
       showHistory();
     }
 
-    // Show score history
     function showHistory() {
       if (!scoreHistory.length) {
         historyBox.style.display = 'none';
@@ -688,7 +705,6 @@
       historyBox.style.display = 'block';
     }
 
-    // Typing input handling
     inputArea.addEventListener('input', () => {
       if (!started) return;
       let userInput = inputArea.value;
@@ -697,15 +713,13 @@
         let userWords = userInput.trim().split(' ');
         correctWords = 0;
         wrongWords = 0;
-        for (let i = 0; i < userWords.length && i < words.length; i++) {
+        for (let i = 0; i < userWords.length; i++) {
           if (userWords[i] === words[i]) {
             correctWords++;
           } else {
             wrongWords++;
           }
         }
-        // Extra words typed are wrong
-        wrongWords += Math.max(0, userWords.length - words.length);
         renderTestText(currentText, userInput);
         updateStats();
         updateProgressBar();
@@ -716,14 +730,13 @@
         correctWords = 0;
         wrongWords = 0;
         totalTyped = userInput.length;
-        for (let i = 0; i < userInput.length && i < currentText.length; i++) {
+        for (let i = 0; i < userInput.length; i++) {
           if (userInput[i] === currentText[i]) {
             correctWords++;
           } else {
             wrongWords++;
           }
         }
-        wrongWords += Math.max(0, userInput.length - currentText.length);
         renderTestText(currentText, userInput);
         updateStats();
         updateProgressBar();
@@ -733,8 +746,9 @@
       }
     });
 
-    // Button event handlers
-    startBtn.onclick = () => { startTest(); };
+    startBtn.onclick = () => {
+      startTest();
+    };
     resetBtn.onclick = () => {
       started = false;
       inputArea.value = '';
@@ -753,6 +767,7 @@
       renderTestText(pickText(), '');
       testArea.classList.remove('active');
     };
+
     langSelect.onchange = () => {
       currentLang = langSelect.value;
       inputArea.placeholder = currentLang === 'hi' ? 'यहाँ टाइप करें...' : 'Start typing here...';
@@ -773,6 +788,7 @@
       renderTestText(pickText(), '');
       testArea.classList.remove('active');
     };
+
     timerSelect.onchange = () => {
       timer = parseInt(timerSelect.value);
       started = false;
@@ -787,6 +803,7 @@
       renderTestText(pickText(), '');
       testArea.classList.remove('active');
     };
+
     reloadBtn.onclick = () => {
       started = false;
       inputArea.value = '';
@@ -801,13 +818,11 @@
       testArea.classList.remove('active');
     };
 
-    // Pick random text for the test
     function pickText() {
       let arr = texts[currentLang];
       return arr[Math.floor(Math.random() * arr.length)];
     }
 
-    // On window load, initialize
     window.onload = () => {
       inputArea.disabled = true;
       inputArea.classList.toggle('hindi', currentLang === 'hi');
@@ -816,14 +831,13 @@
       showHistory();
     };
 
-    // Focus input on clicking test area
     testArea.onclick = () => {
       if (started && !inputArea.disabled) {
         inputArea.focus();
       }
     };
 
-    // Theme switch
+    // Theme switcher
     themeBtn.onclick = () => {
       document.body.classList.toggle('dark');
       themeBtn.textContent = document.body.classList.contains('dark') ? '🌞' : '🌗';
