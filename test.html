@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Online Typing Practice: Improve Your WPM in English & Hindi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Master online typing practice for free! Our tool helps you improve your WPM and accuracy with engaging English and Hindi tests. Start your typing journey today.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' fonts.googleapis.com fonts.gstatic.com;">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', Verdana, Arial, sans-serif;
+      background: linear-gradient(120deg, #4e54c8, #8f94fb, #43e97b);
+      background-size: 200% 200%;
+      animation: bgGradientMove 7s ease-in-out infinite alternate;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+    }
+    @keyframes bgGradientMove {
+      0% {background-position: left top;}
+      100% {background-position: right bottom;}
+    }
+    body.dark {
+      background: linear-gradient(120deg, #191c26, #23263a, #313c50);
+      color: #f7f8fa;
+    }
+    .container {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(60,60,60,0.12);
+      padding: 38px 32px;
+      max-width: 600px;
+      width: 97vw;
+      min-width: 320px;
+      text-align: center;
+      animation: popIn 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+      margin: 16px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s, box-shadow 0.3s, color 0.3s;
+    }
+    body.dark .container {
+      background: #23263a;
+      box-shadow: 0 8px 24px rgba(20,20,30,0.22);
+      color: #f7f8fa;
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.7); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    h1 {
+      background: linear-gradient(90deg, #43e97b, #38f9d7 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: clamp(1.5rem, 4vw, 2.1rem);
+      margin-bottom: 5px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      animation: fadeInDown 0.8s;
+    }
+    @keyframes fadeInDown {
+      0% { opacity: 0; transform: translateY(-24px);}
+      100% { opacity: 1; transform: translateY(0);}
+    }
+    .row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .theme-btn {
+      border: none;
+      background: transparent;
+      font-size: 1.3rem;
+      cursor: pointer;
+      margin-left: 8px;
+      transition: color 0.2s;
+    }
+    .theme-btn:hover {
+      color: #43e97b;
+      transform: scale(1.2);
+    }
+    label {
+      font-size: clamp(0.9rem, 2vw, 1.05rem);
+      font-weight: 600;
+      color: #4e54c8;
+      transition: color 0.2s;
+    }
+    body.dark label {
+      color: #43e97b;
+    }
+    select {
+      font-size: clamp(0.9rem, 2vw, 1.08rem);
+      border-radius: 9px;
+      padding: 5px 14px;
+      border: 1.5px solid #38f9d7;
+      background: #f6faff;
+      color: #24292f;
+      outline: none;
+      font-weight: 500;
+      transition: border 0.2s, background 0.2s;
+      margin-right: 10px;
+    }
+    select:focus {
+      border: 2px solid #43e97b;
+      background: #e8ffe8;
+    }
+    select:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    body.dark select {
+      background: #23263a;
+      color: #f7f8fa;
+      border-color: #43e97b;
+    }
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      margin: 12px 0 16px 0;
+      font-size: clamp(0.95rem, 2vw, 1.06rem);
+      color: #57606f;
+      flex-wrap: wrap;
+      gap: 8px;
+      transition: color 0.3s;
+    }
+    body.dark .stats {
+      color: #43e97b;
+    }
+    .progress-bar-bg {
+      width: 100%;
+      height: 10px;
+      background: #f0f4ff;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+    body.dark .progress-bar-bg {
+      background: #23263a;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #43e97b, #38f9d7);
+      border-radius: 8px;
+      width: 0;
+      transition: width 0.5s cubic-bezier(.68,-0.55,.27,1.55);
+      position: absolute;
+      left: 0; top: 0;
+    }
+    .test-area {
+      width: 100%;
+      min-height: 52px;
+      font-size: clamp(1rem, 2.5vw, 1.12rem);
+      background: #f0f4ff;
+      border-radius: 11px;
+      margin-bottom: 10px;
+      padding: 11px;
+      text-align: left;
+      box-sizing: border-box;
+      line-height: 2rem;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 8px rgba(60,60,60,0.08);
+      user-select: none;
+      word-break: break-word;
+      transition: font-size 0.2s, padding 0.2s, border 0.2s, background 0.3s;
+      font-family: inherit;
+      border: 2px solid #e0e4fc;
+      position: relative;
+    }
+    body.dark .test-area {
+      background: #23263a;
+      border-color: #313c50;
+    }
+    .test-area.active {
+      border-color: #43e97b;
+      box-shadow: 0 0 0 2px #43e97b33;
+    }
+    .test-area.hindi, textarea.hindi {
+      font-family: 'Noto Sans Devanagari', 'Mangal', Arial, sans-serif;
+      font-size: clamp(1rem, 2.5vw, 1.16rem);
+      letter-spacing: 0.5px;
+    }
+    .test-area .word,
+    .test-area .char {
+      display: inline-block;
+      margin-right: 4px;
+      margin-bottom: 3px;
+      padding: 2px 4px;
+      border-radius: 4px;
+      transition: background 0.15s, color 0.15s, transform 0.18s cubic-bezier(.68,-0.55,.27,1.55);
+      position: relative;
+    }
+    .test-area .next {
+      background: #fff8a3;
+      color: #222;
+      box-shadow: 0 2px 8px #ffc93355;
+      z-index: 1;
+      animation: pulseNext 0.8s infinite alternate;
+    }
+    @keyframes pulseNext {
+      0% { box-shadow: 0 2px 8px #ffc93344; }
+      100% { box-shadow: 0 4px 16px #ffc93399; }
+    }
+    .test-area .correct {
+      color: #43e97b;
+      background: #e8ffe8;
+      transform: scale(1.13);
+      animation: popWord 0.22s cubic-bezier(.68,-0.55,.27,1.55);
+      z-index: 0;
+    }
+    @keyframes popWord {
+      0% { transform: scale(0.8);}
+      100% { transform: scale(1.13);}
+    }
+    .test-area .incorrect {
+      color: #ff6767;
+      background: #ffeaea;
+      animation: shake 0.18s, flashIncorrect 0.18s;
+      z-index: 0;
+    }
+    @keyframes shake {
+      0% { transform: translateX(-1px); }
+      50% { transform: translateX(2px); }
+      100% { transform: translateX(0px); }
+    }
+    @keyframes flashIncorrect {
+      0% { background: #ffd9d9;}
+      100% { background: #ffeaea;}
+    }
+    textarea {
+      width: 100%;
+      font-size: clamp(1rem, 2.5vw, 1.13rem);
+      padding: 13px;
+      border-radius: 11px;
+      border: 2px solid #8f94fb;
+      margin-bottom: 13px;
+      outline: none;
+      resize: none;
+      box-sizing: border-box;
+      transition: border 0.2s, background 0.2s;
+      background: #fcfcff;
+      min-height: 40px;
+      font-family: inherit;
+    }
+    body.dark textarea {
+      background: #23263a;
+      color: #f7f8fa;
+      border-color: #43e97b;
+    }
+    textarea.hindi {
+      font-family: 'Noto Sans Devanagari', 'Mangal', Arial, sans-serif;
+      font-size: clamp(1rem, 2.5vw, 1.16rem);
+      letter-spacing: 0.5px;
+    }
+    textarea:focus {
+      border: 2px solid #43e97b;
+      background: #f6ffe8;
+    }
+    button {
+      padding: 11px 29px;
+      font-size: clamp(0.9rem, 2vw, 1.11rem);
+      border-radius: 29px;
+      border: none;
+      background: linear-gradient(90deg, #43e97b, #38f9d7);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(60,60,60,0.13);
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      margin: 0 8px 8px 0;
+      outline: none;
+      letter-spacing: 1px;
+      touch-action: manipulation;
+      position: relative;
+      z-index: 2;
+    }
+    button:hover, button:focus-visible {
+      background: linear-gradient(90deg, #38f9d7, #43e97b);
+      box-shadow: 0 4px 12px rgba(60,60,60,0.22);
+    }
+    button:active {
+      transform: scale(0.97);
+      background: linear-gradient(90deg, #38f9d7, #43e97b);
+    }
+    button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    .button-group {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .reload-btn {
+      background: linear-gradient(90deg, #ffc933, #ff6767);
+      color: #333;
+      font-size: 1rem;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .reload-btn:hover {
+      background: linear-gradient(90deg, #ff6767, #ffc933);
+      color: #fff;
+    }
+    .result {
+      margin-top: 15px;
+      font-size: clamp(1rem, 2.5vw, 1.13rem);
+      background: #d4eeff;
+      border-radius: 11px;
+      padding: 10px 0;
+      color: #24292f;
+      animation: slideInResult 0.8s cubic-bezier(.68,-0.55,.27,1.55);
+      font-weight: 500;
+      box-shadow: 0 2px 8px #43e97b22;
+      position: relative;
+    }
+    body.dark .result {
+      background: #23263a;
+      color: #f7f8fa;
+      box-shadow: 0 2px 8px #43e97b55;
+    }
+    @keyframes slideInResult {
+      0% {transform: translateY(30px); opacity: 0;}
+      100% {transform: translateY(0); opacity: 1;}
+    }
+    .confetti {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 9;
+    }
+    .history {
+      background: #f8f8ff;
+      color: #333;
+      border-radius: 12px;
+      margin: 16px 0 0 0;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      padding: 10px;
+      box-shadow: 0 2px 8px #43e97b22;
+      text-align: left;
+      max-height: 120px;
+      overflow-y: auto;
+      animation: fadeInDown 0.7s;
+    }
+    body.dark .history {
+      background: #23263a;
+      color: #f7f8fa;
+    }
+    .history-title {
+      font-weight: 600;
+      color: #4e54c8;
+      margin-bottom: 6px;
+      font-size: clamp(0.95rem, 2vw, 1.03rem);
+      display: block;
+    }
+    body.dark .history-title {
+      color: #43e97b;
+    }
+    @media (max-width: 700px) {
+      .container {
+        padding: 16px 3vw;
+      }
+    }
+    @media (max-width: 420px) {
+      .container {
+        padding: 7px 1vw;
+      }
+    }
+    button:focus-visible {
+      outline: 3px solid #38f9d7;
+    }
+    ::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <h1>Online Typing Practice <span style="font-size:clamp(0.8rem, 2vw, 1rem);">(WPM & Accuracy)</span></h1>
+    <section class="row">
+      <label for="langSelect">Language:</label>
+      <select id="langSelect">
+        <option value="en">English</option>
+        <option value="hi">हिंदी</option>
+      </select>
+      <label for="timerSelect" style="margin-left:10px;">Timer:</label>
+      <select id="timerSelect">
+        <option value="15">15s</option>
+        <option value="30">30s</option>
+        <option value="45">45s</option>
+        <option value="60" selected>60s</option>
+        <option value="90">90s</option>
+        <option value="120">120s</option>
+      </select>
+      <button class="theme-btn" id="themeBtn" title="Switch theme" aria-label="Switch theme">🌗</button>
+    </section>
+    <section class="stats">
+      <span id="timer">⏱️ 60s</span>
+      <span id="wpm">WPM: 0</span>
+      <span id="accuracy">Accuracy: 100%</span>
+    </section>
+    <div class="progress-bar-bg">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="test-area" id="testArea"></div>
+    <textarea id="inputArea" rows="3" placeholder="Start typing here..." disabled></textarea>
+    <div class="button-group">
+      <button id="startBtn">Start</button>
+      <button id="resetBtn">Reset</button>
+      <button id="reloadBtn" class="reload-btn" title="Random text">🔄</button>
+    </div>
+    <div class="result" id="resultBox" style="display:none"></div>
+    <canvas id="confettiCanvas" class="confetti" style="display:none"></canvas>
+    <div class="history" id="historyBox" style="display:none"></div>
+  </main>
+  <script>
+    // Typing texts for English and Hindi
+    const texts = {
+      en: [
+        "Online typing practice is essential for a fast career. Improve your WPM and accuracy to excel.",
+        "A regular online typing practice routine will significantly boost your words per minute. Consistency is key.",
+        "The quick brown fox jumps over the lazy dog. This sentence is a classic for online typing tests, using every letter of the alphabet.",
+        "Learning to type quickly opens up new possibilities in coding, writing, and communication. Start your typing practice online today!",
+        "A fast typist can save countless hours on projects and assignments. The keyboard is your most powerful tool.",
+        "Improve your cognitive skills and hand-eye coordination by consistently practicing typing. It's a skill that pays off.",
+        "Dedicate time to a free online typing practice to see your speed and accuracy soar. Small steps lead to big improvements."
+      ],
+      hi: [
+        "ऑनलाइन टाइपिंग अभ्यास गति और शुद्धता के लिए बहुत ज़रूरी है। रोज़ अभ्यास करें और अपनी क्षमता बढ़ाएँ।",
+        "कंप्यूटर पर हिंदी में टाइप करना सीखना अब बहुत आसान हो गया है। ऑनलाइन अभ्यास से यह संभव है।",
+        "सफलता का राज़ मेहनत और लगन में छुपा है। नियमित ऑनलाइन टाइपिंग प्रैक्टिस से सब कुछ संभव है।",
+        "अगर आप बिना देखे टाइप करना सीख लें तो आपकी स्पीड और सटीकता बहुत बढ़ जाएगी। यह ऑनलाइन अभ्यास से ही मुमकिन है।",
+        "शुरुआत में गलतियाँ होना सामान्य है, लेकिन लगातार अभ्यास करते रहें। हमारा ऑनलाइन टूल इसमें आपकी मदद करेगा।",
+        "डिजिटल युग में तेज़ी से टाइप करना एक आवश्यक कौशल है। यह आपको दूसरों से आगे रखेगा। आज ही ऑनलाइन प्रैक्टिस शुरू करें।",
+        "प्रतिदिन पाँच मिनट का ऑनलाइन अभ्यास आपकी टाइपिंग गति को आश्चर्यजनक रूप से बढ़ा सकता है। आज ही से शुरुआत करें।"
+      ]
+    };
+    // DOM elements
+    const testArea = document.getElementById('testArea');
+    const inputArea = document.getElementById('inputArea');
+    const timerEl = document.getElementById('timer');
+    const wpmEl = document.getElementById('wpm');
+    const accuracyEl = document.getElementById('accuracy');
+    const startBtn = document.getElementById('startBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const reloadBtn = document.getElementById('reloadBtn');
+    const resultBox = document.getElementById('resultBox');
+    const langSelect = document.getElementById('langSelect');
+    const timerSelect = document.getElementById('timerSelect');
+    const progressBar = document.getElementById('progressBar');
+    const themeBtn = document.getElementById('themeBtn');
+    const confettiCanvas = document.getElementById('confettiCanvas');
+    const historyBox = document.getElementById('historyBox');
+
+    // State variables
+    let timer = parseInt(timerSelect.value);
+    let timerInterval = null;
+    let started = false;
+    let currentText = '';
+    let currentLang = 'en';
+    let correctWords = 0;
+    let totalTyped = 0;
+    let wrongWords = 0;
+    let scoreHistory = [];
+
+    // Confetti animation
+    function fireConfetti() {
+      confettiCanvas.style.display = 'block';
+      const ctx = confettiCanvas.getContext('2d');
+      confettiCanvas.width = confettiCanvas.offsetWidth;
+      confettiCanvas.height = confettiCanvas.offsetHeight;
+      let particles = [];
+      for (let i = 0; i < 40; i++) {
+        particles.push({
+          x: Math.random() * confettiCanvas.width,
+          y: -10,
+          r: Math.random() * 6 + 4,
+          d: Math.random() * 20 + 10,
+          color: `hsl(${Math.random()*360},80%,60%)`,
+          tilt: Math.random() * 12 - 6
+        });
+      }
+      let frame = 0;
+      function draw() {
+        ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
+        particles.forEach(p => {
+          ctx.beginPath();
+          ctx.ellipse(p.x, p.y, p.r, p.r/1.5, p.tilt, 0, 2*Math.PI);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+        });
+      }
+      function update() {
+        particles.forEach(p => {
+          p.y += p.d/10 + Math.sin(frame/10 + p.x/60)*1.5;
+          p.x += Math.sin(frame/10 + p.x/60)*2;
+          p.tilt += 0.1;
+        });
+      }
+      function loop() {
+        frame++;
+        update();
+        draw();
+        if (frame < 60) requestAnimationFrame(loop);
+        else confettiCanvas.style.display = 'none';
+      }
+      loop();
+    }
+
+    // Render test text with highlighting
+    function renderTestText(text, userInput = '') {
+      testArea.classList.toggle('hindi', currentLang === 'hi');
+      testArea.classList.toggle('active', started);
+      testArea.innerHTML = '';
+      if (currentLang === 'hi') {
+        let words = text.split(' ');
+        let userWords = userInput.trim().split(' ');
+        words.forEach((word, i) => {
+          const span = document.createElement('span');
+          span.classList.add('word');
+          span.textContent = word;
+          if (userWords[i]) {
+            if (userWords[i] === word) {
+              span.classList.add('correct');
+            } else {
+              span.classList.add('incorrect');
+            }
+          }
+          if (started && i === userWords.length) span.classList.add('next');
+          testArea.appendChild(span);
+          if (i < words.length - 1) {
+            testArea.appendChild(document.createTextNode(' '));
+          }
+        });
+      } else {
+        testArea.classList.remove('hindi');
+        for (let i = 0; i < text.length; i++) {
+          const span = document.createElement('span');
+          span.classList.add('char');
+          span.textContent = text[i];
+          if (userInput[i]) {
+            if (userInput[i] === text[i]) {
+              span.classList.add('correct');
+            } else {
+              span.classList.add('incorrect');
+            }
+          }
+          if (started && i === userInput.length) span.classList.add('next');
+          testArea.appendChild(span);
+        }
+      }
+    }
+
+    // Update stats display
+    function updateStats() {
+      let wpm, acc;
+      let timeSpent = (parseInt(timerSelect.value) - timer) / 60 || 1;
+      if (currentLang === 'hi') {
+        let words = inputArea.value.trim().split(/\s+/).filter(Boolean).length;
+        wpm = Math.round(words / (timeSpent || 1));
+        wpmEl.textContent = `शब्द प्रति मिनट: ${wpm}`;
+        acc = (correctWords + wrongWords) ? Math.max(0, Math.round((correctWords/(correctWords+wrongWords))*100)) : 100;
+        accuracyEl.textContent = `शुद्धता: ${acc}%`;
+      } else {
+        let chars = inputArea.value.replace(/\s/g, '').length;
+        wpm = Math.round((chars/5) / (timeSpent || 1));
+        wpmEl.textContent = `WPM: ${wpm}`;
+        acc = totalTyped ? Math.max(0, Math.round((correctWords/totalTyped)*100)) : 100;
+        accuracyEl.textContent = `Accuracy: ${acc}%`;
+      }
+    }
+
+    // Progress bar update
+    function updateProgressBar() {
+      let totalTime = parseInt(timerSelect.value);
+      let percent = ((totalTime - timer) / totalTime) * 100;
+      progressBar.style.width = percent + '%';
+    }
+
+    // Start test
+    function startTest() {
+      currentText = pickText();
+      renderTestText(currentText);
+      timer = parseInt(timerSelect.value);
+      correctWords = 0;
+      totalTyped = 0;
+      wrongWords = 0;
+      inputArea.value = '';
+      inputArea.disabled = false;
+      inputArea.classList.toggle('hindi', currentLang === 'hi');
+      inputArea.focus();
+      started = true;
+      langSelect.disabled = true;
+      timerSelect.disabled = true;
+      startBtn.disabled = true;
+      reloadBtn.disabled = true;
+      timerEl.textContent = `⏱️ ${timer}s`;
+      wpmEl.textContent = currentLang === 'hi' ? 'शब्द प्रति मिनट: 0' : 'WPM: 0';
+      accuracyEl.textContent = currentLang === 'hi' ? 'शुद्धता: 100%' : 'Accuracy: 100%';
+      resultBox.style.display = 'none';
+      updateProgressBar();
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        timer--;
+        timerEl.textContent = `⏱️ ${timer}s`;
+        updateStats();
+        updateProgressBar();
+        if (timer <= 0) {
+          endTest();
+        }
+      }, 1000);
+    }
+
+    // End test, calculate & show result
+    function endTest() {
+      started = false;
+      inputArea.disabled = true;
+      langSelect.disabled = false;
+      timerSelect.disabled = false;
+      startBtn.disabled = false;
+      reloadBtn.disabled = false;
+      clearInterval(timerInterval);
+      updateStats();
+      updateProgressBar();
+      let finalWPM;
+      let finalAccuracy;
+      let resultStr = "";
+      if (currentLang === 'en') {
+        let typedChars = totalTyped;
+        let timeInMinutes = parseInt(timerSelect.value) / 60;
+        finalWPM = Math.round((correctWords / 5) / (timeInMinutes || 1));
+        finalAccuracy = typedChars ? Math.max(0, Math.round((correctWords / typedChars) * 100)) : 100;
+        resultStr =
+          `🎉 Test Finished!<br>
+          WPM: ${finalWPM}<br>
+          Accuracy: ${finalAccuracy}%<br>
+          Correct Chars: ${correctWords} | Incorrect: ${wrongWords}`;
+      } else {
+        let words = inputArea.value.trim().split(/\s+/).filter(Boolean).length;
+        let timeInMinutes = parseInt(timerSelect.value) / 60;
+        finalWPM = Math.round(words / (timeInMinutes || 1));
+        finalAccuracy = correctWords + wrongWords ? Math.max(0, Math.round((correctWords / (correctWords + wrongWords)) * 100)) : 100;
+        resultStr =
+          `🎉 टेस्ट समाप्त!<br>
+          शब्द प्रति मिनट: ${finalWPM}<br>
+          शुद्धता: ${finalAccuracy}%<br>
+          सही शब्द: ${correctWords} | गलत: ${wrongWords}`;
+      }
+      resultBox.innerHTML = resultStr;
+      resultBox.style.display = 'block';
+      fireConfetti();
+      let score = {
+        lang: currentLang === 'hi' ? 'हिंदी' : 'English',
+        timer: timerSelect.value+'s',
+        wpm: finalWPM,
+        acc: finalAccuracy,
+        correct: correctWords,
+        wrong: wrongWords,
+        date: new Date().toLocaleTimeString()
+      };
+      scoreHistory.unshift(score);
+      showHistory();
+    }
+
+    // Show score history
+    function showHistory() {
+      if (!scoreHistory.length) {
+        historyBox.style.display = 'none';
+        return;
+      }
+      let html = '<span class="history-title">Previous Scores:</span><ul style="padding-left:12px;">';
+      scoreHistory.slice(0,5).forEach(s => {
+        html += `<li>
+          <b>${s.lang}</b> | ${s.timer} | <b>WPM:</b> ${s.wpm} | <b>ACC:</b> ${s.acc}% | <b>✔️</b> ${s.correct} | <b>❌</b> ${s.wrong} <span style="float:right;">${s.date}</span>
+        </li>`;
+      });
+      html += '</ul>';
+      historyBox.innerHTML = html;
+      historyBox.style.display = 'block';
+    }
+
+    // Typing input handling
+    inputArea.addEventListener('input', () => {
+      if (!started) return;
+      let userInput = inputArea.value;
+      if (currentLang === 'hi') {
+        let words = currentText.split(' ');
+        let userWords = userInput.trim().split(' ');
+        correctWords = 0;
+        wrongWords = 0;
+        for (let i = 0; i < userWords.length && i < words.length; i++) {
+          if (userWords[i] === words[i]) {
+            correctWords++;
+          } else {
+            wrongWords++;
+          }
+        }
+        // Extra words typed are wrong
+        wrongWords += Math.max(0, userWords.length - words.length);
+        renderTestText(currentText, userInput);
+        updateStats();
+        updateProgressBar();
+        if (userWords.length >= words.length) {
+          endTest();
+        }
+      } else {
+        correctWords = 0;
+        wrongWords = 0;
+        totalTyped = userInput.length;
+        for (let i = 0; i < userInput.length && i < currentText.length; i++) {
+          if (userInput[i] === currentText[i]) {
+            correctWords++;
+          } else {
+            wrongWords++;
+          }
+        }
+        wrongWords += Math.max(0, userInput.length - currentText.length);
+        renderTestText(currentText, userInput);
+        updateStats();
+        updateProgressBar();
+        if (userInput.length >= currentText.length) {
+          endTest();
+        }
+      }
+    });
+
+    // Button event handlers
+    startBtn.onclick = () => { startTest(); };
+    resetBtn.onclick = () => {
+      started = false;
+      inputArea.value = '';
+      inputArea.disabled = true;
+      inputArea.classList.toggle('hindi', currentLang === 'hi');
+      langSelect.disabled = false;
+      timerSelect.disabled = false;
+      startBtn.disabled = false;
+      reloadBtn.disabled = false;
+      clearInterval(timerInterval);
+      timerEl.textContent = `⏱️ ${timerSelect.value}s`;
+      wpmEl.textContent = currentLang === 'hi' ? 'शब्द प्रति मिनट: 0' : 'WPM: 0';
+      accuracyEl.textContent = currentLang === 'hi' ? 'शुद्धता: 100%' : 'Accuracy: 100%';
+      resultBox.style.display = 'none';
+      progressBar.style.width = '0%';
+      renderTestText(pickText(), '');
+      testArea.classList.remove('active');
+    };
+    langSelect.onchange = () => {
+      currentLang = langSelect.value;
+      inputArea.placeholder = currentLang === 'hi' ? 'यहाँ टाइप करें...' : 'Start typing here...';
+      started = false;
+      inputArea.value = '';
+      inputArea.disabled = true;
+      inputArea.classList.toggle('hindi', currentLang === 'hi');
+      langSelect.disabled = false;
+      timerSelect.disabled = false;
+      startBtn.disabled = false;
+      reloadBtn.disabled = false;
+      clearInterval(timerInterval);
+      timerEl.textContent = `⏱️ ${timerSelect.value}s`;
+      wpmEl.textContent = currentLang === 'hi' ? 'शब्द प्रति मिनट: 0' : 'WPM: 0';
+      accuracyEl.textContent = currentLang === 'hi' ? 'शुद्धता: 100%' : 'Accuracy: 100%';
+      resultBox.style.display = 'none';
+      progressBar.style.width = '0%';
+      renderTestText(pickText(), '');
+      testArea.classList.remove('active');
+    };
+    timerSelect.onchange = () => {
+      timer = parseInt(timerSelect.value);
+      started = false;
+      inputArea.value = '';
+      inputArea.disabled = true;
+      clearInterval(timerInterval);
+      timerEl.textContent = `⏱️ ${timerSelect.value}s`;
+      wpmEl.textContent = currentLang === 'hi' ? 'शब्द प्रति मिनट: 0' : 'WPM: 0';
+      accuracyEl.textContent = currentLang === 'hi' ? 'शुद्धता: 100%' : 'Accuracy: 100%';
+      resultBox.style.display = 'none';
+      progressBar.style.width = '0%';
+      renderTestText(pickText(), '');
+      testArea.classList.remove('active');
+    };
+    reloadBtn.onclick = () => {
+      started = false;
+      inputArea.value = '';
+      inputArea.disabled = true;
+      clearInterval(timerInterval);
+      timerEl.textContent = `⏱️ ${timerSelect.value}s`;
+      wpmEl.textContent = currentLang === 'hi' ? 'शब्द प्रति मिनट: 0' : 'WPM: 0';
+      accuracyEl.textContent = currentLang === 'hi' ? 'शुद्धता: 100%' : 'Accuracy: 100%';
+      resultBox.style.display = 'none';
+      progressBar.style.width = '0%';
+      renderTestText(pickText(), '');
+      testArea.classList.remove('active');
+    };
+
+    // Pick random text for the test
+    function pickText() {
+      let arr = texts[currentLang];
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    // On window load, initialize
+    window.onload = () => {
+      inputArea.disabled = true;
+      inputArea.classList.toggle('hindi', currentLang === 'hi');
+      renderTestText(pickText());
+      progressBar.style.width = '0%';
+      showHistory();
+    };
+
+    // Focus input on clicking test area
+    testArea.onclick = () => {
+      if (started && !inputArea.disabled) {
+        inputArea.focus();
+      }
+    };
+
+    // Theme switch
+    themeBtn.onclick = () => {
+      document.body.classList.toggle('dark');
+      themeBtn.textContent = document.body.classList.contains('dark') ? '🌞' : '🌗';
+    };
+  </script>
+</body>
+</html>
