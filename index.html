@@ -7,16 +7,13 @@
 
   <!-- Primary SEO Meta Tags -->
   <meta name="description" content="Online typing practice for free! Take typing speed tests, improve your accuracy, and master keyboard skills. Best free typing tool for students, professionals & beginners." />
-  <meta name="keywords" content="online typing practice, typing test, free typing test, typing lessons, typing games, improve typing speed, typing accuracy, WPM, keyboard practice, fast typing, learn typing" />
+  <meta name="keywords" content="online typing practice, typing test, free typing test, typing lessons, typing games, improve typing speed, typing accuracy, WPM, keyboard practice, fast typing, learn typing, hindi typing, english typing" />
   <meta name="author" content="OnlineTypingPractice.app" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="canonical" href="https://onlinetypingpractice.app/" />
 
-  <!-- Google Site Verification (update code in content) -->
-  <meta name="google-site-verification" content="YOUR_GOOGLE_VERIFICATION_CODE" />
-
   <!-- Favicon -->
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⌨️</text></svg>" type="image/svg+xml" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
@@ -43,11 +40,7 @@
       "@type": "SearchAction",
       "target": "https://onlinetypingpractice.app/?q={search_term_string}",
       "query-input": "required name=search_term_string"
-    },
-    "sameAs": [
-      "https://twitter.com/yourhandle",
-      "https://facebook.com/yourpage"
-    ]
+    }
   }
   </script>
 
@@ -75,20 +68,580 @@
   }
   </script>
 
-  <!-- Performance: Preload important resources -->
-  <link rel="preload" href="style.css" as="style" />
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet" />
-
   <!-- Accessibility: Language -->
   <meta http-equiv="Content-Language" content="en" />
 
+  <style>
+    /* CSS Variables for theming */
+    :root {
+      --primary-color: #4361ee;
+      --secondary-color: #3a0ca3;
+      --accent-color: #f72585;
+      --light-color: #f8f9fa;
+      --dark-color: #212529;
+      --success-color: #4cc9f0;
+      --warning-color: #f9c74f;
+      --danger-color: #f94144;
+      --gray-color: #6c757d;
+      --light-gray: #e9ecef;
+      --border-radius: 12px;
+      --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    /* Dark theme variables */
+    [data-theme="dark"] {
+      --light-color: #212529;
+      --dark-color: #f8f9fa;
+      --light-gray: #343a40;
+      --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--dark-color);
+      background-color: var(--light-color);
+      transition: var(--transition);
+      overflow-x: hidden;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    h2 {
+      font-size: 2rem;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+    }
+
+    p {
+      margin-bottom: 1rem;
+    }
+
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    a:hover {
+      color: var(--secondary-color);
+    }
+
+    /* Layout */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Header styles */
+    .main-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: var(--light-color);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: var(--transition);
+    }
+
+    [data-theme="dark"] .main-header {
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .tool-logo {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .header-center {
+      text-align: center;
+    }
+
+    .header-title {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .menu-nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    .menu-link {
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      font-weight: 500;
+    }
+
+    .menu-link:hover, .menu-link.active {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .dark-mode-toggle {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: var(--transition);
+      padding: 0.5rem;
+      border-radius: 50%;
+    }
+
+    .dark-mode-toggle:hover {
+      background-color: var(--light-gray);
+    }
+
+    /* Main content */
+    .main-body {
+      padding: 2rem 0;
+      animation: fadeIn 1s ease;
+    }
+
+    .center-content {
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .website-title {
+      margin-bottom: 1.5rem;
+    }
+
+    .website-description {
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+
+    /* Achievement card */
+    .achievement-goal-card {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      margin: 2rem auto;
+      max-width: 600px;
+      box-shadow: var(--box-shadow);
+      animation: slideUp 0.8s ease;
+    }
+
+    .achievement-goal-row {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .achievement-goal-left, .achievement-goal-right {
+      flex: 1;
+      min-width: 250px;
+      padding: 1rem;
+    }
+
+    .achievement-goal-divider {
+      width: 1px;
+      background-color: rgba(255, 255, 255, 0.3);
+      margin: 0 1rem;
+    }
+
+    .score, .wpm, .accuracy {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-bar {
+      height: 10px;
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 5px;
+      margin: 0.5rem 0;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      background-color: var(--success-color);
+      border-radius: 5px;
+      width: 65%;
+      transition: width 1s ease;
+    }
+
+    .progress-text {
+      font-size: 0.9rem;
+    }
+
+    /* Buttons */
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .main-btn-card {
+      perspective: 1000px;
+      width: 160px;
+      height: 160px;
+    }
+
+    .main-btn-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+
+    .main-btn-card:hover .main-btn-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .main-btn-card-front, .main-btn-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: var(--border-radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 1rem;
+      box-shadow: var(--box-shadow);
+    }
+
+    .main-btn-card-front {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .main-btn-card-back {
+      background-color: var(--secondary-color);
+      color: white;
+      transform: rotateY(180deg);
+      font-size: 0.9rem;
+    }
+
+    .main-btn {
+      background: none;
+      border: none;
+      color: inherit;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Call to action */
+    .call-to-action {
+      margin: 2rem 0;
+      padding: 1.5rem;
+      background-color: var(--light-gray);
+      border-radius: var(--border-radius);
+      animation: pulse 2s infinite;
+    }
+
+    .motivation {
+      display: block;
+      font-style: italic;
+      margin-top: 0.5rem;
+      color: var(--primary-color);
+      font-weight: 500;
+    }
+
+    /* Internal links */
+    .internal-links {
+      margin: 2rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .internal-links a {
+      padding: 0.5rem 1rem;
+      background-color: var(--light-gray);
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+    }
+
+    .internal-links a:hover {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    /* FAQ section */
+    .faq-section {
+      text-align: left;
+      margin: 3rem 0;
+    }
+
+    .faq-item {
+      margin-bottom: 1.5rem;
+      padding: 1.5rem;
+      background-color: var(--light-gray);
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+    }
+
+    .faq-item:hover {
+      transform: translateX(5px);
+      box-shadow: var(--box-shadow);
+    }
+
+    /* Footer */
+    .main-footer {
+      text-align: center;
+      padding: 2rem;
+      background-color: var(--light-gray);
+      margin-top: 3rem;
+    }
+
+    .main-footer ul {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      list-style: none;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .social-footer {
+      margin-bottom: 1rem;
+    }
+
+    /* Floating buttons */
+    .scroll-down-btn, .scroll-up-btn, .share-btn {
+      position: fixed;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      background-color: var(--primary-color);
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .scroll-down-btn {
+      bottom: 7rem;
+      animation: bounce 2s infinite;
+    }
+
+    .scroll-up-btn {
+      bottom: 2rem;
+    }
+
+    .share-btn {
+      bottom: 12rem;
+    }
+
+    .scroll-down-btn:hover, .scroll-up-btn:hover, .share-btn:hover {
+      background-color: var(--secondary-color);
+      transform: scale(1.1);
+    }
+
+    /* Share popup */
+    .share-popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1001;
+      visibility: hidden;
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .share-popup.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .share-popup-inner {
+      background-color: var(--light-color);
+      padding: 2rem;
+      border-radius: var(--border-radius);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: var(--box-shadow);
+      transform: translateY(-20px);
+      transition: var(--transition);
+    }
+
+    .share-popup.active .share-popup-inner {
+      transform: translateY(0);
+    }
+
+    .share-title {
+      margin-bottom: 1rem;
+      font-weight: bold;
+    }
+
+    .share-socials {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .social-icon {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--light-gray);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .social-icon:hover {
+      transform: scale(1.1);
+      background-color: var(--primary-color);
+    }
+
+    .social-icon img {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { 
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(67, 97, 238, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0); }
+    }
+
+    @keyframes typewriter {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .main-header {
+        flex-direction: column;
+        padding: 1rem;
+      }
+      
+      .header-center {
+        margin: 1rem 0;
+      }
+      
+      .menu-nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .achievement-goal-row {
+        flex-direction: column;
+      }
+      
+      .achievement-goal-divider {
+        width: 100%;
+        height: 1px;
+        margin: 1rem 0;
+      }
+      
+      .main-btn-card {
+        width: 140px;
+        height: 140px;
+      }
+      
+      .scroll-down-btn, .scroll-up-btn, .share-btn {
+        right: 1rem;
+        bottom: 1rem;
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+      }
+      
+      .scroll-down-btn {
+        bottom: 6rem;
+      }
+      
+      .share-btn {
+        bottom: 11rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <header class="main-header" id="mainHeader">
     <div class="header-left">
       <div class="tool-logo" aria-label="Online Typing Practice Logo">
-        <img src="online-typing-practice-logo.png" alt="Online Typing Practice Tool Logo | Free Typing Speed Test" />
+        ⌨️ Online Typing Practice
       </div>
     </div>
     <div class="header-center">
@@ -98,6 +651,8 @@
           <li><a href="index.html" class="menu-link active">Home</a></li>
           <li><a href="test.html" class="menu-link" id="testPageLink">Typing Test</a></li>
           <li><a href="games.html" class="menu-link" id="gamePageLink">Typing Games</a></li>
+          <li><a href="hindi-typing.html" class="menu-link">Hindi Typing</a></li>
+          <li><a href="english-typing.html" class="menu-link">English Typing</a></li>
         </ul>
       </nav>
     </div>
@@ -107,87 +662,143 @@
   </header>
 
   <main class="main-body">
-    <section class="center-content">
-      <div class="website-title">
-        <h2>Free Online Typing Practice Tool</h2>
-      </div>
-      <div class="website-description">
-        <p>
-          Welcome! Our <strong>online typing practice</strong> tool helps you master keyboard skills.  
-          Take free typing tests, play typing games, and learn typing lessons to improve your <strong>typing speed</strong> and <strong>accuracy</strong>.
-        </p>
-      </div>
+    <div class="container">
+      <section class="center-content">
+        <div class="website-title">
+          <h2>Free Online Typing Practice Tool</h2>
+        </div>
+        <div class="website-description">
+          <p>
+            Welcome! Our <strong>online typing practice</strong> tool helps you master keyboard skills.  
+            Take free typing tests, play typing games, and learn typing lessons to improve your <strong>typing speed</strong> and <strong>accuracy</strong>.
+          </p>
+        </div>
 
-      <!-- SEO: Detailed Keyword-rich Section -->
-      <section>
-        <h2>Why Use Online Typing Practice?</h2>
-        <p>
-          <strong>Online typing practice</strong> is the fastest way to improve your typing speed and accuracy. Our typing test and lessons are designed for beginners and professionals. Whether you want to learn touch typing, increase your WPM, or simply have fun with typing games, this website provides everything for free.
-        </p>
-        <ul>
-          <li>Free typing speed tests and lessons</li>
-          <li>Track progress with achievements</li>
-          <li>Practice keyboard skills anywhere, anytime</li>
-        </ul>
-      </section>
+        <!-- SEO: Detailed Keyword-rich Section -->
+        <section>
+          <h2>Why Use Online Typing Practice?</h2>
+          <p>
+            <strong>Online typing practice</strong> is the fastest way to improve your typing speed and accuracy. Our typing test and lessons are designed for beginners and professionals. Whether you want to learn touch typing, increase your WPM, or simply have fun with typing games, this website provides everything for free.
+          </p>
+          <ul>
+            <li>Free typing speed tests and lessons</li>
+            <li>Track progress with achievements</li>
+            <li>Practice keyboard skills anywhere, anytime</li>
+            <li>Hindi and English typing practice</li>
+          </ul>
+        </section>
 
-      <section>
-        <h2>Benefits of Practicing Typing Online</h2>
-        <p>
-          Practicing typing online helps you work faster, reduces errors, and improves your confidence. Our free typing tool is trusted by students, professionals, and teachers worldwide. Try our typing test today and see how much you can improve in just a week!
-        </p>
-      </section>
+        <section>
+          <h2>Benefits of Practicing Typing Online</h2>
+          <p>
+            Practicing typing online helps you work faster, reduces errors, and improves your confidence. Our free typing tool is trusted by students, professionals, and teachers worldwide. Try our typing test today and see how much you can improve in just a week!
+          </p>
+        </section>
 
-      <div class="achievement-goal-card" id="achievementCard">
-        <div class="achievement-goal-row">
-          <div class="achievement-goal-left">
-            <h3>Last Achievement 🏆</h3>
-            <div class="score"><span class="score-label">Score:</span><span class="score-value">98</span></div>
-            <div class="wpm"><span class="wpm-label">WPM (Words Per Minute):</span><span class="wpm-value">72</span></div>
-            <div class="accuracy"><span class="accuracy-label">Accuracy:</span><span class="accuracy-value">94%</span></div>
+        <div class="achievement-goal-card" id="achievementCard">
+          <div class="achievement-goal-row">
+            <div class="achievement-goal-left">
+              <h3>Last Achievement 🏆</h3>
+              <div class="score"><span class="score-label">Score:</span><span class="score-value">98</span></div>
+              <div class="wpm"><span class="wpm-label">WPM (Words Per Minute):</span><span class="wpm-value">72</span></div>
+              <div class="accuracy"><span class="accuracy-label">Accuracy:</span><span class="accuracy-value">94%</span></div>
+            </div>
+            <div class="achievement-goal-divider"></div>
+            <div class="achievement-goal-right">
+              <h3>Daily Typing Goal 🎯</h3>
+              <div class="progress-bar"><div class="progress" style="width: 65%"></div></div>
+              <span class="progress-text">65% Complete</span>
+            </div>
           </div>
-          <div class="achievement-goal-divider"></div>
-          <div class="achievement-goal-right">
-            <h3>Daily Typing Goal 🎯</h3>
-            <div class="progress-bar"><div class="progress" style="width: 65%"></div></div>
-            <span class="progress-text">65% Complete</span>
+        </div>
+        
+        <nav class="button-row" aria-label="Typing Levels">
+          <div class="main-btn-card" data-href="beginner.html">
+            <div class="main-btn-card-inner">
+              <div class="main-btn-card-front">
+                <button class="main-btn" aria-label="Beginner Typing Lessons">Beginner</button>
+              </div>
+              <div class="main-btn-card-back">
+                <p>Start with basic keys and simple words</p>
+              </div>
+            </div>
           </div>
+          <div class="main-btn-card" data-href="intermediate.html">
+            <div class="main-btn-card-inner">
+              <div class="main-btn-card-front">
+                <button class="main-btn" aria-label="Intermediate Typing Lessons">Intermediate</button>
+              </div>
+              <div class="main-btn-card-back">
+                <p>Practice with paragraphs and common phrases</p>
+              </div>
+            </div>
+          </div>
+          <div class="main-btn-card" data-href="advance.html">
+            <div class="main-btn-card-inner">
+              <div class="main-btn-card-front">
+                <button class="main-btn" aria-label="Advance Typing Lessons">Advanced</button>
+              </div>
+              <div class="main-btn-card-back">
+                <p>Challenge yourself with complex texts</p>
+              </div>
+            </div>
+          </div>
+          <div class="main-btn-card" data-href="tutorial.html">
+            <div class="main-btn-card-inner">
+              <div class="main-btn-card-front">
+                <button class="main-btn" aria-label="Typing Tutorials">Tutorial</button>
+              </div>
+              <div class="main-btn-card-back">
+                <p>Learn proper typing techniques</p>
+              </div>
+            </div>
+          </div>
+          <div class="main-btn-card" data-href="games.html">
+            <div class="main-btn-card-inner">
+              <div class="main-btn-card-front">
+                <button class="main-btn" aria-label="Typing Games">Games</button>
+              </div>
+              <div class="main-btn-card-back">
+                <p>Improve your skills with fun games</p>
+              </div>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="call-to-action">
+          <p>Start your online typing practice journey today! <span class="motivation">"Every keystroke brings you closer to mastery."</span></p>
         </div>
-      </div>
-      <nav class="button-row" aria-label="Typing Levels">
-        <div class="main-btn-card" data-href="beginner.html"><button class="main-btn" aria-label="Beginner Typing Lessons">Beginner</button></div>
-        <div class="main-btn-card" data-href="intermediate.html"><button class="main-btn" aria-label="Intermediate Typing Lessons">Intermediate</button></div>
-        <div class="main-btn-card" data-href="advance.html"><button class="main-btn" aria-label="Advance Typing Lessons">Advance</button></div>
-        <div class="main-btn-card" data-href="tutorial.html"><button class="main-btn" aria-label="Typing Tutorials">Tutorial</button></div>
-        <div class="main-btn-card" data-href="games.html"><button class="main-btn" aria-label="Typing Games">Games</button></div>
-      </nav>
-      <div class="call-to-action">
-        <p>Start your online typing practice journey today! <span class="motivation">"Every keystroke brings you closer to mastery."</span></p>
-      </div>
-      <!-- Internal links for SEO -->
-      <div class="internal-links" style="margin-top:2em;">
-        <a href="test.html">Try our Free Typing Test</a> |
-        <a href="tutorial.html">Read Typing Tips & Tutorials</a> |
-        <a href="games.html">Play Typing Games</a>
-      </div>
+        
+        <!-- Internal links for SEO -->
+        <div class="internal-links">
+          <a href="test.html">Try our Free Typing Test</a>
+          <a href="tutorial.html">Read Typing Tips & Tutorials</a>
+          <a href="games.html">Play Typing Games</a>
+          <a href="hindi-typing.html">Hindi Typing Practice</a>
+        </div>
 
-      <!-- FAQ Section for SEO -->
-      <section class="faq-section" aria-label="Typing Practice FAQs">
-        <h2>Frequently Asked Questions about Online Typing Practice</h2>
-        <div class="faq-item">
-          <h3>How do I improve my typing speed?</h3>
-          <p>Practice regularly using our free typing tests and lessons. Focus on accuracy first, then gradually increase speed.</p>
-        </div>
-        <div class="faq-item">
-          <h3>Is online typing practice free here?</h3>
-          <p>Yes, all our typing lessons, games and speed tests are totally free for everyone!</p>
-        </div>
-        <div class="faq-item">
-          <h3>Can I track my typing progress?</h3>
-          <p>Yes! Your scores and achievements are saved to help you improve over time.</p>
-        </div>
+        <!-- FAQ Section for SEO -->
+        <section class="faq-section" aria-label="Typing Practice FAQs">
+          <h2>Frequently Asked Questions about Online Typing Practice</h2>
+          <div class="faq-item">
+            <h3>How do I improve my typing speed?</h3>
+            <p>Practice regularly using our free typing tests and lessons. Focus on accuracy first, then gradually increase speed.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Is online typing practice free here?</h3>
+            <p>Yes, all our typing lessons, games and speed tests are totally free for everyone!</p>
+          </div>
+          <div class="faq-item">
+            <h3>Can I track my typing progress?</h3>
+            <p>Yes! Your scores and achievements are saved to help you improve over time.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Do you have Hindi typing practice?</h3>
+            <p>Yes! We have dedicated Hindi typing practice lessons to help you master typing in Hindi.</p>
+          </div>
+        </section>
       </section>
-    </section>
+    </div>
   </main>
 
   <!-- Buttons for accessibility -->
@@ -199,11 +810,11 @@
     <div class="share-popup-inner">
       <div class="share-title">Share on:</div>
       <div class="share-socials">
-        <a href="#" class="social-icon" id="shareTwitter" title="Share on Twitter" target="_blank" rel="noopener"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Share Online Typing Practice on Twitter" /></a>
-        <a href="#" class="social-icon" id="shareFacebook" title="Share on Facebook" target="_blank" rel="noopener"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Share Online Typing Practice on Facebook" /></a>
-        <a href="#" class="social-icon" id="shareWhatsapp" title="Share on WhatsApp" target="_blank" rel="noopener"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="Share Online Typing Practice on WhatsApp" /></a>
-        <a href="#" class="social-icon" id="shareTelegram" title="Share on Telegram" target="_blank" rel="noopener"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="Share Online Typing Practice on Telegram" /></a>
-        <a href="#" class="social-icon" id="shareCopy" title="Copy link"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/link.svg" alt="Copy Online Typing Practice Link" /></a>
+        <a href="#" class="social-icon" id="shareTwitter" title="Share on Twitter" target="_blank" rel="noopener">🐦</a>
+        <a href="#" class="social-icon" id="shareFacebook" title="Share on Facebook" target="_blank" rel="noopener">📘</a>
+        <a href="#" class="social-icon" id="shareWhatsapp" title="Share on WhatsApp" target="_blank" rel="noopener">📱</a>
+        <a href="#" class="social-icon" id="shareTelegram" title="Share on Telegram" target="_blank" rel="noopener">✈️</a>
+        <a href="#" class="social-icon" id="shareCopy" title="Copy link">🔗</a>
       </div>
     </div>
   </div>
@@ -216,18 +827,124 @@
       <li><a href="about.html">About Us</a></li>
       <li><a href="Contact-Us.html">Contact Us</a></li>
     </ul>
-    <div class="social-footer">
-      <a href="https://twitter.com/yourhandle" rel="noopener" target="_blank">Twitter</a> |
-      <a href="https://facebook.com/yourpage" rel="noopener" target="_blank">Facebook</a>
-    </div>
     <div class="copyright">© <span id="year"></span> OnlineTypingPractice.app</div>
   </footer>
 
-  <!-- Accessibility JS: Add year dynamically -->
+  <!-- JavaScript -->
   <script>
+    // Set current year in footer
     document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // Dark mode toggle functionality
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const darkModeIcon = document.getElementById('darkModeIcon');
+    const body = document.body;
+    
+    // Check for saved theme preference or respect OS preference
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    if (savedTheme === 'dark') {
+      body.setAttribute('data-theme', 'dark');
+      darkModeIcon.textContent = '☀️';
+    }
+    
+    darkModeToggle.addEventListener('click', () => {
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        darkModeIcon.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        darkModeIcon.textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+    
+    // Scroll buttons functionality
+    const scrollDownBtn = document.getElementById('scrollDownBtn');
+    const scrollUpBtn = document.getElementById('scrollUpBtn');
+    
+    scrollDownBtn.addEventListener('click', () => {
+      window.scrollBy({ top: window.innerHeight * 0.8, behavior: 'smooth' });
+    });
+    
+    scrollUpBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    // Show/hide scroll up button based on scroll position
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 500) {
+        scrollUpBtn.style.display = 'flex';
+      } else {
+        scrollUpBtn.style.display = 'none';
+      }
+    });
+    
+    // Share functionality
+    const shareBtn = document.getElementById('shareBtn');
+    const sharePopup = document.getElementById('sharePopup');
+    const shareTwitter = document.getElementById('shareTwitter');
+    const shareFacebook = document.getElementById('shareFacebook');
+    const shareWhatsapp = document.getElementById('shareWhatsapp');
+    const shareTelegram = document.getElementById('shareTelegram');
+    const shareCopy = document.getElementById('shareCopy');
+    
+    const pageUrl = encodeURIComponent(window.location.href);
+    const pageTitle = encodeURIComponent(document.title);
+    
+    shareBtn.addEventListener('click', () => {
+      sharePopup.classList.add('active');
+    });
+    
+    // Close popup when clicking outside
+    sharePopup.addEventListener('click', (e) => {
+      if (e.target === sharePopup) {
+        sharePopup.classList.remove('active');
+      }
+    });
+    
+    // Set share URLs
+    shareTwitter.href = `https://twitter.com/intent/tweet?text=${pageTitle}&url=${pageUrl}`;
+    shareFacebook.href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+    shareWhatsapp.href = `https://wa.me/?text=${pageTitle}%20${pageUrl}`;
+    shareTelegram.href = `https://t.me/share/url?url=${pageUrl}&text=${pageTitle}`;
+    
+    // Copy link functionality
+    shareCopy.addEventListener('click', (e) => {
+      e.preventDefault();
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        alert('Link copied to clipboard!');
+        sharePopup.classList.remove('active');
+      });
+    });
+    
+    // Make button cards clickable
+    document.querySelectorAll('.main-btn-card').forEach(card => {
+      card.addEventListener('click', () => {
+        window.location.href = card.getAttribute('data-href');
+      });
+    });
+    
+    // Animate elements when they come into view
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animation = 'slideUp 0.8s ease forwards';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+    
+    // Observe elements for animation
+    document.querySelectorAll('.achievement-goal-card, .main-btn-card, .faq-item').forEach(el => {
+      el.style.opacity = '0';
+      observer.observe(el);
+    });
   </script>
-  <!-- Defer JS for performance -->
-  <script src="script.js" defer></script>
 </body>
 </html>
