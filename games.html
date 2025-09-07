@@ -1,156 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Games</title>
   <style>
+    /* Reset some default */
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      background: linear-gradient(120deg,#fbc2eb 0%, #a6c1ee 100%);
-      font-family: 'Segoe UI', Arial, sans-serif;
-    }
-    h1 {
-      text-align: center;
-      color: #0a6bcd;
-      margin-top: 32px;
-      letter-spacing: 2px;
-      text-shadow: 0 2px 8px #fff;
-    }
-    .games-container {
-      max-width: 900px;
-      margin: 40px auto;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 28px;
-      justify-content: center;
-    }
-    .game-card {
-      background: #fff;
-      border-radius: 14px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.10);
-      padding: 28px 22px 22px 22px;
-      width: 320px;
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #a6c1ee 0%, #fbc2eb 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #2a2a2a;
       display: flex;
       flex-direction: column;
       align-items: center;
-      transition: box-shadow 0.18s;
+      padding: 0 1rem 3rem;
+      scroll-behavior: smooth;
+    }
+
+    h1 {
+      margin: 48px 0 24px;
+      font-weight: 900;
+      font-size: 3rem;
+      color: #2a23ad;
+      letter-spacing: 3px;
+      position: relative;
+      text-align: center;
+      text-shadow: 0 3px 10px rgba(106, 72, 189, 0.5);
+    }
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 5px;
+      border-radius: 12px;
+      background: linear-gradient(90deg, #0a6bcd, #6dd5ed);
+      box-shadow: 0 0 15px #6dd5ed66;
+    }
+
+    .games-container {
+      max-width: 960px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 28px;
+      width: 100%;
+      padding-bottom: 24px;
+    }
+
+    .game-card {
+      background: #ffffffdd;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(106, 72, 189, 0.12);
+      padding: 32px 26px 26px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: default;
+      user-select: none;
+      backdrop-filter: saturate(180%) blur(18px);
+      border: 1px solid rgba(106, 72, 189, 0.15);
     }
     .game-card:hover {
-      box-shadow: 0 6px 28px #fbc2eb55;
+      transform: translateY(-10px);
+      box-shadow: 0 14px 35px rgba(106, 72, 189, 0.3);
+      border-color: #6e45e2;
     }
+
     .game-card-title {
-      font-size: 1.28em;
-      font-weight: bold;
-      color: #6e45e2;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #5e3ab7;
       margin-bottom: 14px;
-      letter-spacing: 1px;
       text-align: center;
-      text-shadow: 0 1px 6px #e7e9bb44;
+      letter-spacing: 1.6px;
+      text-shadow: 0 1px 6px #d3d2ff;
+      user-select: text;
     }
+
     .game-card-desc {
-      font-size: 1.02em;
-      color: #7e8fa0;
-      margin-bottom: 18px;
+      font-size: 1.05rem;
+      color: #555f7a;
+      margin-bottom: 26px;
       text-align: center;
+      line-height: 1.38;
+      user-select: text;
+      min-height: 108px;
     }
+
+    a {
+      text-decoration: none;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
     .game-card-btn {
-      padding: 10px 36px;
-      font-size: 1.07em;
-      font-weight: bold;
-      border-radius: 9px;
+      padding: 12px 48px;
+      font-size: 1.12rem;
+      font-weight: 700;
+      border-radius: 32px;
       border: none;
       background: linear-gradient(90deg,#0a6bcd,#6dd5ed);
       color: #fff;
       cursor: pointer;
-      box-shadow: 0 2px 8px #6dd5ed44;
-      transition: background 0.22s, transform 0.18s;
+      box-shadow: 0 6px 20px #6dd5edaa;
+      transition: background 0.3s ease, transform 0.22s ease, box-shadow 0.3s ease;
+      user-select: none;
+      width: fit-content;
+      white-space: nowrap;
     }
-    .game-card-btn:hover {
+    .game-card-btn:hover,
+    .game-card-btn:focus {
       background: linear-gradient(90deg,#fd5d47,#43cea2);
-      transform: scale(1.08);
+      box-shadow: 0 10px 30px #43cea299;
+      transform: scale(1.12);
+      outline: none;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 400px) {
+      h1 {
+        font-size: 2.4rem;
+      }
+      .game-card-desc {
+        min-height: auto;
+      }
+      .game-card-btn {
+        padding: 10px 28px;
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Games Page</h1>
+  <h1>Games Hub</h1>
   <div class="games-container">
-
-    <!-- Alphabet Cutting Game Card -->
     <div class="game-card">
       <div class="game-card-title">Alphabet Cutting Game</div>
       <div class="game-card-desc">
         Animated गेम जिसमें नीचे से ऊपर आते अल्फाबेट्स को सही key दबाकर काटो!
       </div>
-      <a href="es-games.html">
+      <a href="es-games.html" aria-label="Play Alphabet Cutting Game">
         <button class="game-card-btn">Play Now</button>
       </a>
     </div>
 
-    <!-- Space Invaders Typing Game Card -->
     <div class="game-card">
       <div class="game-card-title">Space Invaders Typing</div>
       <div class="game-card-desc">
         शब्दों की लहरें ऊपर से नीचे आती हैं, उन्हें सही टाइप करके शूट करें!
       </div>
-      <a href="space-invaders-typing.html">
+      <a href="space-invaders-typing.html" aria-label="Play Space Invaders Typing">
         <button class="game-card-btn">Play Now</button>
       </a>
     </div>
 
-    <!-- Temple Run Typing Game Card -->
     <div class="game-card">
       <div class="game-card-title">Temple Run Typing Game</div>
       <div class="game-card-desc">
         दौड़ते किरदार को बाधाओं से बचाने के लिए शब्द टाइप करें, गलत टाइपिंग पर गेम ओवर!
       </div>
-      <a href="temple-run-typing.html">
+      <a href="temple-run-typing.html" aria-label="Play Temple Run Typing Game">
         <button class="game-card-btn">Play Now</button>
       </a>
     </div>
 
-    <!-- Pong Typing Game Card -->
     <div class="game-card">
       <div class="game-card-title">Pong Typing Game</div>
       <div class="game-card-desc">
         पोंग जैसा गेम जिसमें शब्दों को सही key टाइप करके bounce करो, Paddle छोटा होने से बचाओ!
       </div>
-      <a href="pong-typing.html">
+      <a href="pong-typing.html" aria-label="Play Pong Typing Game">
         <button class="game-card-btn">Play Now</button>
       </a>
     </div>
 
-    <!-- Word Race Typing Game Card -->
     <div class="game-card">
       <div class="game-card-title">Word Race Typing Game</div>
       <div class="game-card-desc">
         तेजी से बदलते शब्दों को सही टाइप करो, टाइमर खत्म होने से पहले सबसे ज्यादा स्कोर बनाओ! समय चुनें और फास्ट टाइपिंग का मज़ा लो।
       </div>
-      <a href="word-race-typing.html">
+      <a href="word-race-typing.html" aria-label="Play Word Race Typing Game">
         <button class="game-card-btn">Play Now</button>
       </a>
     </div>
 
-    <!-- Math Blitz Typing Game Card -->
     <div class="game-card">
       <div class="game-card-title">Math Blitz Typing Game</div>
       <div class="game-card-desc">
         आसान गणित सवालों को जल्दी-जल्दी हल करो, टाइमर खत्म होने से पहले सबसे ज्यादा स्कोर बनाओ! मैथ टाइपिंग से दिमाग को तेज करो।
       </div>
-      <a href="math-blitz-typing.html">
+      <a href="math-blitz-typing.html" aria-label="Play Math Blitz Typing Game">
         <button class="game-card-btn">Play Now</button>
       </a>
     </div>
 
-    <!-- Typing Escape Room Game Card -->
     <div class="game-card">
       <div class="game-card-title">Typing Escape Room Game</div>
       <div class="game-card-desc">
         कमरे से बाहर निकलने के लिए पहेलियाँ टाइप करो! Language: English या हिन्दी चुनो। हर सही वाक्य टाइपिंग पर अगला दरवाजा खुलेगा, समय खत्म होने से पहले भागो!
       </div>
-      <a href="typing-escape-room.html">
+      <a href="typing-escape-room.html" aria-label="Play Typing Escape Room Game">
         <button class="game-card-btn">Play Now</button>
       </a>
     </div>
-
   </div>
 </body>
 </html>
