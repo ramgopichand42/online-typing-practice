@@ -1,143 +1,134 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
-
-
+This XML file does not appear to have any style information associated with it. The document tree is shown below.
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!--  created with Free Online Sitemap Generator www.xml-sitemaps.com  -->
 <url>
-  <loc>https://onlinetypingpractice.app/</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>1.00</priority>
+<loc>https://onlinetypingpractice.app/</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>1.00</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/test.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-      <url>
-  <loc>https://onlinetypingpractice.app/Ztype.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>1.00</priority>
+<loc>https://onlinetypingpractice.app/test.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.80</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/tutorial.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.80</priority>
+<loc>https://onlinetypingpractice.app/tutorial.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.80</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/games.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.80</priority>
+<loc>https://onlinetypingpractice.app/Ztype.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.80</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/beginner.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.80</priority>
+<loc>https://onlinetypingpractice.app/beginner.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.80</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/intermediate.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.80</priority>
+<loc>https://onlinetypingpractice.app/intermediate.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.80</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/advance.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.80</priority>
+<loc>https://onlinetypingpractice.app/advance.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.80</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/FAQ.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.80</priority>
+<loc>https://onlinetypingpractice.app/games.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.80</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/Contact-Us.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.80</priority>
+<loc>https://onlinetypingpractice.app/FAQ.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.80</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/Privacy-Policy.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.80</priority>
+<loc>https://onlinetypingpractice.app/Contact-Us.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.80</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/terms.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.80</priority>
+<loc>https://onlinetypingpractice.app/Privacy-Policy.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.80</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/lesson1.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.64</priority>
+<loc>https://onlinetypingpractice.app/terms.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.80</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/lesson2.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.64</priority>
+<loc>https://onlinetypingpractice.app/lesson1.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.64</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/lesson3.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.64</priority>
+<loc>https://onlinetypingpractice.app/lesson2.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.64</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/lesson4.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.64</priority>
+<loc>https://onlinetypingpractice.app/lesson3.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.64</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/lesson5.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.64</priority>
+<loc>https://onlinetypingpractice.app/lesson4.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.64</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/lesson6.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.64</priority>
+<loc>https://onlinetypingpractice.app/lesson5.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.64</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/index.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.64</priority>
+<loc>https://onlinetypingpractice.app/lesson6.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.64</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/es-games.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.64</priority>
+<loc>https://onlinetypingpractice.app/index.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.64</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/space-invaders-typing.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.64</priority>
+<loc>https://onlinetypingpractice.app/es-games.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.64</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/temple-run-typing.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.64</priority>
+<loc>https://onlinetypingpractice.app/space-invaders-typing.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.64</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/pong-typing.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.64</priority>
+<loc>https://onlinetypingpractice.app/temple-run-typing.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.64</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/word-race-typing.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.64</priority>
+<loc>https://onlinetypingpractice.app/pong-typing.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.64</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/math-blitz-typing.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.64</priority>
+<loc>https://onlinetypingpractice.app/word-race-typing.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.64</priority>
 </url>
 <url>
-  <loc>https://onlinetypingpractice.app/typing-escape-room.html</loc>
-  <lastmod>2025-09-07T18:28:49+00:00</lastmod>
-  <priority>0.64</priority>
+<loc>https://onlinetypingpractice.app/math-blitz-typing.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.64</priority>
 </url>
-
-
+<url>
+<loc>https://onlinetypingpractice.app/typing-escape-room.html</loc>
+<lastmod>2025-09-09T16:13:45+00:00</lastmod>
+<priority>0.64</priority>
+</url>
 </urlset>
-
