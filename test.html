@@ -1,847 +1,580 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Online Typing Test: Free English & Hindi Typing Practice</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Improve your typing speed with our free online typing test. Practice in English and Hindi with WPM, accuracy, and history tracking. Start your typing journey today!">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary1: #43e97b;
-      --primary2: #38f9d7;
-      --accent1: #4e54c8;
-      --accent2: #8f94fb;
-      --bg: #fcfcff;
-      --box: #fff;
-      --shadow: 0 8px 24px rgba(60,60,60,0.12);
-      --radius: 18px;
-      --dark-bg: #191c26;
-      --dark-box: #23263a;
-      --dark-text: #f7f8fa;
-      --dark-shadow: 0 8px 24px rgba(20,20,30,0.22);
-      --dark-primary: #43e97b;
-      --dark-accent: #38f9d7;
-      --highlight: #fff8a3;
-    }
-    body {
-      min-height: 100vh;
-      margin: 0;
-      font-family: 'Segoe UI', Verdana, Arial, sans-serif;
-      background: linear-gradient(120deg, var(--accent1), var(--accent2), var(--primary1));
-      background-size: 200% 200%;
-      animation: bgGradientMove 7s ease-in-out infinite alternate;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.3s;
-    }
-    @keyframes bgGradientMove {
-      0% {background-position: left top;}
-      100% {background-position: right bottom;}
-    }
-    body.dark {
-      background: linear-gradient(120deg, var(--dark-bg), #23263a, #313c50);
-      color: var(--dark-text);
-    }
-    .container {
-      background: var(--box);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 38px 32px;
-      max-width: 600px; /* Increased for better desktop/tablet view */
-      width: 97vw;
-      min-width: 320px;
-      text-align: center;
-      animation: popIn 1.2s cubic-bezier(0.23, 1, 0.32, 1);
-      margin: 16px;
-      position: relative;
-      overflow: hidden;
-      transition: background 0.3s, box-shadow 0.3s, color 0.3s;
-    }
-    body.dark .container {
-      background: var(--dark-box);
-      box-shadow: var(--dark-shadow);
-      color: var(--dark-text);
-    }
-    @keyframes popIn {
-      0% { transform: scale(0.7); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    h1 {
-      background: linear-gradient(90deg, var(--primary1), var(--primary2) 80%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-size: clamp(1.5rem, 4vw, 2.1rem); /* Responsive font size */
-      margin-bottom: 5px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      animation: fadeInDown 0.8s;
-    }
-    @keyframes fadeInDown {
-      0% { opacity: 0; transform: translateY(-24px);}
-      100% { opacity: 1; transform: translateY(0);}
-    }
-    .row {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
-    }
-    .theme-btn {
-      border: none;
-      background: transparent;
-      font-size: 1.3rem;
-      cursor: pointer;
-      margin-left: 8px;
-      transition: color 0.2s;
-    }
-    .theme-btn:hover {
-      color: var(--primary1);
-      transform: scale(1.2);
-    }
-    label {
-      font-size: clamp(0.9rem, 2vw, 1.05rem); /* Responsive font size */
-      font-weight: 600;
-      color: #4e54c8;
-      transition: color 0.2s;
-    }
-    body.dark label {
-      color: var(--dark-primary);
-    }
-    select {
-      font-size: clamp(0.9rem, 2vw, 1.08rem); /* Responsive font size */
-      border-radius: 9px;
-      padding: 5px 14px;
-      border: 1.5px solid var(--primary2);
-      background: #f6faff;
-      color: #24292f;
-      outline: none;
-      font-weight: 500;
-      transition: border 0.2s, background 0.2s;
-      margin-right: 10px;
-    }
-    select:focus {
-      border: 2px solid var(--primary1);
-      background: #e8ffe8;
-    }
-    select:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-    }
-    body.dark select {
-      background: #23263a;
-      color: var(--dark-text);
-      border-color: var(--dark-primary);
-    }
-    .stats {
-      display: flex;
-      justify-content: space-between;
-      margin: 12px 0 16px 0;
-      font-size: clamp(0.95rem, 2vw, 1.06rem); /* Responsive font size */
-      color: #57606f;
-      flex-wrap: wrap;
-      gap: 8px;
-      transition: color 0.3s;
-    }
-    body.dark .stats {
-      color: var(--dark-primary);
-    }
-    .progress-bar-bg {
-      width: 100%;
-      height: 10px;
-      background: #f0f4ff;
-      border-radius: 8px;
-      margin-bottom: 8px;
-      overflow: hidden;
-      position: relative;
-    }
-    body.dark .progress-bar-bg {
-      background: #23263a;
-    }
-    .progress-bar {
-      height: 100%;
-      background: linear-gradient(90deg, var(--primary1), var(--primary2));
-      border-radius: 8px;
-      width: 0;
-      transition: width 0.5s cubic-bezier(.68,-0.55,.27,1.55);
-      position: absolute;
-      left: 0; top: 0;
-    }
-    .test-area {
-      width: 100%;
-      min-height: 52px;
-      font-size: clamp(1rem, 2.5vw, 1.12rem); /* Responsive font size */
-      background: #f0f4ff;
-      border-radius: 11px;
-      margin-bottom: 10px;
-      padding: 11px;
-      text-align: left;
-      box-sizing: border-box;
-      line-height: 2rem;
-      letter-spacing: 1px;
-      box-shadow: 0 2px 8px rgba(60,60,60,0.08);
-      user-select: none;
-      word-break: break-word;
-      transition: font-size 0.2s, padding 0.2s, border 0.2s, background 0.3s;
-      font-family: inherit;
-      border: 2px solid #e0e4fc;
-      position: relative;
-    }
-    body.dark .test-area {
-      background: #23263a;
-      border-color: #313c50;
-    }
-    .test-area.active {
-      border-color: var(--primary1);
-      box-shadow: 0 0 0 2px var(--primary1)33;
-    }
-    .test-area.hindi, textarea.hindi {
-      font-family: 'Noto Sans Devanagari', 'Mangal', Arial, sans-serif;
-      font-size: clamp(1rem, 2.5vw, 1.16rem); /* Responsive font size */
-      letter-spacing: 0.5px;
-    }
-    .test-area .word,
-    .test-area .char {
-      display: inline-block;
-      margin-right: 4px;
-      margin-bottom: 3px;
-      padding: 2px 4px;
-      border-radius: 4px;
-      transition: background 0.15s, color 0.15s, transform 0.18s cubic-bezier(.68,-0.55,.27,1.55);
-      position: relative;
-    }
-    .test-area .next {
-      background: var(--highlight);
-      color: #222;
-      box-shadow: 0 2px 8px #ffc93355;
-      z-index: 1;
-      animation: pulseNext 0.8s infinite alternate;
-    }
-    @keyframes pulseNext {
-      0% { box-shadow: 0 2px 8px #ffc93344; }
-      100% { box-shadow: 0 4px 16px #ffc93399; }
-    }
-    .test-area .correct {
-      color: var(--primary1);
-      background: #e8ffe8;
-      transform: scale(1.13);
-      animation: popWord 0.22s cubic-bezier(.68,-0.55,.27,1.55);
-      z-index: 0;
-    }
-    @keyframes popWord {
-      0% { transform: scale(0.8);}
-      100% { transform: scale(1.13);}
-    }
-    .test-area .incorrect {
-      color: #ff6767;
-      background: #ffeaea;
-      animation: shake 0.18s, flashIncorrect 0.18s;
-      z-index: 0;
-    }
-    @keyframes shake {
-      0% { transform: translateX(-1px); }
-      50% { transform: translateX(2px); }
-      100% { transform: translateX(0px); }
-    }
-    @keyframes flashIncorrect {
-      0% { background: #ffd9d9;}
-      100% { background: #ffeaea;}
-    }
-    textarea {
-      width: 100%;
-      font-size: clamp(1rem, 2.5vw, 1.13rem); /* Responsive font size */
-      padding: 13px;
-      border-radius: 11px;
-      border: 2px solid var(--accent2);
-      margin-bottom: 13px;
-      outline: none;
-      resize: none;
-      box-sizing: border-box;
-      transition: border 0.2s, background 0.2s;
-      background: var(--bg);
-      min-height: 40px;
-      font-family: inherit;
-    }
-    body.dark textarea {
-      background: #23263a;
-      color: var(--dark-text);
-      border-color: var(--dark-primary);
-    }
-    textarea.hindi {
-      font-family: 'Noto Sans Devanagari', 'Mangal', Arial, sans-serif;
-      font-size: clamp(1rem, 2.5vw, 1.16rem); /* Responsive font size */
-      letter-spacing: 0.5px;
-    }
-    textarea:focus {
-      border: 2px solid var(--primary1);
-      background: #f6ffe8;
-    }
-    button {
-      padding: 11px 29px;
-      font-size: clamp(0.9rem, 2vw, 1.11rem); /* Responsive font size */
-      border-radius: 29px;
-      border: none;
-      background: linear-gradient(90deg, var(--primary1), var(--primary2));
-      color: white;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(60,60,60,0.13);
-      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
-      margin: 0 8px 8px 0;
-      outline: none;
-      letter-spacing: 1px;
-      touch-action: manipulation;
-      position: relative;
-      z-index: 2;
-    }
-    button:hover, button:focus-visible {
-      background: linear-gradient(90deg, var(--primary2), var(--primary1));
-      box-shadow: 0 4px 12px rgba(60,60,60,0.22);
-    }
-    button:active {
-      transform: scale(0.97);
-      background: linear-gradient(90deg, var(--primary2), var(--primary1));
-    }
-    button:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-    }
-    .button-group {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 8px; /* Added gap for better spacing on mobile */
-    }
-    .reload-btn {
-      background: linear-gradient(90deg, #ffc933, #ff6767);
-      color: #333;
-      font-size: 1rem;
-      margin-left: 0;
-      margin-right: 0;
-    }
-    .reload-btn:hover {
-      background: linear-gradient(90deg, #ff6767, #ffc933);
-      color: #fff;
-    }
-    .result {
-      margin-top: 15px;
-      font-size: clamp(1rem, 2.5vw, 1.13rem); /* Responsive font size */
-      background: #d4eeff;
-      border-radius: 11px;
-      padding: 10px 0;
-      color: #24292f;
-      animation: slideInResult 0.8s cubic-bezier(.68,-0.55,.27,1.55);
-      font-weight: 500;
-      box-shadow: 0 2px 8px #43e97b22;
-      position: relative;
-    }
-    body.dark .result {
-      background: #23263a;
-      color: var(--dark-text);
-      box-shadow: 0 2px 8px #43e97b55;
-    }
-    @keyframes slideInResult {
-      0% {transform: translateY(30px); opacity: 0;}
-      100% {transform: translateY(0); opacity: 1;}
-    }
-    .confetti {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 9;
-    }
-    .history {
-      background: #f8f8ff;
-      color: #333;
-      border-radius: 12px;
-      margin: 16px 0 0 0;
-      font-size: clamp(0.9rem, 2vw, 1rem); /* Responsive font size */
-      padding: 10px;
-      box-shadow: 0 2px 8px #43e97b22;
-      text-align: left;
-      max-height: 120px;
-      overflow-y: auto;
-      animation: fadeInDown 0.7s;
-    }
-    body.dark .history {
-      background: #23263a;
-      color: var(--dark-text);
-    }
-    .history-title {
-      font-weight: 600;
-      color: var(--accent1);
-      margin-bottom: 6px;
-      font-size: clamp(0.95rem, 2vw, 1.03rem); /* Responsive font size */
-      display: block;
-    }
-    body.dark .history-title {
-      color: var(--dark-primary);
-    }
-    
-    /* Removed redundant media queries by using clamp() and flexbox gap */
-    @media (max-width: 700px) {
-      .container {
-        padding: 16px 3vw;
-      }
-    }
-    @media (max-width: 420px) {
-      .container {
-        padding: 7px 1vw;
-      }
-    }
-
-    button:focus-visible {
-      outline: 3px solid var(--primary2);
-    }
-    ::-webkit-scrollbar {
-      width: 0px;
-      background: transparent;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Language Typing Test - Improve Your Speed & Accuracy | TypingMaster</title>
+    <meta name="description" content="Free online typing test in multiple languages. Test your typing speed (WPM) and accuracy in English, Hindi, Spanish, French, and German. Choose from 1, 2, 3, 5, or 10-minute tests.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+        
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            padding: 25px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .control-panel {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .option-group {
+            margin-bottom: 20px;
+        }
+        
+        .option-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+        
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .option-btn {
+            padding: 10px 15px;
+            background: #e9ecef;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .option-btn:hover {
+            background: #dee2e6;
+        }
+        
+        .option-btn.active {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+        
+        .typing-area {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        #typing-text {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            min-height: 180px;
+            transition: all 0.3s;
+        }
+        
+        #typing-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            resize: none;
+            transition: border 0.3s;
+        }
+        
+        #typing-input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .stat-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        
+        .stat-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+        }
+        
+        .btn-primary {
+            background: #2ecc71;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #27ae60;
+        }
+        
+        .btn-secondary {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #c0392b;
+        }
+        
+        .result-container {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .certificate {
+            font-size: 3rem;
+            margin: 15px 0;
+        }
+        
+        .highlight {
+            color: #e74c3c;
+            font-weight: 700;
+        }
+        
+        .seo-content {
+            padding: 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .seo-content h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .seo-content h3 {
+            color: #2c3e50;
+            margin: 20px 0 10px;
+        }
+        
+        .seo-content p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 0.9rem;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        /* Character highlighting */
+        .correct {
+            color: #27ae60;
+        }
+        
+        .incorrect {
+            color: #c0392b;
+            text-decoration: underline;
+        }
+        
+        .current {
+            background-color: #d6eaf8;
+            padding: 0 2px;
+            border-radius: 3px;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Online Typing Test <span style="font-size:clamp(0.8rem, 2vw, 1rem);"> (Practice in English & Hindi)</span></h1>
-    <div class="row">
-      <label for="langSelect">Language:</label>
-      <select id="langSelect">
-        <option value="en">English</option>
-        <option value="hi">हिंदी</option>
-      </select>
-      <label for="timerSelect" style="margin-left:10px;">Timer:</label>
-      <select id="timerSelect">
-        <option value="15">15s</option>
-        <option value="30">30s</option>
-        <option value="45">45s</option>
-        <option value="60" selected>60s</option>
-        <option value="90">90s</option>
-        <option value="120">120s</option>
-      </select>
-      <button class="theme-btn" id="themeBtn" title="Switch theme" aria-label="Switch theme">🌗</button>
-    </div>
-    <div class="stats">
-      <span id="timer">⏱️ 60s</span>
-      <span id="wpm">WPM: 0</span>
-      <span id="accuracy">Accuracy: 100%</span>
-    </div>
-    <div class="progress-bar-bg">
-      <div class="progress-bar" id="progressBar"></div>
-    </div>
-    <div class="test-area" id="testArea"></div>
-    <textarea id="inputArea" rows="3" placeholder="Start typing here..." disabled></textarea>
-    <div class="button-group"> <button id="startBtn">Start</button>
-      <button id="resetBtn">Reset</button>
-      <button id="reloadBtn" class="reload-btn" title="Random text">🔄</button>
-    </div>
-    <div class="result" id="resultBox" style="display:none"></div>
-    <canvas id="confettiCanvas" class="confetti" style="display:none"></canvas>
-    <div class="history" id="historyBox" style="display:none"></div>
-  </div>
-  <script>
-    // Practice texts (English + Hindi)
-    const texts = {
-      en: [
-        "Speed and accuracy matter in typing tests. Practice daily to improve your skills.",
-        "GitHub Copilot can help you write better code, faster and smarter than ever before.",
-        "The quick brown fox jumps over the lazy dog. Typing this phrase tests every key.",
-        "Consistency is the key to mastering typing. Try to type without looking at the keyboard.",
-        "Learning to type quickly opens up new possibilities in coding, writing, and communication.",
-        "A fast typist can save countless hours on projects and assignments. The keyboard is your most powerful tool.",
-        "Improve your cognitive skills and hand-eye coordination by consistently practicing typing. It's a skill that pays off."
-      ],
-      hi: [
-        "टाइपिंग टेस्ट में गति और शुद्धता बहुत ज़रूरी है। रोज़ अभ्यास करें और अपनी क्षमता बढ़ाएँ।",
-        "कंप्यूटर पर हिंदी में टाइप करना सीखना अब बहुत आसान हो गया है।",
-        "सफलता का राज़ मेहनत और लगन में छुपा है। अभ्यास से सब कुछ संभव है।",
-        "अगर आप बिना देखे टाइप करना सीख लें तो आपकी स्पीड और सटीकता बहुत बढ़ जाएगी।",
-        "शुरुआत में गलतियाँ होना सामान्य है, लेकिन लगातार अभ्यास करते रहें।",
-        "डिजिटल युग में तेज़ी से टाइप करना एक आवश्यक कौशल है। यह आपको दूसरों से आगे रखेगा।",
-        "प्रतिदिन पाँच मिनट का अभ्यास आपकी टाइपिंग गति को आश्चर्यजनक रूप से बढ़ा सकता है।"
-      ]
-    };
+    <div class="container">
+        <header>
+            <h1>Multi-Language Typing Test</h1>
+            <p class="subtitle">Test your typing speed and accuracy in multiple languages</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="control-panel">
+                <div class="option-group">
+                    <div class="option-title">Select Language</div>
+                    <div class="options">
+                        <button class="option-btn active" data-language="english">English</button>
+                        <button class="option-btn" data-language="hindi">Hindi</button>
+                        <button class="option-btn" data-language="spanish">Spanish</button>
+                        <button class="option-btn" data-language="french">French</button>
+                        <button class="option-btn" data-language="german">German</button>
+                    </div>
+                </div>
+                
+                <div class="option-group">
+                    <div class="option-title">Test Duration</div>
+                    <div class="options">
+                        <button class="option-btn" data-time="1">1 Min</button>
+                        <button class="option-btn" data-time="2">2 Min</button>
+                        <button class="option-btn active" data-time="3">3 Min</button>
+                        <button class="option-btn" data-time="5">5 Min</button>
+                        <button class="option-btn" data-time="10">10 Min</button>
+                    </div>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-value" id="wpm">0</div>
+                        <div class="stat-label">WPM</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="accuracy">100%</div>
+                        <div class="stat-label">Accuracy</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="timer">3:00</div>
+                        <div class="stat-label">Time Left</div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="start-btn" class="btn btn-primary">Start Test</button>
+                    <button id="reset-btn" class="btn btn-secondary">Reset</button>
+                </div>
+            </div>
+            
+            <div class="typing-area">
+                <div id="typing-text">
+                    Select your language and test duration, then click Start Test to begin. Type the text you see here as quickly and accurately as possible.
+                </div>
+                <textarea id="typing-input" placeholder="Click 'Start Test' and begin typing here..." rows="5" disabled></textarea>
+                
+                <div class="result-container" id="result-container">
+                    <h2>Typing Test Complete!</h2>
+                    <div class="certificate">🏆</div>
+                    <p>Your final score: <span class="highlight" id="final-wpm">0</span> WPM with <span class="highlight" id="final-accuracy">100%</span> accuracy.</p>
+                    <p>Share your certificate and challenge your friends!</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="seo-content">
+            <h2>Improve Your Typing Speed with Our Multi-Language Typing Test</h2>
+            <p>Welcome to the most advanced <strong>free online typing test</strong> platform. Whether you're a student, professional, or just looking to improve your keyboard skills, our <strong>multi-language typing test</strong> is designed to help you measure and enhance your Words Per Minute (WPM) rate and accuracy in English, Hindi, Spanish, French, and German.</p>
 
-    const testArea = document.getElementById('testArea');
-    const inputArea = document.getElementById('inputArea');
-    const timerEl = document.getElementById('timer');
-    const wpmEl = document.getElementById('wpm');
-    const accuracyEl = document.getElementById('accuracy');
-    const startBtn = document.getElementById('startBtn');
-    const resetBtn = document.getElementById('resetBtn');
-    const reloadBtn = document.getElementById('reloadBtn');
-    const resultBox = document.getElementById('resultBox');
-    const langSelect = document.getElementById('langSelect');
-    const timerSelect = document.getElementById('timerSelect');
-    const progressBar = document.getElementById('progressBar');
-    const themeBtn = document.getElementById('themeBtn');
-    const confettiCanvas = document.getElementById('confettiCanvas');
-    const historyBox = document.getElementById('historyBox');
+            <h3>Why Take a Multi-Language Typing Test?</h3>
+            <p>In today's globalized world, typing proficiency in multiple languages is a valuable skill. Regular practice with our <strong>English typing test</strong>, <strong>Hindi typing test</strong>, or tests in other languages can significantly improve your productivity and employability. Our tests use common paragraphs and sentences, making them excellent for <strong>typing practice</strong> regardless of your chosen language.</p>
 
-    let timer = parseInt(timerSelect.value);
-    let timerInterval = null;
-    let started = false;
-    let currentText = '';
-    let currentLang = 'en';
-    let correctWords = 0;
-    let totalTyped = 0;
-    let wrongWords = 0;
-    let scoreHistory = [];
+            <h3>How to Use Our Typing Test</h3>
+            <p>1. Select your preferred language and test duration (1, 2, 3, 5, or 10 minutes).<br>
+            2. Click the "Start Test" button.<br>
+            3. Type the text shown in the box above as quickly and accurately as possible.<br>
+            4. Receive your WPM and accuracy scores instantly upon completion!</p>
 
-    // Confetti for celebration
-    function fireConfetti() {
-      confettiCanvas.style.display = 'block';
-      const ctx = confettiCanvas.getContext('2d');
-      confettiCanvas.width = confettiCanvas.offsetWidth;
-      confettiCanvas.height = confettiCanvas.offsetHeight;
-      let particles = [];
-      for (let i = 0; i < 40; i++) {
-        particles.push({
-          x: Math.random() * confettiCanvas.width,
-          y: -10,
-          r: Math.random() * 6 + 4,
-          d: Math.random() * 20 + 10,
-          color: `hsl(${Math.random()*360},80%,60%)`,
-          tilt: Math.random() * 12 - 6
-        });
-      }
-      let frame = 0;
-      function draw() {
-        ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
-        particles.forEach(p => {
-          ctx.beginPath();
-          ctx.ellipse(p.x, p.y, p.r, p.r/1.5, p.tilt, 0, 2*Math.PI);
-          ctx.fillStyle = p.color;
-          ctx.fill();
-        });
-      }
-      function update() {
-        particles.forEach(p => {
-          p.y += p.d/10 + Math.sin(frame/10 + p.x/60)*1.5;
-          p.x += Math.sin(frame/10 + p.x/60)*2;
-          p.tilt += 0.1;
-        });
-      }
-      function loop() {
-        frame++;
-        update();
-        draw();
-        if (frame < 60) requestAnimationFrame(loop);
-        else confettiCanvas.style.display = 'none';
-      }
-      loop();
-    }
+            <p>Bookmark this page for daily <strong>typing test practice</strong> and track your progress over time. Challenge yourself with different languages and time durations to become a typing master!</p>
 
-    function renderTestText(text, userInput = '') {
-      testArea.classList.toggle('hindi', currentLang === 'hi');
-      testArea.classList.toggle('active', started);
-      if (currentLang === 'hi') {
-        let words = text.split(' ');
-        let userWords = userInput.trim().split(' ');
-        testArea.innerHTML = '';
-        words.forEach((word, i) => {
-          const span = document.createElement('span');
-          span.classList.add('word');
-          span.textContent = word;
-          if (userWords[i]) {
-            if (userWords[i] === word) {
-              span.classList.add('correct');
-            } else {
-              span.classList.add('incorrect');
+            <h3>Benefits of Improving Your Typing Skills</h3>
+            <p>Faster typing speeds can significantly enhance your productivity, whether you're writing emails, coding, creating documents, or chatting with friends. Improved typing accuracy reduces time spent correcting mistakes and increases your overall efficiency.</p>
+        </div>
+        
+        <footer>
+            <p>© 2023 TypingMaster | The Ultimate Multi-Language Typing Practice Platform</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM elements
+            const languageButtons = document.querySelectorAll('[data-language]');
+            const timeButtons = document.querySelectorAll('[data-time]');
+            const typingTextElement = document.getElementById('typing-text');
+            const typingInput = document.getElementById('typing-input');
+            const startButton = document.getElementById('start-btn');
+            const resetButton = document.getElementById('reset-btn');
+            const wpmElement = document.getElementById('wpm');
+            const accuracyElement = document.getElementById('accuracy');
+            const timerElement = document.getElementById('timer');
+            const resultContainer = document.getElementById('result-container');
+            const finalWpmElement = document.getElementById('final-wpm');
+            const finalAccuracyElement = document.getElementById('final-accuracy');
+            
+            // Test variables
+            let selectedLanguage = 'english';
+            let selectedTime = 180; // 3 minutes in seconds
+            let timer;
+            let timeLeft = selectedTime;
+            let isTestRunning = false;
+            let startTime;
+            let totalKeystrokes = 0;
+            let incorrectKeystrokes = 0;
+            let originalText = "";
+            
+            // Sample texts for different languages
+            const sampleTexts = {
+                english: [
+                    "The quick brown fox jumps over the lazy dog. This sentence contains every letter in the English alphabet, making it perfect for typing practice. Try to type it as quickly and accurately as you can.",
+                    "Programming is the process of creating a set of instructions that tell a computer how to perform a task. Programming can be done using many programming languages such as JavaScript, Python, C++, and Ruby.",
+                    "Regular typing practice can significantly improve your speed and accuracy. Focus on hitting the correct keys without looking at your keyboard. Over time, your fingers will learn the location of each key automatically."
+                ],
+                hindi: [
+                    "मैं एक मुफ्त ऑनलाइन हिंदी टाइपिंग परीक्षण कर रहा हूं। हिंदी टाइपिंग सीखना बहुत उपयोगी है क्योंकि यह दुनिया में तीसरी सबसे अधिक बोली जाने वाली भाषा है।",
+                    "प्र technology लोगों के जीवन को बेहतर बनाने के लिए प्रौद्योगिकी का उपयोग करना चाहिए। कंप्यूटर और स्मार्टफोन ने हमारे दैनिक जीवन को पूरी तरह से बदल दिया है।",
+                    "भारत एक सुंदर देश है जिसमें एक समृद्ध इतिहास और विविध संस्कृति है। यहां के लोग विभिन्न धर्मों, भाषाओं और परंपराओं का पालन करते हैं।"
+                ],
+                spanish: [
+                    "El rápido zorro marrón salta sobre el perro perezoso. Esta oración contiene todas las letras del alfabeto español, por lo que es perfecta para practicar mecanografía.",
+                    "Aprender a escribir rápidamente en español es muy útil porque el español es uno de los idiomas más hablados del mundo. Se habla en muchos países de América Latina y España.",
+                    "La tecnología moderna ha cambiado la forma en que vivimos y trabajamos. Los smartphones y las computadoras se han convertido en partes esenciales de nuestra vida diaria."
+                ],
+                french: [
+                    "Le rapide renard brun saute par-dessus le chien paresseux. Cette phrase contient toutes les lettres de l'alphabet français, ce qui la rend parfaite pour la pratique de la dactylographie.",
+                    "Apprendre à taper rapidement en français est très utile car le français est une langue importante dans les affaires internationales, la diplomatie et la culture.",
+                    "Paris est la capitale de la France et l'une des villes les plus visitées au monde. La ville est célèbre pour sa tour Eiffel, son musée du Louvre et sa délicieuse cuisine."
+                ],
+                german: [
+                    "Der schnelle braune Fuchs springt über den faulen Hund. Dieser Satz enthält alle Buchstaben des deutschen Alphabets und ist daher perfekt für Schreibübungen geeignet.",
+                    "Deutsch lernen ist sehr nützlich, da Deutschland eine der größten Volkswirtschaften der Welt ist. Viele internationale Unternehmen haben ihren Sitz in deutschsprachigen Ländern.",
+                    "Berlin ist die Hauptstadt Deutschlands und eine der kosmopolitischsten Städte Europas. Die Stadt ist bekannt für ihre Geschichte, Kultur und lebendige Kunstszene."
+                ]
+            };
+            
+            // Initialize the test with a random text
+            function initTest() {
+                const texts = sampleTexts[selectedLanguage];
+                const randomIndex = Math.floor(Math.random() * texts.length);
+                originalText = texts[randomIndex];
+                renderText(originalText);
             }
-          }
-          if (started && i === userWords.length) span.classList.add('next');
-          testArea.appendChild(span);
-          if (i < words.length - 1) {
-            testArea.appendChild(document.createTextNode(' '));
-          }
-        });
-      } else {
-        testArea.classList.remove('hindi');
-        testArea.innerHTML = '';
-        for (let i = 0; i < text.length; i++) {
-          const span = document.createElement('span');
-          span.classList.add('char');
-          span.textContent = text[i];
-          if (userInput[i]) {
-            if (userInput[i] === text[i]) {
-              span.classList.add('correct');
-            } else {
-              span.classList.add('incorrect');
+            
+            // Render the text with highlighting
+            function renderText(text, typedText = "") {
+                let html = '';
+                for (let i = 0; i < text.length; i++) {
+                    let char = text[i];
+                    if (i < typedText.length) {
+                        if (char === typedText[i]) {
+                            html += `<span class="correct">${char}</span>`;
+                        } else {
+                            html += `<span class="incorrect">${char}</span>`;
+                        }
+                    } else if (i === typedText.length) {
+                        html += `<span class="current">${char}</span>`;
+                    } else {
+                        html += char;
+                    }
+                }
+                typingTextElement.innerHTML = html;
             }
-          }
-          if (started && i === userInput.length) span.classList.add('next');
-          testArea.appendChild(span);
-        }
-      }
-    }
-
-    function updateStats() {
-      let wpm, acc;
-      let timeSpent = (parseInt(timerSelect.value) - timer) / 60 || 1;
-      if (currentLang === 'hi') {
-        let words = inputArea.value.trim().split(/\s+/).filter(Boolean).length;
-        wpm = Math.round(words / timeSpent);
-        wpmEl.textContent = `शब्द प्रति मिनट: ${wpm}`;
-        acc = correctWords + wrongWords ? Math.max(0, Math.round((correctWords/(correctWords+wrongWords))*100)) : 100;
-        accuracyEl.textContent = `शुद्धता: ${acc}%`;
-      } else {
-        let words = inputArea.value.trim().split(/\s+/).filter(Boolean).length;
-        wpm = Math.round(words / timeSpent);
-        wpmEl.textContent = `WPM: ${wpm}`;
-        acc = totalTyped ? Math.max(0, Math.round((correctWords/totalTyped)*100)) : 100;
-        accuracyEl.textContent = `Accuracy: ${acc}%`;
-      }
-    }
-
-    function updateProgressBar() {
-      let totalTime = parseInt(timerSelect.value);
-      let percent = ((totalTime - timer) / totalTime) * 100;
-      progressBar.style.width = percent + '%';
-    }
-
-    function startTest() {
-      currentText = pickText();
-      renderTestText(currentText);
-      timer = parseInt(timerSelect.value);
-      correctWords = 0;
-      totalTyped = 0;
-      wrongWords = 0;
-      inputArea.value = '';
-      inputArea.disabled = false;
-      inputArea.classList.toggle('hindi', currentLang === 'hi');
-      inputArea.focus();
-      started = true;
-      langSelect.disabled = true;
-      timerSelect.disabled = true;
-      startBtn.disabled = true;
-      reloadBtn.disabled = true;
-      timerEl.textContent = `⏱️ ${timer}s`;
-      wpmEl.textContent = currentLang === 'hi' ? 'शब्द प्रति मिनट: 0' : 'WPM: 0';
-      accuracyEl.textContent = currentLang === 'hi' ? 'शुद्धता: 100%' : 'Accuracy: 100%';
-      resultBox.style.display = 'none';
-      updateProgressBar();
-      if (timerInterval) clearInterval(timerInterval);
-      timerInterval = setInterval(() => {
-        timer--;
-        timerEl.textContent = `⏱️ ${timer}s`;
-        updateStats();
-        updateProgressBar();
-        if (timer <= 0) {
-          endTest();
-        }
-      }, 1000);
-    }
-
-    function endTest() {
-      started = false;
-      inputArea.disabled = true;
-      langSelect.disabled = false;
-      timerSelect.disabled = false;
-      startBtn.disabled = false;
-      reloadBtn.disabled = false;
-      clearInterval(timerInterval);
-      updateStats();
-      updateProgressBar();
-      
-      let finalWPM;
-      let finalAccuracy;
-      if (currentLang === 'en') {
-        let typedChars = totalTyped;
-        let timeInMinutes = parseInt(timerSelect.value) / 60;
-        finalWPM = Math.round((correctWords / 5) / timeInMinutes);
-        finalAccuracy = typedChars ? Math.max(0, Math.round((correctWords/typedChars)*100)) : 100;
-      } else {
-        let words = inputArea.value.trim().split(/\s+/).filter(Boolean).length;
-        let timeInMinutes = parseInt(timerSelect.value) / 60;
-        finalWPM = Math.round(words / timeInMinutes);
-        finalAccuracy = correctWords + wrongWords ? Math.max(0, Math.round((correctWords/(correctWords+wrongWords))*100)) : 100;
-      }
-
-      if (currentLang === 'hi') {
-        resultBox.innerHTML =
-          `<b>🎉 टेस्ट समाप्त!</b> <br>
-          <span style="font-size:1.5rem;">🥳</span><br>
-          शब्द प्रति मिनट: <b>${finalWPM}</b><br>
-          शुद्धता: <b>${finalAccuracy}%</b><br>
-          सही शब्द: <b>${correctWords}</b> | गलत: <b>${wrongWords}</b>`;
-      } else {
-        resultBox.innerHTML =
-          `<b>🎉 Test Finished!</b><br>
-          <span style="font-size:1.5rem;">🥳</span><br>
-          WPM: <b>${finalWPM}</b><br>
-          Accuracy: <b>${finalAccuracy}%</b><br>
-          Correct Chars: <b>${correctWords}</b> | Incorrect: <b>${wrongWords}</b>`;
-      }
-      resultBox.style.display = 'block';
-      fireConfetti();
-      let score = {
-        lang: currentLang === 'hi' ? 'हिंदी' : 'English',
-        timer: timerSelect.value+'s',
-        wpm: finalWPM,
-        acc: finalAccuracy,
-        correct: correctWords,
-        wrong: wrongWords,
-        date: new Date().toLocaleTimeString()
-      };
-      scoreHistory.unshift(score);
-      showHistory();
-    }
-
-    function showHistory() {
-      if (!scoreHistory.length) {
-        historyBox.style.display = 'none';
-        return;
-      }
-      let html = '<span class="history-title">Previous Scores:</span><ul style="padding-left:12px;">';
-      scoreHistory.slice(0,5).forEach(s => {
-        html += `<li>
-          <b>${s.lang}</b> | ${s.timer} | <b>WPM:</b> ${s.wpm} | <b>ACC:</b> ${s.acc}% | <b>✔️</b> ${s.correct} | <b>❌</b> ${s.wrong} <span style="float:right;">${s.date}</span>
-        </li>`;
-      });
-      html += '</ul>';
-      historyBox.innerHTML = html;
-      historyBox.style.display = 'block';
-    }
-
-    inputArea.addEventListener('input', () => {
-      if (!started) return;
-      let userInput = inputArea.value;
-      if (currentLang === 'hi') {
-        let words = currentText.split(' ');
-        let userWords = userInput.trim().split(' ');
-        correctWords = 0;
-        wrongWords = 0;
-        for (let i = 0; i < userWords.length; i++) {
-          if (userWords[i] === words[i]) {
-            correctWords++;
-          } else {
-            wrongWords++;
-          }
-        }
-        renderTestText(currentText, userInput);
-        updateStats();
-        updateProgressBar();
-        if (userWords.length >= words.length) {
-          endTest();
-        }
-      } else {
-        correctWords = 0;
-        wrongWords = 0;
-        totalTyped = userInput.length;
-        for (let i = 0; i < userInput.length; i++) {
-          if (userInput[i] === currentText[i]) {
-            correctWords++;
-          } else {
-            wrongWords++;
-          }
-        }
-        renderTestText(currentText, userInput);
-        updateStats();
-        updateProgressBar();
-        if (userInput.length >= currentText.length) {
-          endTest();
-        }
-      }
-    });
-
-    startBtn.onclick = () => {
-      startTest();
-    };
-    resetBtn.onclick = () => {
-      started = false;
-      inputArea.value = '';
-      inputArea.disabled = true;
-      inputArea.classList.toggle('hindi', currentLang === 'hi');
-      langSelect.disabled = false;
-      timerSelect.disabled = false;
-      startBtn.disabled = false;
-      reloadBtn.disabled = false;
-      clearInterval(timerInterval);
-      timerEl.textContent = `⏱️ ${timerSelect.value}s`;
-      wpmEl.textContent = currentLang === 'hi' ? 'शब्द प्रति मिनट: 0' : 'WPM: 0';
-      accuracyEl.textContent = currentLang === 'hi' ? 'शुद्धता: 100%' : 'Accuracy: 100%';
-      resultBox.style.display = 'none';
-      progressBar.style.width = '0%';
-      renderTestText(pickText(), '');
-      testArea.classList.remove('active');
-    };
-
-    langSelect.onchange = () => {
-      currentLang = langSelect.value;
-      inputArea.placeholder = currentLang === 'hi' ? 'यहाँ टाइप करें...' : 'Start typing here...';
-      started = false;
-      inputArea.value = '';
-      inputArea.disabled = true;
-      inputArea.classList.toggle('hindi', currentLang === 'hi');
-      langSelect.disabled = false;
-      timerSelect.disabled = false;
-      startBtn.disabled = false;
-      reloadBtn.disabled = false;
-      clearInterval(timerInterval);
-      timerEl.textContent = `⏱️ ${timerSelect.value}s`;
-      wpmEl.textContent = currentLang === 'hi' ? 'शब्द प्रति मिनट: 0' : 'WPM: 0';
-      accuracyEl.textContent = currentLang === 'hi' ? 'शुद्धता: 100%' : 'Accuracy: 100%';
-      resultBox.style.display = 'none';
-      progressBar.style.width = '0%';
-      renderTestText(pickText(), '');
-      testArea.classList.remove('active');
-    };
-
-    timerSelect.onchange = () => {
-      timer = parseInt(timerSelect.value);
-      started = false;
-      inputArea.value = '';
-      inputArea.disabled = true;
-      clearInterval(timerInterval);
-      timerEl.textContent = `⏱️ ${timerSelect.value}s`;
-      wpmEl.textContent = currentLang === 'hi' ? 'शब्द प्रति मिनट: 0' : 'WPM: 0';
-      accuracyEl.textContent = currentLang === 'hi' ? 'शुद्धता: 100%' : 'Accuracy: 100%';
-      resultBox.style.display = 'none';
-      progressBar.style.width = '0%';
-      renderTestText(pickText(), '');
-      testArea.classList.remove('active');
-    };
-
-    reloadBtn.onclick = () => {
-      started = false;
-      inputArea.value = '';
-      inputArea.disabled = true;
-      clearInterval(timerInterval);
-      timerEl.textContent = `⏱️ ${timerSelect.value}s`;
-      wpmEl.textContent = currentLang === 'hi' ? 'शब्द प्रति मिनट: 0' : 'WPM: 0';
-      accuracyEl.textContent = currentLang === 'hi' ? 'शुद्धता: 100%' : 'Accuracy: 100%';
-      resultBox.style.display = 'none';
-      progressBar.style.width = '0%';
-      renderTestText(pickText(), '');
-      testArea.classList.remove('active');
-    };
-
-    function pickText() {
-      let arr = texts[currentLang];
-      return arr[Math.floor(Math.random() * arr.length)];
-    }
-
-    window.onload = () => {
-      inputArea.disabled = true;
-      inputArea.classList.toggle('hindi', currentLang === 'hi');
-      renderTestText(pickText());
-      progressBar.style.width = '0%';
-      showHistory();
-    };
-
-    testArea.onclick = () => {
-      if (started && !inputArea.disabled) {
-        inputArea.focus();
-      }
-    };
-
-    // Theme switcher
-    themeBtn.onclick = () => {
-      document.body.classList.toggle('dark');
-      themeBtn.textContent = document.body.classList.contains('dark') ? '🌞' : '🌗';
-    };
-  </script>
+            
+            // Event listeners for language buttons
+            languageButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    languageButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedLanguage = this.dataset.language;
+                    if (!isTestRunning) {
+                        initTest();
+                    }
+                });
+            });
+            
+            // Event listeners for time buttons
+            timeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    timeButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedTime = parseInt(this.dataset.time) * 60;
+                    timeLeft = selectedTime;
+                    updateTimerDisplay();
+                });
+            });
+            
+            // Update timer display
+            function updateTimerDisplay() {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            }
+            
+            // Start the test
+            startButton.addEventListener('click', function() {
+                if (!isTestRunning) {
+                    startTest();
+                } else {
+                    restartTest();
+                }
+            });
+            
+            // Reset the test
+            resetButton.addEventListener('click', function() {
+                restartTest();
+            });
+            
+            function startTest() {
+                isTestRunning = true;
+                startButton.textContent = 'Restart Test';
+                typingInput.disabled = false;
+                typingInput.value = '';
+                typingInput.focus();
+                startTime = new Date();
+                totalKeystrokes = 0;
+                incorrectKeystrokes = 0;
+                
+                resultContainer.style.display = 'none';
+                
+                initTest();
+                
+                timer = setInterval(function() {
+                    timeLeft--;
+                    updateTimerDisplay();
+                    
+                    if (timeLeft <= 0) {
+                        endTest();
+                    }
+                    
+                    updateStats();
+                }, 1000);
+            }
+            
+            function restartTest() {
+                clearInterval(timer);
+                isTestRunning = false;
+                typingInput.disabled = true;
+                startButton.textContent = 'Start Test';
+                timeLeft = selectedTime;
+                updateTimerDisplay();
+                initTest();
+                wpmElement.textContent = '0';
+                accuracyElement.textContent = '100%';
+                resultContainer.style.display = 'none';
+            }
+            
+            function endTest() {
+                clearInterval(timer);
+                isTestRunning = false;
+                typingInput.disabled = true;
+                startButton.textContent = 'Start Test';
+                
+                // Calculate final stats
+                const elapsedTime = (new Date() - startTime) / 1000 / 60; // in minutes
+                const wpm = Math.round((totalKeystrokes / 5) / elapsedTime);
+                const accuracy = totalKeystrokes === 0 ? 100 : Math.round(((totalKeystrokes - incorrectKeystrokes) / totalKeystrokes) * 100);
+                
+                // Display final results
+                finalWpmElement.textContent = wpm;
+                finalAccuracyElement.textContent = accuracy + '%';
+                resultContainer.style.display = 'block';
+            }
+            
+            function updateStats() {
+                if (!isTestRunning) return;
+                
+                const elapsedTime = (new Date() - startTime) / 1000 / 60; // in minutes
+                const wpm = Math.round((totalKeystrokes / 5) / elapsedTime);
+                const accuracy = totalKeystrokes === 0 ? 100 : Math.round(((totalKeystrokes - incorrectKeystrokes) / totalKeystrokes) * 100);
+                
+                wpmElement.textContent = wpm;
+                accuracyElement.textContent = accuracy + '%';
+            }
+            
+            // Input tracking
+            typingInput.addEventListener('input', function() {
+                if (!isTestRunning) return;
+                
+                const typedText = typingInput.value;
+                totalKeystrokes = typedText.length;
+                
+                // Render text with highlighting based on what's been typed
+                renderText(originalText, typedText);
+                
+                // Calculate incorrect keystrokes
+                incorrectKeystrokes = 0;
+                for (let i = 0; i < typedText.length; i++) {
+                    if (originalText[i] !== typedText[i]) {
+                        incorrectKeystrokes++;
+                    }
+                }
+                
+                updateStats();
+            });
+            
+            // Initial setup
+            initTest();
+            updateTimerDisplay();
+        });
+    </script>
 </body>
 </html>
